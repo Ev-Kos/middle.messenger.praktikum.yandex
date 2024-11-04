@@ -1,9 +1,15 @@
 {{#> Layout isCenter="true"}}
   {{#> FormWrapper}}
-    {{#> InfoFormWrapper}}
+    {{#> InfoFormWrapper }}
       {{#> Title text="Вход"}} {{/ Title}}
-      {{#> InputsFormWrapper}} {{/ InputsFormWrapper}}
+      {{#> InputsFormWrapper}}
+        {{#> InputForm text="Логин" name="login" type="text" value=""}} {{/ InputForm}}
+        {{#> InputForm text="Пароль" name="password" type="password" value=""}} {{/ InputForm}}
+      {{/ InputsFormWrapper}}
     {{/ InfoFormWrapper}}
-    {{#> ButtonsFormWrapper}} {{/ ButtonsFormWrapper}}
+    {{#> ButtonsFormWrapper}}
+      {{#> Button text="Авторизоваться"}} {{/ Button}}
+      {{#> Button text="Нет аккаунта?" modifier="button_login" modifier-text="button_login-text"}} {{/ Button}}
+    {{/ ButtonsFormWrapper}}
   {{/ FormWrapper}}
-{{/ Layout }}
+{{/ Layout}}

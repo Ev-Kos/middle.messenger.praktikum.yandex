@@ -1,0 +1,36 @@
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+  color: var(--color-text);
+
+  &__label {
+    position: relative;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--color-blue);
+    padding: 7px 0;
+  }
+
+  &__text {
+    position: absolute;
+    color: var(--color-grey);
+    left: 0;
+    bottom: 7px;
+    transition: all .2s ease;
+  }
+
+  &,
+  &__text {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &:focus + &__text,
+  &:not(:placeholder-shown) + &__text {
+    font-size: 9px;
+    bottom: 28px;
+  }
+}
+

@@ -3,7 +3,7 @@ import * as Components from './components';
 import * as Pages from './pages';
 
 const pages = {
-  'login': [ Pages.LoginPage ],
+  'login': [ Pages.LoginPage],
 };
 
 Object.entries(Components).forEach(([ name, template ]) => {
@@ -16,7 +16,6 @@ function navigate(page: string) {
   const container = document.getElementById('app')!;
 
   const temlpatingFunction = Handlebars.compile(source);
-  console.log('html', temlpatingFunction(context))
   container.innerHTML = temlpatingFunction(context);
 }
 
@@ -27,7 +26,6 @@ document.addEventListener('click', e => {
   const page = e.target.getAttribute('page');
   if (page) {
     navigate(page);
-
     e.preventDefault();
     e.stopImmediatePropagation();
   }
