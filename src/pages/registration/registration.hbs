@@ -1,0 +1,20 @@
+{{#> Layout isCenter="true"}}
+  {{#> FormWrapper modifier-form="form_registration"}}
+    {{#> InfoFormWrapper }}
+      {{#> Title text="Регистрация"}} {{/ Title}}
+      {{#> InputsFormWrapper}}
+        {{#> InputForm text="Почта" name="email" type="text" value="" error=""}} {{/ InputForm}}
+        {{#> InputForm text="Логин" name="login" type="text" value="" error=""}} {{/ InputForm}}
+        {{#> InputForm text="Имя" name="user-name" type="text" value="" error=""}} {{/ InputForm}}
+        {{#> InputForm text="Фамилия" name="user-lastname" type="text" value="" error=""}} {{/ InputForm}}
+        {{#> InputForm text="Телефон" name="phone" type="text" value="" error=""}} {{/ InputForm}}
+        {{#> InputForm text="Пароль" name="password" type="password" value="" error="" modifier=""}} {{/ InputForm}}
+        {{#> InputForm text="Пароль (еще раз)" name="repeat-password" type="password" value="" error="" modifier=""}} {{/ InputForm}}
+      {{/ InputsFormWrapper}}
+    {{/ InfoFormWrapper}}
+    {{#> ButtonsFormWrapper}}
+      {{#> Button text="Зарегистрироваться"}} {{/ Button}}
+      {{#> Button text="Войти" modifier="button_login" modifier-text="button_login-text"}} {{/ Button}}
+    {{/ ButtonsFormWrapper}}
+  {{/ FormWrapper}}
+{{/ Layout}}

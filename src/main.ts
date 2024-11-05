@@ -5,6 +5,7 @@ import * as Pages from './pages';
 const pages = {
   'navigation': [ Pages.NavigationPage ],
   'login': [ Pages.LoginPage],
+  'registration': [ Pages.RegistrationPage],
 };
 
 Object.entries(Components).forEach(([ name, template ]) => {
