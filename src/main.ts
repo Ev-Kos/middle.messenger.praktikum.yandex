@@ -3,6 +3,7 @@ import * as Components from './components';
 import * as Pages from './pages';
 
 const pages = {
+  'navigation': [ Pages.NavigationPage ],
   'login': [ Pages.LoginPage],
 };
 
@@ -19,7 +20,7 @@ function navigate(page: string) {
   container.innerHTML = temlpatingFunction(context);
 }
 
-document.addEventListener('DOMContentLoaded', () => navigate('login'));
+document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
 
 document.addEventListener('click', e => {
   //@ts-ignore
