@@ -6,6 +6,7 @@ const pages = {
   'navigation': [ Pages.NavigationPage ],
   'login': [ Pages.LoginPage],
   'registration': [ Pages.RegistrationPage],
+  'chat': [ Pages.ChatPage],
 };
 
 Object.entries(Components).forEach(([ name, template ]) => {

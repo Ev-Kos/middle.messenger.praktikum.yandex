@@ -1,0 +1,1 @@
+export { default as LoupIcon } from './loup.hbs?raw';
