@@ -3,4 +3,9 @@
     {{#> Link filling="Профиль >" to="#" modifier-link="container__search-link"}} {{/ Link}}
     {{#> InputSearch placeholder-text="Поиск" name="seach" type="text" value=""}}{{/ InputSearch}}
   </div>
+  <ul class="container__list">
+    {{#each chats}}
+      {{> ContactCard}}
+    {{/each}}
+  </ul>
 </div>

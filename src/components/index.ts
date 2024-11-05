@@ -10,3 +10,5 @@ export { Link } from './link';
 export { ContactList } from './contact-list';
 export { InputSearch } from './inputs/input-search';
 export { LoupIcon } from './icons';
+export { ContactCard } from './contact-card';
+export { UserPhoto } from './user-photo';

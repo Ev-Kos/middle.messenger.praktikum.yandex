@@ -1,12 +1,13 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
+import { chats } from './utils/chats';
 
 const pages = {
   'navigation': [ Pages.NavigationPage ],
   'login': [ Pages.LoginPage],
   'registration': [ Pages.RegistrationPage],
-  'chat': [ Pages.ChatPage],
+  'chat': [ Pages.ChatPage, {chats}],
 };
 
 Object.entries(Components).forEach(([ name, template ]) => {
