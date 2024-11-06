@@ -12,3 +12,4 @@ export { InputSearch } from './inputs/input-search';
 export { LoupIcon } from './icons';
 export { ContactCard } from './contact-card';
 export { UserPhoto } from './user-photo';
+export { MessagesList } from './messages-list';
