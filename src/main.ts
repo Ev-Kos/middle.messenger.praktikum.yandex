@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
 import { chats } from './utils/chats';
+import { getDate } from './utils/functions';
 
 const pages = {
   'navigation': [ Pages.NavigationPage ],
@@ -9,6 +10,10 @@ const pages = {
   'registration': [ Pages.RegistrationPage],
   'chat': [ Pages.ChatPage, {chats}],
 };
+
+Handlebars.registerHelper('getDate', function (date) {
+  return getDate(date)
+})
 
 Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
@@ -18,7 +23,6 @@ function navigate(page: string) {
   //@ts-ignore
   const [ source, context ] = pages[page];
   const container = document.getElementById('app')!;
-
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
 }

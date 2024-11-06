@@ -9,13 +9,317 @@ export const chats = [
       "user": {
         "first_name": "Petya",
         "second_name": "Pupkin",
-        "avatar": "/path/to/avatar.jpg",
+        "avatar": "https://img2.akspic.ru/previews/5/0/8/8/7/178805/178805-muzhchina-lazurnyj-solnechnye_ochki-purpur-rukav-500x.jpg",
         "email": "my@email.com",
         "login": "userLogin",
         "phone": "8(911)-222-33-22"
       },
       "time": "2020-01-02T14:22:22.000Z",
       "content": "this is message content"
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+    }
+  },
+  {
+    "id": 124,
+    "title": "Алексей",
+    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "unread_count": 4,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Алексей",
+        "second_name": "Pupkin",
+        "avatar": "https://proxys.io/files/blog/useragent/user.png",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2024-11-06T14:22:22.000Z",
+      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
     }
   }
 ]
