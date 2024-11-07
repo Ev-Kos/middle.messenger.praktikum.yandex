@@ -11,8 +11,8 @@ const pages = {
   'chat': [ Pages.ChatPage, {contactList}],
 };
 
-Handlebars.registerHelper('getDate', function (date) {
-  return getDate(date)
+Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
+  return getDate(date, isGotMessage, isOnlyTime)
 })
 
 Object.entries(Components).forEach(([ name, template ]) => {

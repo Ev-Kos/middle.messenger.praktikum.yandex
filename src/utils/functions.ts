@@ -1,4 +1,4 @@
-export const getDate = (date: string) => {
+export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean) => {
   const messageDate = new Date(date);
 
   const now = new Date();
@@ -27,14 +27,27 @@ export const getDate = (date: string) => {
     messageDay = Number('0' + messageDay)
   };
 
-  if (nowDay - messageDay < 7 && messageMonthNumber === monthNow && year === yearNow && nowDay - messageDay !== 0) {
-    return `${weekDayMod}`;
+  if(!isGotMessage && !isOnlyTime) {
+    if (nowDay - messageDay < 7 && messageMonthNumber === monthNow && year === yearNow && nowDay - messageDay !== 0) {
+      return `${weekDayMod}`;
+    }
+
+    else if (nowDay - messageDay === 0 && messageMonthNumber === monthNow && year === yearNow) {
+      return `${hour}:${min}`
+    } else {
+      return `${messageDay} ${monthMod} ${year}`;
+    }
   }
 
-  else if (nowDay - messageDay === 0 && messageMonthNumber === monthNow && year === yearNow) {
-    return `${hour}:${min}`
-  } else {
+  if(isGotMessage && !isOnlyTime) {
+    if(yearNow === year) {
+      return `${messageDay} ${monthMod}`;
+    }
     return `${messageDay} ${monthMod} ${year}`;
+  }
+
+  if(!isGotMessage && isOnlyTime) {
+    return `${hour}:${min}`
   }
 }
 

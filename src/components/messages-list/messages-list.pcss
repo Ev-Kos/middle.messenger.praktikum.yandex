@@ -1,4 +1,4 @@
-.messager-list {
+.not-select-chat {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -9,4 +9,68 @@
     font-weight: 500;
     color: var(--color-grey);
   }
+}
+
+.messages-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  &__user-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  &__user {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__chat-name {
+    font-size: 13px;
+  }
+
+  &__content {
+    padding: 48px 0 30px 0;
+    border-top: 1px solid var(--color-grey-border);
+    border-bottom: 1px solid var(--color-grey-border);
+    height: calc(100vh - 190px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  &__create-message-container {
+    padding: 11px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__date {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-grey);
+  }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__got-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
 }

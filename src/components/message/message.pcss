@@ -1,0 +1,38 @@
+.message {
+  padding: 11px;
+  box-sizing: border-box;
+  background-color: var(--color-got-message);
+  border-radius: 12px 12px 12px 0;
+  max-width: 50%;
+  align-self: start;
+
+  &__text, &__time {
+    font-weight: 500;
+    margin: 0;
+  }
+
+  &__text {
+    font-size: 12px;
+    color: var(--color-text);
+  }
+
+  &__time-wrap {
+    display: flex;
+    gap: 4px;
+    float: right;
+    margin: 10px 0 0 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__time {
+    font-size: 9px;
+    color: var(--color-grey);
+  }
+
+  &_send {
+    background-color: var(--color-blue-light);
+    border-radius: 12px 12px 0 12px;
+    align-self: end;
+  }
+}
