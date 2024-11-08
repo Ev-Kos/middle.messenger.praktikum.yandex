@@ -9,19 +9,14 @@ const pages = {
   'login': [ Pages.LoginPage],
   'registration': [ Pages.RegistrationPage],
   'chat': [ Pages.ChatPage, {contactList}],
-  'profile': [ Pages.ProfilePage]
+  'profile': [ Pages.ProfilePage],
+  '500': [ Pages.ErrorPage, {error: "500", text:"Мы уже фиксим"}],
+  '400': [ Pages.ErrorPage, {error: "400", text:"Не туда попали"}],
 };
 
 Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
   return getDate(date, isGotMessage, isOnlyTime)
 })
-
-Handlebars.registerHelper('ifCond', function(isChangeInfo, isChangePassword) {
-  if(!isChangeInfo && !isChangePassword) {
-    return true;
-  }
-  return false;
-});
 
 Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
