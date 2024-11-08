@@ -16,6 +16,13 @@ Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
   return getDate(date, isGotMessage, isOnlyTime)
 })
 
+Handlebars.registerHelper('ifCond', function(isChangeInfo, isChangePassword) {
+  if(!isChangeInfo && !isChangePassword) {
+    return true;
+  }
+  return false;
+});
+
 Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });

@@ -1,4 +1,10 @@
 <li class="profile-field">
-  {{>Title modifier-title="profile-field__text" text=text }}
-  {{> InputProfile placeholder="" name=name value=value isDisabled=isDisabled}}
+  {{#if isLink}}
+    {{> Link to=to modifier-link=modifier-link filling=filling}}
+  {{else}}
+    {{>Title modifier-title="profile-field__text {{modifier-field-text}}" text=text }}
+  {{/if}}
+  {{#if isWithInput}}
+    {{> InputProfile placeholder="" name=name value=value isDisabled=isDisabled}}
+  {{/if}}
 </li>

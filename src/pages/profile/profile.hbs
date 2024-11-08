@@ -2,5 +2,9 @@
   <div class="button-back">
     {{> ButtonArrow}}
   </div>
-  {{>ProfileInfo}}
+{{!-- isChangeInfo="true" (Изменение основной информации)
+  isChangePassword="true" (Изменение пароля)
+  isNotChange="true" (Профиль)
+--}}
+  {{> ProfileInfo isNotChange="true"}}
 {{/ Layout}}
