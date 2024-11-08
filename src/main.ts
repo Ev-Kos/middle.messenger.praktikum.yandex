@@ -9,6 +9,7 @@ const pages = {
   'login': [ Pages.LoginPage],
   'registration': [ Pages.RegistrationPage],
   'chat': [ Pages.ChatPage, {contactList}],
+  'profile': [ Pages.ProfilePage]
 };
 
 Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {

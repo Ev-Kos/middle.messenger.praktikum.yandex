@@ -22,3 +22,8 @@ export { ArrowIcon } from './icons';
 export { Message } from './message';
 export { CheckmarkIcon } from './icons';
 export { ImageMessage } from './image-message';
+export { ProfileInfo } from './profile-info';
+export { InputAvatar } from './inputs/input-avatar';
+export { ImageIcon } from './icons';
+export { InputProfile } from './inputs/input-profile';
+export { ProfileField } from './profile-field';
