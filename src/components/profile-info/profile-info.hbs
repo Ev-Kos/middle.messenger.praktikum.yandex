@@ -9,9 +9,9 @@
     <ul class="profile-info__fields">
       {{> ProfileField text="Почта" name="email" value="pochta@yandex.ru" isDisabled=isNotChange isWithInput="true" type="text"}}
       {{> ProfileField text="Логин" name="login" value="ivanivanov" isDisabled=isNotChange isWithInput="true" type="text"}}
-      {{> ProfileField text="Имя" name="name" value="Иван" isDisabled=isNotChange isWithInput="true" type="text"}}
-      {{> ProfileField text="Фамилия" name="last-name" value="Иванов" isDisabled=isNotChange isWithInput="true" type="text"}}
-      {{> ProfileField text="Имя в чате" name="chat-name" value="Иван" isDisabled=isNotChange isWithInput="true" type="text"}}
+      {{> ProfileField text="Имя" name="first_name" value="Иван" isDisabled=isNotChange isWithInput="true" type="text"}}
+      {{> ProfileField text="Фамилия" name="second_name" value="Иванов" isDisabled=isNotChange isWithInput="true" type="text"}}
+      {{> ProfileField text="Имя в чате" name="display_name" value="Иван" isDisabled=isNotChange isWithInput="true" type="text"}}
       {{> ProfileField text="Телефон" name="phone" value="+7-909-967-30-30" isDisabled=isNotChange isWithInput="true" type="text"}}
     </ul>
   {{/unless}}
@@ -24,8 +24,8 @@
   {{/if}}
   {{#if isChangePassword}}
     <ul class="profile-info__fields">
-      {{> ProfileField text="Старый пароль" name="old-password" value="11111111" isWithInput="true" type="password"}}
-      {{> ProfileField text="Новый пароль" name="new-password" value="11111" isWithInput="true" type="password"}}
+      {{> ProfileField text="Старый пароль" name="oldPassword" value="11111111" isWithInput="true" type="password"}}
+      {{> ProfileField text="Новый пароль" name="newPassword" value="11111" isWithInput="true" type="password"}}
       {{> ProfileField text="Повторите новый пароль" name="repeat-password" value="11111" isWithInput="true" type="password"}}
     </ul>
   {{/if}}
