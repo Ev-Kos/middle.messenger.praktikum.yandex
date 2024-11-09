@@ -1,8 +1,12 @@
 {{#> ModalWrapper}}{{/ ModalWrapper}}
 {{#> FormWrapper modifier-form="modal-centred"}}
-  {{> Title modifier-title="modal-centred__title" text="Загрузите файл"}}
+  {{#if isError}}
+    {{> Title modifier-title="modal-centred__title-error" text="Ошибка, попробуйте ещё раз"}}
+    {{else}}
+    {{> Title modifier-title="modal-centred__title" text="Загрузите файл"}}
+  {{/if}}
   <div class="modal-centred__form">
-    {{> InputForm text="Логин" name="login" type="text" value="" error="" modifier=""}}
+    {{> InputFile }}
       {{#> Button text="Поменять"}} {{/ Button}}
   </div>
 {{/ FormWrapper}}

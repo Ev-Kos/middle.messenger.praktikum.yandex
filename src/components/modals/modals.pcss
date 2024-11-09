@@ -62,15 +62,20 @@
   height: max-content;
   gap: 50px;
 
-  &__title {
+  &__title, &__title-error {
     font-size: 15px;
     font-weight: 500;
     line-height: 1.3;
   }
 
+  &__title-error {
+    color: var(--color-red);
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 33px;
     width: 100%;
   }
