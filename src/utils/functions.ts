@@ -50,4 +50,3 @@ export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean
     return `${hour}:${min}`
   }
 }
-

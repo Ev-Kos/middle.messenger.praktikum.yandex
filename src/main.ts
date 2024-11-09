@@ -50,6 +50,3 @@ document.addEventListener('click', e => {
     e.stopImmediatePropagation();
   }
 })
-
-
-
