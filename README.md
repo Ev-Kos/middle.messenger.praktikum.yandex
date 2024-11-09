@@ -1,7 +1,7 @@
 ## Chat
 Чат для обмена сообщениями
 
-## [Открыть проект](https://ev-kos.github.io/todo/)
+## [Открыть проект](https://chat-yandex.netlify.app/)
 
 ### [Макет](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1)
 
