@@ -1,5 +1,7 @@
 {{#> Layout}}
   {{#> ContactList contactList=contactList}}{{/ ContactList}}
-  {{> MessagesList isSelectChat="true" isOpenAddDeleteUserModal="true" isOpenFileModal="true"}}
-{{> AddDeleteUserSelectedModal isClickAdd="true"}}
+  {{> MessagesList isSelectChat="true"}}
+  {{#if isClickAddOrDeleteUser}}
+    {{> AddDeleteUserSelectedModal}}
+  {{/if}}
 {{/ Layout}}

@@ -7,5 +7,7 @@
   isNotChange="true" (Профиль)
 --}}
   {{> ProfileInfo isNotChange="true"}}
-  {{> FileLoadModal }}
+  {{#if isClickFileLoad}}
+    {{> FileLoadModal }}
+  {{/if}}
 {{/ Layout}}
