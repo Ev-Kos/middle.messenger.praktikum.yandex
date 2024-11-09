@@ -29,7 +29,7 @@ function navigate(page: string) {
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
 
-  history.pushState({ page }, "", `${page}`);
+  history.pushState({ page }, "", `#${page}`);
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
