@@ -5,13 +5,13 @@ import { contactList } from './utils/contact-list';
 import { getDate } from './utils/functions';
 
 const pages = {
-  'navigation': [ Pages.NavigationPage ],
-  'login': [ Pages.LoginPage],
-  'registration': [ Pages.RegistrationPage],
-  'chat': [ Pages.ChatPage, {contactList}],
-  'profile': [ Pages.ProfilePage],
-  '500': [ Pages.ErrorPage, {error: "500", text:"Мы уже фиксим"}],
-  '400': [ Pages.ErrorPage, {error: "400", text:"Не туда попали"}],
+  navigation: [ Pages.NavigationPage ],
+  login: [ Pages.LoginPage],
+  registration: [ Pages.RegistrationPage],
+  chat: [ Pages.ChatPage, {contactList}],
+  profile: [ Pages.ProfilePage],
+  500: [ Pages.ErrorPage, {error: "500", text:"Мы уже фиксим"}],
+  400: [ Pages.ErrorPage, {error: "400", text:"Не туда попали"}],
 };
 
 Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
@@ -28,6 +28,8 @@ function navigate(page: string) {
   const container = document.getElementById('app')!;
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
+
+  history.pushState({ page }, "", `${page}`);
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
