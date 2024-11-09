@@ -19,6 +19,7 @@
   box-sizing: border-box;
 
   &__user-container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
@@ -46,10 +47,22 @@
   }
 
   &__create-message-container {
+    position: relative;
     padding: 11px 0;
     display: flex;
     gap: 10px;
     align-items: center;
+  }
+
+  &__file-button {
+    padding: 0;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+  }
+
+  &__file-button:hover {
+    opacity: 0.7;
   }
 
   &__date {

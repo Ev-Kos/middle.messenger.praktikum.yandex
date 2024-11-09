@@ -31,13 +31,21 @@
       </div>
     </div>
     <div class="messages-list__create-message-container">
-      {{> PaperClipIcon}}
+      <button type="button" class="messages-list__file-button">
+        {{> PaperClipIcon}}
+      </button>
       {{> InputCreateMessage placeholder-text="Сообщение" name="message" value="hhh"}}
       {{> ButtonArrow isRight="true"}}
+      {{#if isOpenFileModal}}
+        {{> FilesModal}}
+      {{/if}}
     </div>
   </div>
-{{else}}
+  {{else}}
   <div class="not-select-chat">
     <span class="not-select-chat__text">Выберите чат чтобы отправить сообщение</span>
   </div>
+{{/if}}
+{{#if isOpenAddDeleteUserModal}}
+  {{> AddDeleteUserModal}}
 {{/if}}
