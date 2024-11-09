@@ -24,13 +24,20 @@ Object.entries(Components).forEach(([ name, template ]) => {
 
 function navigate(page: string) {
   //@ts-ignore
-  const [ source, context ] = pages[page];
+  const [source, context] = pages[page];
   const container = document.getElementById('app')!;
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
-
-  history.pushState({ page }, "", `#${page}`);
+  history.pushState({ page }, "", `${page}`);
 }
+
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.page) {
+    navigate(event.state.page);
+  } else {
+    navigate('navigation');
+  }
+})
 
 document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
 
@@ -42,7 +49,7 @@ document.addEventListener('click', e => {
     e.preventDefault();
     e.stopImmediatePropagation();
   }
-});
+})
 
 
 
