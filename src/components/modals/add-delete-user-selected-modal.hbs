@@ -1,0 +1,16 @@
+{{#> ModalWrapper}}{{/ ModalWrapper}}
+{{#> FormWrapper modifier-form="modal-centred"}}
+  {{#if isClickAdd}}
+  {{> Title modifier-title="modal-centred__title" text="Добавить пользователя"}}
+  {{else}}
+  {{> Title modifier-title="modal-centred__title" text="Удалить пользователя"}}
+  {{/if}}
+  <div class="modal-centred__form">
+    {{> InputForm text="Логин" name="login" type="text" value="" error="" modifier=""}}
+    {{#if isClickAdd}}
+      {{#> Button text="Добавить"}} {{/ Button}}
+      {{else}}
+      {{#> Button text="Удалить"}} {{/ Button}}
+    {{/if}}
+  </div>
+{{/ FormWrapper}}

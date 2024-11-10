@@ -1,0 +1,34 @@
+.input-file {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+
+  &__label {
+    position: relative;
+    width: 122px;
+  }
+
+  &__text {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-align: center;
+  }
+
+  &__mask {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+}

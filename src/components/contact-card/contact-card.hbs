@@ -1,0 +1,15 @@
+<li class="contact-card">
+  <div class="contact-card__message-and-photo-wrap">
+    {{#> UserPhoto photo=avatar}}{{/ UserPhoto}}
+    <div class="contact-card__message-wrap">
+      {{#> Title modifier-title="contact-card__chat-name" text=title}}{{/ Title}}
+      <p class="contact-card__message">{{last_message.content}}</p>
+    </div>
+  </div>
+  <div class="contact-card__time-and-count">
+      <p class="contact-card__time">{{getDate last_message.time false false}}</p>
+      <div class="contact-card__count">
+        <span class="contact-card__count-num">{{unread_count}}</span>
+      </div>
+    </div>
+</li>

@@ -1,0 +1,12 @@
+{{#> ModalWrapper}}{{/ ModalWrapper}}
+{{#> FormWrapper modifier-form="modal-centred"}}
+  {{#if isError}}
+    {{> Title modifier-title="modal-centred__title-error" text="Ошибка, попробуйте ещё раз"}}
+    {{else}}
+    {{> Title modifier-title="modal-centred__title" text="Загрузите файл"}}
+  {{/if}}
+  <div class="modal-centred__form">
+    {{> InputFile }}
+      {{#> Button text="Поменять"}} {{/ Button}}
+  </div>
+{{/ FormWrapper}}
