@@ -1,5 +1,6 @@
 import {v4 as makeUUID} from 'uuid';
 import EventBus from './event-bus';
+import Handlebars from 'handlebars';
 
 type TBlockProps = {
   [key: string]: any;
@@ -20,10 +21,10 @@ export default class Block {
 
   protected  _element: HTMLElement | null = null;
   protected  _meta: IMeta;
-  protected  _id: string = makeUUID();
+  protected  _id: string = makeUUID()
   protected  props: TBlockProps;
   protected eventBus: () => EventBus<string>;
-  protected children: Record<string, Block> | Record<string, any[]>;
+  protected children: Record<string, Block> | Record<string, Block[]>;
 
   constructor(tagName = "div", propsWithChildren = {}) {
     const eventBus = new EventBus();
@@ -37,7 +38,7 @@ export default class Block {
       props
     };
 
-    this.props = this._makePropsProxy(props);
+    this.props = this._makePropsProxy({ ...props, __id: this._id });
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -74,7 +75,7 @@ export default class Block {
   }
 
   _getChildrenAndProps(propsAndChildren: TBlockProps) {
-    const children: Record<string, any[]> | Record<string, Block> = {};
+    const children: Record<string, Block[]> | Record<string, Block> = {};
     const props: TBlockProps = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
@@ -108,7 +109,7 @@ export default class Block {
 
   componentDidMount() {}
 
-  dispatchComponentDidMoun() {
+  dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
@@ -120,17 +121,28 @@ export default class Block {
     this._render();
   }
 
-  componentDidUpdate(_oldProps: TBlockProps, _newProps: TBlockProps) {
-    return true;
-  }
+  componentDidUpdate(oldProps?: TBlockProps, newProps?: TBlockProps): boolean {
+    return oldProps !== newProps;
+}
 
   setProps = (nextProps: TBlockProps) => {
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
   };
+
+  setPropsForChildren(children: Block | Block[], newProps: any) {
+    if (Array.isArray(children)) {
+        children.forEach(child => {
+            if (child instanceof Block) {
+                child.setProps(newProps);
+            }
+        });
+    } else if (children instanceof Block) {
+        children.setProps(newProps);
+    }
+}
 
   get element() {
     return this._element;

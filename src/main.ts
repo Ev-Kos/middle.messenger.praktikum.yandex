@@ -3,6 +3,7 @@ import * as Components from './components';
 import * as Pages from './pages';
 import { contactList } from './utils/contact-list';
 import { getDate } from './utils/functions';
+import renderDOM from './core/render-dom';
 
 const pages = {
   navigation: [ Pages.NavigationPage ],
@@ -19,12 +20,19 @@ Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
 })
 
 Object.entries(Components).forEach(([ name, template ]) => {
+  if (typeof template === "function") {
+    return;
+  }
   Handlebars.registerPartial(name, template);
 });
 
 function navigate(page: string) {
   //@ts-ignore
   const [source, context] = pages[page];
+  if (typeof source === "function") {
+    renderDOM(new source({}));
+    return;
+  }
   const container = document.getElementById('app')!;
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
