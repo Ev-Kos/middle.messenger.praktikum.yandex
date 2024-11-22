@@ -9,7 +9,7 @@ export default class LoginPage extends Block {
         login: "",
         password: "",
       },
-      className: "page",
+      className: "login-page",
       InputLogin: new InputForm({
         name: "login",
         type: "text",
@@ -53,7 +53,7 @@ export default class LoginPage extends Block {
           const errorLogin = checkLogin(this.props.formState.login);
           const errorPassword = checkPassword(this.props.formState.password);
 
-          if (errorLogin.error || errorPassword.error) {
+          if (errorLogin.isError || errorPassword.isError) {
             this.setPropsForChildren(this.children.InputLogin, errorLogin);
             this.setPropsForChildren(this.children.InputPassword, errorPassword);
             return;
@@ -69,15 +69,15 @@ export default class LoginPage extends Block {
   }
   public render(): string {
     return `
-      <form class="form">
-        <div class="form__info">
-          <h1 class="form__title">Вход</h1>
-          <div class="form__inputs">
+      <form class="form-login">
+        <div class="form-login__info">
+          <h1 class="form-login__title">Вход</h1>
+          <div class="form-login__inputs">
             {{{InputLogin}}}
             {{{InputPassword}}}
           </div>
         </div>
-        <div class="form__buttons">
+        <div class="form-login__buttons">
           {{{Button}}}
           {{{Link}}}
         </div>

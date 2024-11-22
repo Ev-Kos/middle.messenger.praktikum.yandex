@@ -3,7 +3,7 @@ import Block from "../../core/block";
 export default class NavigationPage extends Block {
   constructor() {
     super('section', {
-      className: 'page',
+      className: 'navigation-page',
     })
   }
   public render(): string {
