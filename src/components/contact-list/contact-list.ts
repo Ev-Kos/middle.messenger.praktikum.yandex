@@ -9,6 +9,7 @@ export default class ContactList extends Block {
     super('div', {
       className: 'container',
       searchValue: "",
+      selected_id: "",
       Link: new Link({
         to: "#",
         modifierLink: "container__search-link",
@@ -31,9 +32,9 @@ export default class ContactList extends Block {
       Chats: contactList.map(
         (chatProps) =>
             new ContactCard({
-                ...chatProps,
+                ...chatProps
             }),
-    ),
+      ),
     })
   }
   public render(): string {
