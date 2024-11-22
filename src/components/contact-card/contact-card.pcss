@@ -17,6 +17,18 @@
     gap: 10px;
   }
 
+  &__photo, &__mock-photo {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__mock-photo {
+    background-color: var(--color-grey-light);
+  }
+
+
   &__message-wrap {
     display: flex;
     flex-direction: column;
@@ -27,6 +39,8 @@
   &__chat-name {
     font-size: 13px;
     font-weight: 600;
+    margin: 0;
+    color: var(--color-text);
   }
 
   &__message, &__time {

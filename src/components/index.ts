@@ -10,7 +10,6 @@ export { ContactList } from './contact-list';
 export { InputSearch } from './inputs/input-search';
 export { LoupIcon } from './icons';
 export { ContactCard } from './contact-card';
-export { UserPhoto } from './user-photo';
 export { MessagesList } from './messages-list';
 export { ErrorNotice } from './error-notice';
 export { PaperClipIcon } from './icons';

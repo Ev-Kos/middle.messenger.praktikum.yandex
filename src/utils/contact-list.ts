@@ -21,7 +21,7 @@ export const contactList = [
   {
     "id": 124,
     "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
+    "avatar": "https://cdn-icons-png.flaticon.com/512/219/219969.png",
     "unread_count": 4,
     "created_by": 12345,
     "last_message": {
