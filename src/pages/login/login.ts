@@ -1,4 +1,4 @@
-import { InputForm } from "../../components";
+import { Button, InputForm, Link } from "../../components";
 import Block from "../../core/block";
 import { checkLogin, checkPassword } from "../../utils/validate-inputs";
 
@@ -25,16 +25,15 @@ export default class LoginPage extends Block {
               },
             });
           }
-        }
+        },
       }),
       InputPassword: new InputForm({
         name: "password",
-        type: "text",
+        type: "password",
         text: "Пароль",
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
-            console.log(value);
             this.setPropsForChildren(this.children.InputPassword, checkPassword(value));
             this.setProps({
               formState: {
@@ -45,29 +44,44 @@ export default class LoginPage extends Block {
           }
         }
       }),
-      // SignInButton: new Button({ label: "Sign in", color: "primary" }),
-      // SignUpButton: new Button({
-      //   label: "Sign up",
-      //   color: "link",
-      //   onClick: () => console.log(this.props.formState),
-      // }),
+      Button: new Button({
+        type: "submit",
+        text: "Авторизоваться",
+        onClick: (e) => {
+          e.preventDefault();
+
+          const errorLogin = checkLogin(this.props.formState.login);
+          const errorPassword = checkPassword(this.props.formState.password);
+
+          if (errorLogin.error || errorPassword.error) {
+            this.setPropsForChildren(this.children.InputLogin, errorLogin);
+            this.setPropsForChildren(this.children.InputPassword, errorPassword);
+            return;
+          }
+          console.log(this.props.formState)}
+      }),
+      Link: new Link({
+        to: "#",
+        modifierLink: "link",
+        text: "Нет аккаунта?"
+      })
     });
   }
   public render(): string {
     return `
-  {{#> FormWrapper}}
-    {{#> InfoFormWrapper }}
-      {{#> Title text="Вход"}} {{/ Title}}
-      {{#> InputsFormWrapper}}
-        {{{InputLogin}}}
-        {{{InputPassword}}}
-      {{/ InputsFormWrapper}}
-    {{/ InfoFormWrapper}}
-    {{#> ButtonsFormWrapper}}
-      {{#> Button text="Авторизоваться"}} {{/ Button}}
-      {{#> Link filling="Нет аккаунта?" to="#"}} {{/ Link}}
-    {{/ ButtonsFormWrapper}}
-  {{/ FormWrapper}}
+      <form class="form">
+        <div class="form__info">
+          <h1 class="form__title">Вход</h1>
+          <div class="form__inputs">
+            {{{InputLogin}}}
+            {{{InputPassword}}}
+          </div>
+        </div>
+        <div class="form__buttons">
+          {{{Button}}}
+          {{{Link}}}
+        </div>
+      </form
     `;
   }
 }

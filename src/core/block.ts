@@ -21,7 +21,7 @@ export default class Block {
 
   protected  _element: HTMLElement | null = null;
   protected  _meta: IMeta;
-  protected  _id: string = makeUUID()
+  protected  _id: string = makeUUID();
   protected  props: TBlockProps;
   protected eventBus: () => EventBus<string>;
   protected children: Record<string, Block> | Record<string, Block[]>;
@@ -142,7 +142,7 @@ export default class Block {
     } else if (children instanceof Block) {
         children.setProps(newProps);
     }
-}
+  }
 
   get element() {
     return this._element;
@@ -150,7 +150,6 @@ export default class Block {
 
   _addEvents() {
     const { events = {} } = this.props;
-
     Object.keys(events).forEach((eventName) => {
       if(this._element) {
         this._element.addEventListener(eventName, events[eventName]);
