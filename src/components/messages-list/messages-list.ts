@@ -1,9 +1,10 @@
 import Block from "../../core/block";
 import { message } from "../../utils/contact-list";
 import { ButtonDots } from "../buttons/button-dots";
+import { ButtonFile } from "../buttons/button-file";
 import { ImageMessage } from "../image-message";
 import Message from "../message/message";
-import { AddDeleteUserModal, AddDeleteUserSelectedModal } from "../modals";
+import { AddDeleteUserModal, AddDeleteUserSelectedModal, FilesModal } from "../modals";
 import { ModalWrapper } from "../wrappers/modals-wrapper";
 
 type TMessagesList = {
@@ -19,6 +20,7 @@ export default class MessagesList extends Block {
       isClickAddUser: false,
       isClickDeleteUser: false,
       isClickAdd: false,
+      isOpenFileModal: false,
       ButtonDots: new ButtonDots({
         onClick: () => {
           this.setProps({isOpenAddDeleteUserModal: !this.props.isOpenAddDeleteUserModal})
@@ -58,6 +60,12 @@ export default class MessagesList extends Block {
           this.setProps({isClickDeleteUser: false, isClickAddUser: false})
         }
       }),
+      ButtonFile: new ButtonFile({
+        onClick: () => {
+          this.setProps({isOpenFileModal: !this.props.isOpenFileModal})
+        }
+      }),
+      FilesModal: new FilesModal
     })
   }
 
@@ -87,15 +95,13 @@ export default class MessagesList extends Block {
             </div>
           </div>
           <div class="messages-list__create-message-container">
+            {{{ButtonFile}}}
 
 
-            <button type="button" class="messages-list__file-button">
-              {{> PaperClipIcon}}
-            </button>
             {{> InputCreateMessage placeholder-text="Сообщение" name="message" value="hhh"}}
             {{> ButtonArrow isRight="true"}}
             {{#if isOpenFileModal}}
-              {{> FilesModal}}
+              {{{FilesModal}}}
             {{/if}}
           </div>
         </div>

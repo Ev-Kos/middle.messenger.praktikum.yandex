@@ -33,3 +33,4 @@ export { AddDeleteUserSelectedModal } from './modals';
 export { ModalWrapper } from './wrappers/modals-wrapper';
 export { FileLoadModal } from './modals';
 export { ButtonAvatar } from './buttons/button-avatar';
+export { ButtonFile } from './buttons/button-file';
