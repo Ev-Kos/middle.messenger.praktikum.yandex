@@ -30,11 +30,11 @@ export default class ContactCard extends Block {
 
   public render(): string {
     return `
-      <div class="contact-card__message-and-photo-wrap">
+      <div class="contact-card__message-and-photo-wrap {{#if isEqualIds}}contact-card-selected{{/if}}">
         {{#if avatar}}
           <img class="contact-card__photo" src={{avatar}} alt="Фотография пользователя"/>
         {{else}}
-          <div class="mock-photo"></div>
+          <div class="contact-card__mock-photo"></div>
         {{/if}}
         <div class="contact-card__message-wrap">
           <p class="contact-card__chat-name">{{title}}</p>

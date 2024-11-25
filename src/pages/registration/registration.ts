@@ -159,7 +159,8 @@ export default class RegistrationPage extends Block {
             this.setPropsForChildren(this.children.InputRepeatedPassword, errorRepeatedPassword);
             return;
           }
-          console.log(this.props.formState)}
+          console.log(this.props.formState)
+        }
       }),
       Link: new Link({
         to: "#",
