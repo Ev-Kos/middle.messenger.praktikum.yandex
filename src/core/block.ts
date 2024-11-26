@@ -130,7 +130,6 @@ export default class Block {
       return;
     }
     Object.assign(this.props, nextProps);
-    console.log(this.props)
   };
 
   setPropsForChildren(children: Block | Block[], newProps: any) {

@@ -1,6 +1,11 @@
 import Block from "../../core/block";
 
 export default class ArrowIcon extends Block {
+  constructor() {
+    super("div", {
+      className: "arrow-icon"
+    });
+  }
   public render(): string {
     return `
       <svg
