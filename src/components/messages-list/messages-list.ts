@@ -1,8 +1,11 @@
 import Block from "../../core/block";
 import { message } from "../../utils/contact-list";
+import { checkMessage } from "../../utils/validate-inputs";
+import { ButtonArrow } from "../buttons/button-arrow";
 import { ButtonDots } from "../buttons/button-dots";
 import { ButtonFile } from "../buttons/button-file";
 import { ImageMessage } from "../image-message";
+import { InputCreateMessage } from "../inputs/input-create-message";
 import Message from "../message/message";
 import { AddDeleteUserModal, AddDeleteUserSelectedModal, FilesModal } from "../modals";
 import { ModalWrapper } from "../wrappers/modals-wrapper";
@@ -21,6 +24,7 @@ export default class MessagesList extends Block {
       isClickDeleteUser: false,
       isClickAdd: false,
       isOpenFileModal: false,
+      message: "",
       ButtonDots: new ButtonDots({
         onClick: () => {
           this.setProps({isOpenAddDeleteUserModal: !this.props.isOpenAddDeleteUserModal})
@@ -65,7 +69,30 @@ export default class MessagesList extends Block {
           this.setProps({isOpenFileModal: !this.props.isOpenFileModal})
         }
       }),
-      FilesModal: new FilesModal
+      FilesModal: new FilesModal,
+      InputCreateMessage: new InputCreateMessage({
+        placeholderText: "Сообщение",
+        name: "message",
+        type: "text",
+        onChange: (e: Event) => {
+          if(e.target instanceof HTMLInputElement) {
+            const value = e.target.value;
+            this.setPropsForChildren(this.children.InputCreateMessage, checkMessage(value));
+            this.setProps({message: value});
+          }
+        }
+      }),
+      ButtonArrow: new ButtonArrow({
+        onClick: () => {
+          const error = checkMessage(this.props.message)
+          if (error) {
+            this.setPropsForChildren(this.children.InputCreateMessage, error);
+            return;
+          }
+          console.log(this.props.message)
+        },
+        isRight: true
+      })
     })
   }
 
@@ -96,33 +123,29 @@ export default class MessagesList extends Block {
           </div>
           <div class="messages-list__create-message-container">
             {{{ButtonFile}}}
-
-
-            {{> InputCreateMessage placeholder-text="Сообщение" name="message" value="hhh"}}
-            {{> ButtonArrow isRight="true"}}
+            {{{InputCreateMessage}}}
+            {{{ButtonArrow}}}
             {{#if isOpenFileModal}}
               {{{FilesModal}}}
             {{/if}}
           </div>
         </div>
-  {{else}}
-  <div class="not-select-chat">
-    <span class="not-select-chat__text">Выберите чат чтобы отправить сообщение</span>
-  </div>
-{{/if}}
-{{#if isOpenAddDeleteUserModal}}
-  {{{AddDeleteUserModal}}}
-{{/if}}
-{{#if isClickAddUser}}
-{{{ModalWrapper}}}
-     {{{AddUserModal}}}
-         {{/if}}
-
-         {{#if isClickDeleteUser}}
-         {{{ModalWrapper}}}
-     {{{DeleteUserModal}}}
-         {{/if}}
-
+      {{else}}
+        <div class="not-select-chat">
+          <span class="not-select-chat__text">Выберите чат чтобы отправить сообщение</span>
+        </div>
+      {{/if}}
+      {{#if isOpenAddDeleteUserModal}}
+        {{{AddDeleteUserModal}}}
+      {{/if}}
+      {{#if isClickAddUser}}
+        {{{ModalWrapper}}}
+        {{{AddUserModal}}}
+      {{/if}}
+      {{#if isClickDeleteUser}}
+        {{{ModalWrapper}}}
+        {{{DeleteUserModal}}}
+      {{/if}}
     `
   }
 }

@@ -16,12 +16,6 @@ export default class ChatPage extends Block {
     return `
       {{{ContactList}}}
       {{{MessagesList}}}
-
     `
   }
 }
-
-//   {{> MessagesList isSelectChat="true"}}
-//   {{#if isClickAddOrDeleteUser}}
-//     {{> AddDeleteUserSelectedModal}}
-//   {{/if}}

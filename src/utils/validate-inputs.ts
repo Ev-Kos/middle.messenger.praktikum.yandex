@@ -148,3 +148,15 @@ export const checkPhone = (value: string):{isError: boolean, error: string, valu
   }
   return {isError: false, error: '', value: value};
 }
+
+export const checkMessage = (value: string): {isError: boolean, error: string, value: string} => {
+  if (value.length === 0) {
+    console.log(value);
+    return {
+      isError: true,
+      error: 'Поле не может быть пустым',
+      value: value
+    }
+  }
+  return {isError: false, error: '', value: value};
+}
