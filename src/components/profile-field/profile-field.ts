@@ -12,9 +12,9 @@ type TProfileFieldProps = {
   inputValue?: string;
   inputIsDisabled?: boolean;
   onChangeInput?: (e: Event) => void;
-  inputPlaceholder?: string;
   inputType?: string;
   onClick?: () => void;
+  error?: string;
 }
 
 export default class ProfileField extends Block {
@@ -28,7 +28,6 @@ export default class ProfileField extends Block {
       InputProfile: new InputProfile({
         name: String(props.inputName),
         value: props.inputValue,
-        placeholderText: String(props.inputPlaceholder),
         type: String(props.inputType),
         onChange: props.onChangeInput,
       })
@@ -37,18 +36,23 @@ export default class ProfileField extends Block {
 
   public render(): string {
     return `
-      {{#if isButton}}
-        <button class="profile-field__button {{modifierButton}}" type="button">{{buttonText}}</button>
-      {{else}}
-        <p class="profile-field__text {{modifierNameField}}">{{nameField}}</p>
-      {{/if}}
-      {{#if isWithInput}}
-        {{#if inputIsDisabled}}
-          <p class="profile-field__value">{{inputValue}}</p>
+      <div class="profile-field__info-wrap">
+        {{#if isButton}}
+          <button class="profile-field__button {{modifierButton}}" type="button">{{buttonText}}</button>
         {{else}}
-          {{{InputProfile}}}
+          <p class="{{modifierNameField}} {{#unless modifierNameField}}profile-field__text{{/unless}}">{{nameField}}</p>
         {{/if}}
-      {{/if}}
+        {{#if isWithInput}}
+          {{#if inputIsDisabled}}
+            <p class="profile-field__value">{{inputValue}}</p>
+          {{else}}
+            {{{InputProfile}}}
+          {{/if}}
+        {{/if}}
+      </div>
+      {{#unless inputIsDisabled}}
+        <span class="profile-field__error">{{error}}</span>
+      {{/unless}}
     `
   }
 }

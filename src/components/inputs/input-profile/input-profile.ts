@@ -2,10 +2,11 @@ import Block from "../../../core/block";
 
 type TInputProfileProps = {
   type: string;
-  placeholderText: string;
   name: string;
   value?: string;
   onChange?: (e: Event) => void;
+  error?: string;
+  isError?: boolean;
 }
 
 export default class InputProfile extends Block {
@@ -20,9 +21,8 @@ export default class InputProfile extends Block {
   }
 
   public render(): string {
-    console.log(this.props)
     return `
-      <input class="input-profile" type={{type}} placeholder={{placeholderText}} name={{ name }} value={{value}} />
+      <input class="input-profile" autocomplete={{ autocomplete }} type={{type}} placeholder="" name={{ name }} value={{ value }} >
     `
   }
 }

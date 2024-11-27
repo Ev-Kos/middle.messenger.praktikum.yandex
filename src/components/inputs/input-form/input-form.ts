@@ -8,6 +8,7 @@ type InputFormProps = {
   text: string;
   error?: string;
   isError?: boolean;
+  id?: string;
   onChange?: (e: Event) => void;
 };
 
@@ -24,7 +25,7 @@ export default class InputForm extends Block {
   }
   public render(): string {
     return `
-      <input class="input {{modifier }}" autocomplete="new-password" placeholder="" name={{ name }} type={{ type }} value={{ value }} >
+      <input class="input {{modifier }}" autocomplete={{ autocomplete }} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
       <span class="input__text">{{ text }}</span>
       <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>
     `;

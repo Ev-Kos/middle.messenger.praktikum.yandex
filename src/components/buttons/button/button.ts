@@ -5,6 +5,7 @@ type TButtonProps = {
   type: string;
   text: string;
   modifierText?: string;
+  modifierButton?: string;
   onClick?: (e: Event) => void;
 };
 
@@ -12,7 +13,7 @@ export default class Button extends Block {
   constructor(props: TButtonProps) {
     super('button', {
       ...props,
-      className: "button",
+      className: props.modifierButton ? `button ${props.modifierButton}` : "button",
       attrs: {
         type: "button"
       },

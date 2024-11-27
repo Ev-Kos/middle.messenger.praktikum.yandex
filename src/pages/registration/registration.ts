@@ -128,7 +128,6 @@ export default class RegistrationPage extends Block {
             this.setProps({
               repeatedPassword: value
             });
-            console.log(this.props.repeatedPassword, value)
           }
         }
       }),

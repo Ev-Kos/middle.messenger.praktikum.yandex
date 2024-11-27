@@ -38,7 +38,7 @@ export const checkPassword = (value: string): {isError: boolean, error: string, 
   if (value.length < 8) {
     return {
       isError: true,
-      error: 'Минимальная длина пароля 8 символа',
+      error: 'Минимальная длина пароля 8 символов',
       value: value
     }
   }
