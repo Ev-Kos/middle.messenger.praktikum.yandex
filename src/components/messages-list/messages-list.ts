@@ -85,11 +85,12 @@ export default class MessagesList extends Block {
       ButtonArrow: new ButtonArrow({
         onClick: () => {
           const error = checkMessage(this.props.message)
-          if (error) {
+          if (error.isError) {
             this.setPropsForChildren(this.children.InputCreateMessage, error);
             return;
           }
           console.log(this.props.message)
+          this.setPropsForChildren(this.children.InputCreateMessage, {value: ""});
         },
         isRight: true
       })

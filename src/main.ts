@@ -30,12 +30,10 @@ function navigate(page: string) {
   const [source, context] = pages[page];
   if (typeof source === "function") {
     renderDOM(new source({}));
-    console.log(source, context);
     return;
   }
   const container = document.getElementById('app')!;
   const temlpatingFunction = Handlebars.compile(source);
-  console.log(temlpatingFunction);
   container.innerHTML = temlpatingFunction(context);
   history.pushState({ page }, "", `${page}`);
 }
