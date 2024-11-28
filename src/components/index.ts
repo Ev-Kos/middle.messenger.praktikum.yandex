@@ -1,6 +1,3 @@
-export { Layout } from './layout';
-export { FormWrapper } from './wrappers/form-wrapper';
-export { InputsFormWrapper } from './wrappers/inputs-form-wrapper';
 export { InputForm } from './inputs/input-form';
 export { Button } from './buttons/button';
 export { ButtonDots } from './buttons/button-dots';
@@ -10,7 +7,6 @@ export { InputSearch } from './inputs/input-search';
 export { LoupIcon } from './icons';
 export { ContactCard } from './contact-card';
 export { MessagesList } from './messages-list';
-export { ErrorNotice } from './error-notice';
 export { PaperClipIcon } from './icons';
 export { InputCreateMessage } from './/inputs/input-create-message';
 export { ButtonArrow } from './buttons/button-arrow';
