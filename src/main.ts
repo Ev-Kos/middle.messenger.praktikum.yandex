@@ -1,7 +1,6 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
-import { contactList } from './utils/contact-list';
 import { getDate } from './utils/functions';
 import renderDOM from './core/render-dom';
 
@@ -9,10 +8,10 @@ const pages = {
   navigation: [ Pages.NavigationPage ],
   login: [ Pages.LoginPage],
   registration: [ Pages.RegistrationPage],
-  chat: [ Pages.ChatPage, {contactList}],
+  chat: [ Pages.ChatPage ],
   profile: [ Pages.ProfilePage],
-  500: [ Pages.ErrorPage, {error: "500", text:"Мы уже фиксим"}],
-  400: [ Pages.ErrorPage, {error: "400", text:"Не туда попали"}],
+  500: [ Pages.NotFoundPage ],
+  400: [ Pages.ErrorPage ],
 };
 
 Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
@@ -31,10 +30,12 @@ function navigate(page: string) {
   const [source, context] = pages[page];
   if (typeof source === "function") {
     renderDOM(new source({}));
+    console.log(source, context);
     return;
   }
   const container = document.getElementById('app')!;
   const temlpatingFunction = Handlebars.compile(source);
+  console.log(temlpatingFunction);
   container.innerHTML = temlpatingFunction(context);
   history.pushState({ page }, "", `${page}`);
 }

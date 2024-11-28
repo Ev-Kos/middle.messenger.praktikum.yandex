@@ -2,7 +2,7 @@ import Block from "../../core/block";
 
 type TLinkProps = {
   to: string;
-  modifierLink: string;
+  modifierLink?: string;
   text: string;
 };
 
