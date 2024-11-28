@@ -1,5 +1,11 @@
 {
   "extends": ["stylelint-config-standard"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "customSyntax": "postcss-lit"
+    }
+  ],
   "rules": {
     "property-no-vendor-prefix": null,
     "color-hex-length": "short",
