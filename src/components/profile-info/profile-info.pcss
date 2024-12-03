@@ -1,39 +1,69 @@
 .profile-info {
   display: flex;
-  flex-direction: column;
-  gap: 8%;
-  align-items: center;
-  padding-top: 8%;
+  justify-content: center;
+  padding-top: 6%;
   width: 100%;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+    width: 42%;
+  }
 
   &__avatar-wrap {
     display: flex;
     flex-direction: column;
     gap: 21px;
     align-items: center;
+    padding-left: 12%;
   }
 
   &__user-name {
     font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--color-text);
   }
 
   &__fields {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    width: 42%;
+    width: 100%;
   }
 
-  &__link, &__link-exit {
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  &__link-exit {
-    color: var(--color-red)
+  &__button-wrap {
+    display: flex;
+    justify-content: center;
+    width: 84%;
+    align-self: end;
   }
 
   &__save-button {
-    width: 23%;
+    width: 280px;
   }
+
+  &__button, &__button-exit {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &__button {
+    color: var(--color-blue);
+  }
+
+  &__button-exit {
+    color: var(--color-red)
+  }
+}
+
+.password-field {
+  width: 130px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--color-text);
 }
