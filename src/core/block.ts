@@ -2,7 +2,7 @@ import {v4 as makeUUID} from 'uuid';
 import EventBus from './event-bus';
 import Handlebars from 'handlebars';
 
-type TBlockProps = {
+export type TBlockProps = {
   [key: string]: any;
 }
 
@@ -16,6 +16,7 @@ export default class Block {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
+    FLOW_CDUN: "flow:component-did-unmount",
     FLOW_RENDER: "flow:render"
   };
 
@@ -48,6 +49,7 @@ export default class Block {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDUN, this._componentDidUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -123,7 +125,15 @@ export default class Block {
 
   componentDidUpdate(oldProps?: TBlockProps, newProps?: TBlockProps): boolean {
     return oldProps !== newProps;
-}
+  }
+
+  _componentDidUnmount() {
+		this._removeEvents();
+	}
+
+  public dispatchComponentDidUnmount() {
+		this.eventBus().emit(Block.EVENTS.FLOW_CDUN);
+	}
 
   setProps = (nextProps: TBlockProps) => {
     if (!nextProps) {

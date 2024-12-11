@@ -1,5 +1,6 @@
-import { Button, InputForm, Link } from "../../components";
+import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
+import { router, ROUTES } from "../../utils/constants";
 import { checkLogin, checkPassword } from "../../utils/validate-inputs";
 
 export default class LoginPage extends Block {
@@ -58,11 +59,14 @@ export default class LoginPage extends Block {
             this.setPropsForChildren(this.children.InputPassword, errorPassword);
             return;
           }
-          console.log(this.props.formState)}
+          console.log(this.props.formState)
+        }
       }),
-      Link: new Link({
-        to: "#",
-        modifierLink: "link",
+      Link: new Button({
+        type: "button",
+        onClick: () => router.go(ROUTES.register),
+        modifierButton: "button_link",
+        modifierText: "button_link-text",
         text: "Нет аккаунта?"
       })
     });
