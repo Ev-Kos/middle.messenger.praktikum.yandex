@@ -1,6 +1,5 @@
 import Block, { TBlockProps } from "../core/block";
 import { StoreEvents } from "../core/store";
-import { store } from "./constants";
 import isEqual from "./functions/isEqual";
 
 type Indexed<T = any> = {

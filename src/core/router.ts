@@ -1,3 +1,4 @@
+import { ROUTES } from "../utils/constants";
 import Block from "./block";
 import Route from "./route";
 
@@ -34,11 +35,11 @@ export default class Router {
   }
 
   start() {
-    // const { user } = window.store.state;
-
-    // if (!user && String(this._currentRoute) !== ROUTES.register) {
-		// 	this.go(ROUTES.login);
-		// }
+    //@ts-ignore
+    const { user } = window.store.state;
+    if (!user && String(this._currentRoute) !== ROUTES.register) {
+			this.go(ROUTES.login);
+		}
 //исправить типизацию
     window.onpopstate = ((event: any) => {
 			this._onRoute(event.currentTarget.location.pathname);

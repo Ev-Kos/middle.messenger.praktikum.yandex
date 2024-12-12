@@ -5,6 +5,7 @@ import { getDate } from './utils/functions/getDate';
 import { ROUTES } from './utils/constants';
 import { Store, StoreEvents } from './core/store';
 import Router from './core/router';
+import { checkSingInUser } from './services/auth';
 
 declare global {
 	interface Window {
@@ -27,7 +28,8 @@ Object.entries(Components).forEach(([ name, template ]) => {
 const store = window.store = new Store({
 	isLoading: false,
 	user: null,
-	error: null,
+	singInError: null,
+  singUpError: null,
 });
 
 window.store = store
@@ -39,9 +41,16 @@ store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
 const APP_ROOT_ELEMNT = "#app";
 const router = new Router(APP_ROOT_ELEMNT);
 window.router = router;
-router
-  .use(ROUTES.register, Pages.RegistrationPage)
-  .use(ROUTES.chat, Pages.ChatPage)
-  .use(ROUTES.profile, Pages.ProfilePage)
-  .use(ROUTES.login, Pages.LoginPage)
-  .start();
+
+const protectedRouter = async () => {
+  await checkSingInUser();
+
+  router
+    .use(ROUTES.register, Pages.RegistrationPage)
+    .use(ROUTES.chat, Pages.ChatPage)
+    .use(ROUTES.profile, Pages.ProfilePage)
+    .use(ROUTES.login, Pages.LoginPage)
+    .start();
+};
+
+protectedRouter();

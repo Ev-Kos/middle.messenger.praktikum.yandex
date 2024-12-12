@@ -75,7 +75,7 @@ class LoginPage extends Block {
   }
   public render(): string {
     return `
-      <p class="{{#if error}}login-page__error-visible {{else}}login-page__error{{/if}}">Не верный логин или пароль</p>
+      <p class="{{#if singInError}}login-page__error-visible {{else}}login-page__error{{/if}}">Не верный логин или пароль</p>
       <form class="form-login">
         <div class="form-login__info">
           <h1 class="form-login__title">Вход</h1>
@@ -96,7 +96,7 @@ class LoginPage extends Block {
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     isLoading: state.isLoading,
-    error: state.error,
+    singInError: state.singInError,
   };
 };
 

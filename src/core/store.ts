@@ -6,7 +6,7 @@ export enum StoreEvents {
 
 export class Store extends EventBus<string> {
   static __instance: unknown;
-  private state = {};
+  public state = {};
   //изменить типизацию
   constructor(defaultState: any) {
     if (Store.__instance) {
@@ -21,7 +21,6 @@ export class Store extends EventBus<string> {
   }
 
   public getState() {
-    console.log('getState')
     return this.state;
   }
 

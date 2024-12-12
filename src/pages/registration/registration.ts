@@ -1,9 +1,11 @@
 import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
+import { singUp } from "../../services/auth";
+import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
 
-export default class RegistrationPage extends Block {
+class RegistrationPage extends Block {
   constructor() {
     super('section', {
       formState: {
@@ -159,7 +161,7 @@ export default class RegistrationPage extends Block {
             this.setPropsForChildren(this.children.InputRepeatedPassword, errorRepeatedPassword);
             return;
           }
-          console.log(this.props.formState)
+          singUp(this.props.formState);
         }
       }),
       Link: new Button({
@@ -173,6 +175,7 @@ export default class RegistrationPage extends Block {
   }
   public render(): string {
     return `
+      <p class="{{#if singUpError}}registration-page__error-visible {{else}}registration-page__error{{/if}}">Что-то пошло не так :(</p>
       <form class="registration-form">
         <div class="registration-form__info">
           <h1 class="registration-form__title">Регистрация</h1>
@@ -194,3 +197,12 @@ export default class RegistrationPage extends Block {
     `
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    isLoading: state.isLoading,
+    singUpError: state.singUpError,
+  };
+};
+
+export default connect(mapStateToProps)(RegistrationPage);
