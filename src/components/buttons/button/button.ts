@@ -15,7 +15,7 @@ export default class Button extends Block {
       ...props,
       className: props.modifierButton ? `button ${props.modifierButton}` : "button",
       attrs: {
-        type: "button"
+        type: "button",
       },
       events: {
         click: props.onClick,

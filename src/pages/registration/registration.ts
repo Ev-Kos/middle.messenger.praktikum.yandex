@@ -1,6 +1,6 @@
 import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
-import { router, ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../utils/constants";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
 
 export default class RegistrationPage extends Block {
@@ -164,7 +164,7 @@ export default class RegistrationPage extends Block {
       }),
       Link: new Button({
         type: "button",
-        onClick: () => router.go(ROUTES.login),
+        onClick: () => window.router.go(ROUTES.login),
         modifierButton: "button_link",
         modifierText: "button_link-text",
         text: "Войти?"

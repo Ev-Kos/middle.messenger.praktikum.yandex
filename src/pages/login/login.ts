@@ -1,9 +1,11 @@
 import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
-import { router, ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../utils/constants";
 import { checkLogin, checkPassword } from "../../utils/validate-inputs";
+import { singIn } from "../../services/auth";
+import { connect } from "../../utils/connect";
 
-export default class LoginPage extends Block {
+class LoginPage extends Block {
   constructor() {
     super("section", {
       formState: {
@@ -59,12 +61,12 @@ export default class LoginPage extends Block {
             this.setPropsForChildren(this.children.InputPassword, errorPassword);
             return;
           }
-          console.log(this.props.formState)
+          singIn(this.props.formState);
         }
       }),
       Link: new Button({
         type: "button",
-        onClick: () => router.go(ROUTES.register),
+        onClick: () => window.router.go(ROUTES.register),
         modifierButton: "button_link",
         modifierText: "button_link-text",
         text: "Нет аккаунта?"
@@ -73,6 +75,7 @@ export default class LoginPage extends Block {
   }
   public render(): string {
     return `
+      <p class="{{#if error}}login-page__error-visible {{else}}login-page__error{{/if}}">Не верный логин или пароль</p>
       <form class="form-login">
         <div class="form-login__info">
           <h1 class="form-login__title">Вход</h1>
@@ -89,3 +92,12 @@ export default class LoginPage extends Block {
     `;
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    isLoading: state.isLoading,
+    error: state.error,
+  };
+};
+
+export default connect(mapStateToProps)(LoginPage);
