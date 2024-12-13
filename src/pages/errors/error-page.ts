@@ -16,8 +16,8 @@ export default class ErrorPage extends Block {
     return `
       <div class="error-page__content">
         <div class="error-page__error-info">
-          <h1 class="error-page__title">400</h1>
-          <p class="error-page__text">Не туда попали</p>
+          <h1 class="error-page__title">500</h1>
+          <p class="error-page__text">Мы уже фиксим</p>
         </div>
         {{{Link}}}
       </div>

@@ -1,4 +1,5 @@
 import Block from "../../core/block";
+import { logout } from "../../services/auth";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
 import { Button } from "../buttons/button";
 import { ButtonAvatar } from "../buttons/button-avatar";
@@ -188,6 +189,7 @@ export default class ProfileInfo extends Block {
         isWithInput: false,
         buttonText: "Выйти",
         modifierButton: "profile-info__button-exit",
+        onClick: () => { logout() }
       }),
       OldPasswordField: new ProfileField({
         isButton: false,

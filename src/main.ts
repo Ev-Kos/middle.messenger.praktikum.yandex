@@ -30,27 +30,33 @@ const store = window.store = new Store({
 	user: null,
 	singInError: null,
   singUpError: null,
+  logoutError: null
 });
 
-window.store = store
-store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
-  console.log("prevState", prevState);
-  console.log("newState", newState);
-});
+// store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
+//   console.log("prevState", prevState);
+//   console.log("newState", newState);
+// });
 
 const APP_ROOT_ELEMNT = "#app";
-const router = new Router(APP_ROOT_ELEMNT);
-window.router = router;
+window.router = new Router(APP_ROOT_ELEMNT);
+const check = await checkSingInUser();
 
-const protectedRouter = async () => {
-  await checkSingInUser();
-
-  router
+  window.router
     .use(ROUTES.register, Pages.RegistrationPage)
     .use(ROUTES.chat, Pages.ChatPage)
     .use(ROUTES.profile, Pages.ProfilePage)
     .use(ROUTES.login, Pages.LoginPage)
+    .use('*', Pages.NotFoundPage)
     .start();
-};
 
-protectedRouter();
+if (!check) {
+  window.router.go(ROUTES.login);
+} else {
+  const currentPath = window.location.pathname;
+  if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
+      window.router.go(ROUTES.chat);
+  } else {
+      window.router.go(currentPath);
+  }
+}

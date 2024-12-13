@@ -14,10 +14,10 @@ export default class AuthApi {
   }
 
   async currentUser(): Promise<TUser | TErrorApi> {
-    return authApi.get("/user", {});
+    return authApi.get("/user");
   }
 
-  // async logout(): Promise<void | APIError> {
-  //   return authApi.post("/logout");
-  // }
+  async logout(): Promise<void | TErrorApi> {
+    return authApi.post("/logout");
+  }
 }

@@ -1,8 +1,9 @@
 import Block from "../../core/block";
+import { ROUTES } from "../../utils/constants";
 import { contactList } from "../../utils/contact-list";
+import { Button } from "../buttons/button";
 import { ContactCard } from "../contact-card";
 import { InputSearch } from "../inputs/input-search";
-import { Link } from "../link";
 
 export default class ContactList extends Block {
   constructor() {
@@ -10,9 +11,11 @@ export default class ContactList extends Block {
       className: 'container',
       searchValue: "",
       selected_id: "",
-      Link: new Link({
-        to: "#",
-        modifierLink: "container__search-link",
+      ButtonLink: new Button({
+        type: "button",
+        onClick: () => { window.router.go(ROUTES.profile)},
+        modifierButton: "container__search-link",
+        modifierText: "container__search-link-text",
         text: "Профиль >"
       }),
       InputSearch: new InputSearch({
@@ -40,7 +43,7 @@ export default class ContactList extends Block {
   public render(): string {
     return `
       <div class="container__search">
-        {{{Link}}}
+        {{{ButtonLink}}}
         {{{InputSearch}}}
       </div>
       <ul class="container__list">
