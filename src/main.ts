@@ -3,7 +3,7 @@ import * as Components from './components';
 import * as Pages from './pages';
 import { getDate } from './utils/functions/getDate';
 import { ROUTES } from './utils/constants';
-import { Store, StoreEvents } from './core/store';
+import { Store } from './core/store';
 import Router from './core/router';
 import { checkSingInUser } from './services/auth';
 
@@ -25,7 +25,7 @@ Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });
 
-const store = window.store = new Store({
+window.store = new Store({
 	isLoading: false,
 	user: null,
 	singInError: null,

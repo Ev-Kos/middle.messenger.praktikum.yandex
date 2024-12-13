@@ -30,3 +30,21 @@ export type TUser = {
   avatar: string,
   email: string
 }
+
+export type TGetChatsRequest = {
+  offset: number,
+  limit: number,
+  title?: string
+}
+
+export type TGetChatsResponse = {
+  id: number,
+  title: string,
+  avatar: string,
+  unread_count: number,
+  last_message: {
+    user: TUser,
+    time: string,
+    content: string,
+  },
+}

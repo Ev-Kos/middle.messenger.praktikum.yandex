@@ -4,39 +4,14 @@ import { TSingInRequest, TSingUpRequest } from "../utils/types";
 
 const authApi = new AuthApi();
 
-// public async execute(operation: () => Promise<any>): Promise<void> {
-//   window.store.set({ isLoading: true });
-//   try {
-//       const response = await operation();
-//       if (typeof response === 'object' && response !== null) {
-//           const result = await JSON.parse((response as any).response);
-//           if (this._fieldForDisplay) {
-//               window.store.set({ [this._fieldForDisplay]: result })
-//           }
-//           return result;
-//       }
-
-//       return response;
-//   } catch (error) {
-//       this.handleError(error);
-//   } finally {
-//       window.store.set({ isLoading: false });
-//   }
-// }
-
 export const singIn = async (model: TSingInRequest) => {
   window.store.set({ isLoading: true });
 	try {
 		const response = await authApi.singIn(model)
-    //await checkSingInUser();
     if(response) {
       await checkSingInUser();
       window.router.go(ROUTES.chat);
-      console.log('singIn')
     }
-
-    //window.router.go(ROUTES.chat);
-    console.log('singIn')
 	} catch (error: any) {
 		window.store.set({ singInError: error.reason });
 	} finally {
@@ -65,8 +40,8 @@ export const checkSingInUser = async () => {
     return true
   }
   catch (error: any) {
+    window.store.set({ singInError: error.reason });
     return false
-    //window.store.set({ singInError: error.reason });
   }
   finally {
     window.store.set({ isLoading: false });
