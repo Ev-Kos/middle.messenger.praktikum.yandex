@@ -2,19 +2,11 @@ import Block, { TBlockProps } from "../core/block";
 import { StoreEvents } from "../core/store";
 import isEqual from "./functions/isEqual";
 
-type Indexed<T = any> = {
-  [key in string]: T;
-}
-
-// export type Indexed<T = unknown> = {
-//   [key: string]: Indexed<T> | T;
-// };
-
-export function connect(mapStateToProps) {
-	return function (Component: typeof Block) {
+export function connect<T extends TBlockProps>(mapStateToProps: (state: any) => T) {
+	return function (Component: new (props: TBlockProps) => Block<TBlockProps>) {
 		return class extends Component {
 			private onChangeStoreCallback: () => void;
-			constructor(props) {
+			constructor(props: TBlockProps) {
 				const store = window.store;
 				// сохраняем начальное состояние
 				let state = mapStateToProps(store.getState());

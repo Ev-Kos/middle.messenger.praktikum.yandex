@@ -11,7 +11,7 @@ type IMeta = {
 	props: TBlockProps
 }
 
-export default class Block {
+export default class Block<T extends TBlockProps = TBlockProps> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -23,7 +23,7 @@ export default class Block {
   protected  _element: HTMLElement | null = null;
   protected  _meta: IMeta;
   protected  _id: string = makeUUID();
-  protected  props: TBlockProps;
+  protected  props: T;
   protected eventBus: () => EventBus<string>;
   protected children: Record<string, Block> | Record<string, Block[]>;
 
@@ -39,7 +39,7 @@ export default class Block {
       props
     };
 
-    this.props = this._makePropsProxy({ ...props, __id: this._id });
+    this.props = this._makePropsProxy({ ...props, __id: this._id }) as T;
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -178,12 +178,12 @@ export default class Block {
   }
 
   _compile() {
-    const propsAndStubs = { ...this.props };
+    const propsAndStubs: { [key: string]: any } = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
         propsAndStubs[key] = child.map(
-          (component) => `<div data-id="${component._id}"></div>`,
+            (component) => `<div data-id="${component._id}"></div>`
         );
       } else {
         propsAndStubs[key] = `<div data-id="${child._id}"></div>`;

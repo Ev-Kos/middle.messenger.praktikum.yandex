@@ -2,10 +2,11 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
 import { getDate } from './utils/functions/getDate';
-import { ROUTES } from './utils/constants';
-import { Store } from './core/store';
+import { getChatsData, ROUTES } from './utils/constants';
+import { Store, StoreEvents } from './core/store';
 import Router from './core/router';
 import { checkSingInUser } from './services/auth';
+import { getChats } from './services/chats';
 
 declare global {
 	interface Window {
@@ -30,25 +31,27 @@ window.store = new Store({
 	user: null,
 	singInError: null,
   singUpError: null,
-  logoutError: null
+  logoutError: null,
+  getChatError: null,
+  chats: []
 });
 
-// store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
-//   console.log("prevState", prevState);
-//   console.log("newState", newState);
-// });
+window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
+  console.log("prevState", prevState);
+  console.log("newState", newState);
+});
 
 const APP_ROOT_ELEMNT = "#app";
 window.router = new Router(APP_ROOT_ELEMNT);
 const check = await checkSingInUser();
 
-  window.router
-    .use(ROUTES.register, Pages.RegistrationPage)
-    .use(ROUTES.chat, Pages.ChatPage)
-    .use(ROUTES.profile, Pages.ProfilePage)
-    .use(ROUTES.login, Pages.LoginPage)
-    .use('*', Pages.NotFoundPage)
-    .start();
+window.router
+  .use(ROUTES.register, Pages.RegistrationPage)
+  .use(ROUTES.chat, Pages.ChatPage)
+  .use(ROUTES.profile, Pages.ProfilePage)
+  .use(ROUTES.login, Pages.LoginPage)
+  .use('*', Pages.NotFoundPage)
+  .start();
 
 if (!check) {
   window.router.go(ROUTES.login);
@@ -59,4 +62,8 @@ if (!check) {
   } else {
       window.router.go(currentPath);
   }
+}
+
+if(window.location.pathname === ROUTES.chat) {
+  getChats(getChatsData)
 }

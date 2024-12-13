@@ -1,6 +1,6 @@
 import Block from "../../core/block";
 
-type TContactCardProps = {
+export type TContactCardProps = {
   id: number,
   title: string,
   avatar: string,

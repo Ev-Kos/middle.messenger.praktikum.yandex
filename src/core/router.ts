@@ -6,9 +6,10 @@ export interface RouteInterface {
 	match: (path: string) => boolean;
 	leave: () => void;
 }
+export type RouteBlock = new (...args: any[]) => Block;
 
 export default class Router {
-  static __instance: unknown;
+  static __instance: Router | null;
   private routes: RouteInterface[] = [];
   private history: History | null = null;
   private _currentRoute: RouteInterface | null = null;
@@ -27,7 +28,7 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: typeof Block) {
+  use(pathname: string, block: RouteBlock) {
     const route = new Route(pathname, block, {rootQuery: this._rootQuery});
     this.routes.push(route);
     return this;

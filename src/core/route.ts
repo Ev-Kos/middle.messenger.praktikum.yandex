@@ -3,11 +3,12 @@ import { RouteInterface } from "./router";
 
 export default class Route implements RouteInterface {
   private _pathname: string;
-  private readonly _blockClass: typeof Block | null = null;
+  //private readonly _blockClass: typeof Block | null = null;
+  private _blockClass: any;
   private _block: Block | null = null;
   private readonly _props: TBlockProps = {};
 
-  constructor(pathname: string, view: typeof Block, props: TBlockProps) {
+  constructor(pathname: string, view: any, props: TBlockProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;

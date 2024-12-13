@@ -94,17 +94,29 @@ export default class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
-      xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr);
-        } else {
-          const { error, reason } = JSON.parse(xhr.response);
-          reject({
-            error,
-            reason,
-          });
+      const jsonIsString = (str: string) => {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
         }
+        return true;
       };
+
+      xhr.onload = function () {
+				if (xhr.status >= 200 && xhr.status < 300) {
+					const response = jsonIsString(xhr.response)
+						? JSON.parse(xhr.response)
+						: xhr.response;
+					resolve(response);
+				} else {
+					const { error, reason } = JSON.parse(xhr.response);
+					reject({
+						error,
+						reason,
+					});
+				}
+			};
 
       xhr.onabort = reject;
       xhr.onerror = function () {

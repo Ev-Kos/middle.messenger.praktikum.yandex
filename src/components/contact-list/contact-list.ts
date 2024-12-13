@@ -1,13 +1,21 @@
-import Block from "../../core/block";
+import Block, { TBlockProps } from "../../core/block";
+import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
 import { contactList } from "../../utils/contact-list";
 import { Button } from "../buttons/button";
 import { ContactCard } from "../contact-card";
+import { TContactCardProps } from "../contact-card/contact-card";
 import { InputSearch } from "../inputs/input-search";
 
-export default class ContactList extends Block {
-  constructor() {
+interface ListElementProps {
+  chats: TContactCardProps[],
+  onSelectChat?: (event: { }) => void,
+}
+
+class ContactList extends Block {
+  constructor(props: ListElementProps) {
     super('div', {
+      ...props,
       className: 'container',
       searchValue: "",
       selected_id: "",
@@ -33,7 +41,7 @@ export default class ContactList extends Block {
         }
       }),
       Chats: contactList.map(
-        (chatProps) =>
+        (chatProps: TContactCardProps) =>
             new ContactCard({
                 ...chatProps
             }),
@@ -46,12 +54,25 @@ export default class ContactList extends Block {
         {{{ButtonLink}}}
         {{{InputSearch}}}
       </div>
-      <ul class="container__list">
-        {{#each Chats}}
-          {{{ this }}}
-        {{/each}}
+      <ul class="{{#if chatsLength}}container__list{{else}}container__list-whithout-scroll{{/if}}">
+        {{#unless chatsLength}}
+          <p class="container__empty-list">Пока нет созданных чатов</p>
+          {{else}}
+            {{#each Chats}}
+              {{{ this }}}
+            {{/each}}
+        {{/unless}}
       </ul>
     `
   }
 }
 
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    isLoading: state.isLoading,
+    chats: state.chats,
+    chatsLength: state.chatsLength
+  };
+};
+
+export default connect(mapStateToProps)(ContactList as unknown as new (newProps: TBlockProps) => Block<TBlockProps>);
