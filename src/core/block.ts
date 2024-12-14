@@ -23,7 +23,7 @@ export default class Block<T extends TBlockProps = TBlockProps> {
   protected  _element: HTMLElement | null = null;
   protected  _meta: IMeta;
   protected  _id: string = makeUUID();
-  protected  props: T;
+  public  props: T;
   protected eventBus: () => EventBus<string>;
   protected children: Record<string, Block> | Record<string, Block[]>;
 
@@ -224,7 +224,6 @@ export default class Block<T extends TBlockProps = TBlockProps> {
         this._element.replaceChildren(block);
       }
     }
-
     this._addEvents();
   }
 

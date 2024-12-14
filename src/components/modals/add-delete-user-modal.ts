@@ -9,6 +9,7 @@ type TAddDeleteUserModal = {
 type TBtn = {
   onClick: () => void;
   text: string;
+  isDelete: boolean;
 }
 
 class Button extends Block {
@@ -22,14 +23,22 @@ class Button extends Block {
       events: {
         click: props.onClick
       },
-      PlusIcon: new PlusIcon,
-      DelIcon: new PlusIcon
+      PlusIcon: new PlusIcon({
+        color: "#3369F3",
+        width: "12",
+        height: "12"
+      }),
+      DelIcon: new PlusIcon({
+        color: "#3369F3",
+        width: "12",
+        height: "12"
+      })
     });
   }
 
   public render(): string {
     return `
-        <div class="chat-modal__icon">
+        <div class="{{#if isDelete}}chat-modal__icon_rotate{{else}}chat-modal__icon{{/if}}">
           {{{PlusIcon}}}
         </div>
         <p class="chat-modal__text">{{text}}</p>
@@ -42,15 +51,15 @@ export default class AddDeleteUserModal extends Block {
   constructor(props: TAddDeleteUserModal) {
     super("div", {
       className: "chat-modal",
-      PlusIcon: new PlusIcon,
-      DelIcon: new PlusIcon,
       AddButton: new Button({
         text: "Добавить пользователя",
-        onClick: props.onClickAddUser
+        onClick: props.onClickAddUser,
+        isDelete: false
       }),
       DeleteButton: new Button({
         text: "Удалить пользователя",
-        onClick: props.onClickDeleteUser
+        onClick: props.onClickDeleteUser,
+        isDelete: true
       })
     });
   }
@@ -62,17 +71,3 @@ export default class AddDeleteUserModal extends Block {
     `
   }
 }
-
-
-// <button class="chat-modal__field" type="button">
-//         <div class="chat-modal__icon">
-//           {{{PlusIcon}}}
-//         </div>
-//         <p class="chat-modal__text">Добавить пользователя</p>
-//       </button>
-//       <button class="chat-modal__field" type="button">
-//         <div class="chat-modal__icon_rotate">
-//           {{{DelIcon}}}
-//         </div>
-//         <p class="chat-modal__text">Удалить пользователя</p>
-//       </button>

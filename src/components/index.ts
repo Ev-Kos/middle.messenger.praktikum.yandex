@@ -29,3 +29,6 @@ export { ModalWrapper } from './wrappers/modals-wrapper';
 export { FileLoadModal } from './modals';
 export { ButtonAvatar } from './buttons/button-avatar';
 export { ButtonFile } from './buttons/button-file';
+export { ButtonCreateChat } from './buttons/button-create-chat';
+export { CreateChatModal } from './modals';
+export { List } from './contact-list';

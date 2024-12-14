@@ -1,5 +1,11 @@
 import HTTPTransport from "../core/HTTPTransport";
-import { TErrorApi, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
+import {
+  TCreateChatRequest,
+  TCreateChatResponse,
+  TErrorApi,
+  TGetChatsRequest,
+  TGetChatsResponse,
+} from "../utils/types";
 
 const chatsApi = new HTTPTransport("/chats");
 
@@ -7,5 +13,18 @@ export default class ChatsApi {
 
   async getChats(data: TGetChatsRequest): Promise< TGetChatsResponse | TErrorApi > {
     return chatsApi.get("", { data } );
+  }
+
+  async createChat(data: TCreateChatRequest): Promise< TCreateChatResponse | TErrorApi> {
+    return chatsApi.post("", { data } );
+  }
+  //data: TUploadChatAvatarRequest
+  async uploadChatAvatar(id: number, file: File): Promise<TGetChatsResponse | TErrorApi> {
+    const formData = new FormData();
+    formData.append("avatar", file, file.name);
+    console.log(formData.getAll('avatar'))
+    const data = {id, formData}
+    console.log(data, 'data')
+    return chatsApi.put("/avatar", { data });
   }
 }

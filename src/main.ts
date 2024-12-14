@@ -34,39 +34,43 @@ const store = window.store = new Store({
   logoutError: null,
   getChatError: null,
   chats: [],
-  limitMessages: 10,
-  offsetMessages: 10
+  limitMessages: 15,
+  offsetMessages: 0,
+  uploadChatAvatarError: null,
 });
 
-store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
-  console.log("prevState", prevState);
-  console.log("newState", newState);
-});
+// store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
+//   console.log("prevState", prevState);
+//   console.log("newState", newState);
+// });
 
 const APP_ROOT_ELEMNT = "#app";
 window.router = new Router(APP_ROOT_ELEMNT);
 const check = await checkSingInUser();
 const currentPath = window.location.pathname;
 
-window.router
-  .use(ROUTES.register, Pages.RegistrationPage)
-  .use(ROUTES.chat, Pages.ChatPage)
-  .use(ROUTES.profile, Pages.ProfilePage)
-  .use(ROUTES.login, Pages.LoginPage)
-  .use('*', Pages.NotFoundPage)
-  .start();
-
-if (!check) {
-  window.router.go(ROUTES.login);
-} else {
-  if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
-      window.router.go(ROUTES.chat);
+const protectedRouter = async () => {
+  if (!check) {
+    window.router.go(ROUTES.login);
   } else {
-      window.router.go(currentPath);
+    if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
+        window.router.go(ROUTES.chat);
+    } else {
+        window.router.go(currentPath);
+        if(currentPath === ROUTES.chat) {
+          //@ts-ignore
+          await getChats({limit: store.state.limitMessages, offset: store.state.offsetMessages})
+        }
+    }
   }
-}
+	window.router = new Router("#app");
+	window.router
+		.use(ROUTES.login, Pages.LoginPage)
+		.use(ROUTES.register, Pages.RegistrationPage)
+		.use(ROUTES.chat, Pages.ChatPage)
+		.use(ROUTES.profile, Pages.ProfilePage)
+		.use("*", Pages.NavigationPage)
+		.start();
+};
 
-if(currentPath === ROUTES.chat) {
-  //@ts-ignore
-  getChats({limit: store.state.limitMessages, offset: store.state.offsetMessages})
-}
+protectedRouter();

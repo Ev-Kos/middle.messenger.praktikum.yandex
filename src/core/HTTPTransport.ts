@@ -87,6 +87,7 @@ export default class HTTPTransport {
       );
 
       if (!(data instanceof FormData)) {
+        console.log(data, 'http')
           xhr.setRequestHeader('Content-type', 'application/json');
       }
 

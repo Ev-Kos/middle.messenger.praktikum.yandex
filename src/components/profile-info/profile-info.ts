@@ -29,7 +29,9 @@ export default class ProfileInfo extends Block {
       },
       repeatedPassword: "",
       ButtonAvatar: new ButtonAvatar({
-        onClick: props.onClickButtonAvatar
+        onClick: props.onClickButtonAvatar,
+        text: "Поменять аватар",
+        isCreateChat: false
       }),
       EmailField: new ProfileField({
         isButton: false,

@@ -9,7 +9,7 @@ export default class FileLoadModal extends Block {
       InputFile: new InputFile({
         onChange: (e) => {
           console.log(e)
-        }
+        },
       }),
       Button: new Button({
         type: "submit",
@@ -30,7 +30,7 @@ export default class FileLoadModal extends Block {
       {{/if}}
       <div class="form-modal__form">
         {{{InputFile}}}
-          {{{Button}}}
+        {{{Button}}}
       </div>
     `
   }

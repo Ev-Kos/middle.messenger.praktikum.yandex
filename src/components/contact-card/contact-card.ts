@@ -1,50 +1,43 @@
 import Block from "../../core/block";
+import { TGetChatsResponse } from "../../utils/types";
 
-export type TContactCardProps = {
-  id: number,
-  title: string,
-  avatar: string,
-  unread_count: number,
-  created_by: number,
-  last_message: {
-    user: {
-      first_name: string,
-      second_name: string,
-      avatar: string,
-      email: string,
-      login: string,
-      phone: string,
-    },
-    time: string,
-    content: string,
-  }
+export interface IGetChatsProps extends TGetChatsResponse {
+  onClick: (id?: number) => void,
+  isActive?: boolean
 }
 
 export default class ContactCard extends Block {
-  constructor(props: TContactCardProps) {
+  constructor(props: IGetChatsProps) {
     super('li', {
       ...props,
-      className: 'contact-card',
+      className: 'contact',
+      events: {
+				click: props.onClick,
+			},
     })
   }
 
   public render(): string {
     return `
-      <div class="contact-card__message-and-photo-wrap">
-        {{#if avatar}}
-          <img class="contact-card__photo" src={{avatar}} alt="Фотография пользователя"/>
-        {{else}}
-          <div class="contact-card__mock-photo"></div>
-        {{/if}}
-        <div class="contact-card__message-wrap">
-          <p class="contact-card__chat-name">{{title}}</p>
-          <p class="contact-card__message">{{last_message.content}}</p>
+      <div class="contact-card {{#if isActive}}contact-card_selected{{/if}}">
+        <div class="contact-card__message-and-photo-wrap">
+          {{#if avatar}}
+            <img class="contact-card__photo" src={{avatar}} alt="Фотография пользователя"/>
+          {{else}}
+            <div class="contact-card__mock-photo"></div>
+          {{/if}}
+          <div class="contact-card__message-wrap">
+            <p class="contact-card__chat-name">{{title}}</p>
+            <p class="contact-card__message">{{last_message.content}}</p>
+          </div>
         </div>
-      </div>
-      <div class="contact-card__time-and-count">
-        <p class="contact-card__time">{{getDate last_message.time false false}}</p>
-        <div class="contact-card__count">
-          <span class="contact-card__count-num">{{unread_count}}</span>
+        <div class="contact-card__time-and-count">
+          <p class="{{#if last_message.content}}contact-card__time{{else}}contact-card__time contact-card__time_hidden{{/if}}">{{getDate last_message.time false false}}</p>
+          {{#if unread_count}}
+            <div class="contact-card__count">
+              <span class="contact-card__count-num">{{unread_count}}</span>
+            </div>
+          {{/if}}
         </div>
       </div>
     `
