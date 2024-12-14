@@ -44,10 +44,12 @@ class ContactList extends Block {
         },
         onKeyDown: (e) => {
           if(e.key === "Enter") {
-            getChats({limit: props.limitMessages, offset: props.offsetMessages, title: this.props.searchValue})
-            this.setProps({
-              isSearch: true
-            })
+            if(this.props.searchValue.length !== 0) {
+              getChats({limit: props.limitMessages, offset: props.offsetMessages, title: this.props.searchValue})
+              this.setProps({
+                isSearch: true
+              })
+            }
           }
         }
       }),
