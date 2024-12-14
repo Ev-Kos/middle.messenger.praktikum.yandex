@@ -1,24 +1,27 @@
 import Block, { TBlockProps } from "../../core/block";
+import { getChats } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
-import { contactList } from "../../utils/contact-list";
 import { Button } from "../buttons/button";
 import { ContactCard } from "../contact-card";
 import { TContactCardProps } from "../contact-card/contact-card";
 import { InputSearch } from "../inputs/input-search";
 
-interface ListElementProps {
+type TContactList = {
   chats: TContactCardProps[],
   onSelectChat?: (event: { }) => void,
+  limitMessages: number,
+  offsetMessages: number,
 }
 
 class ContactList extends Block {
-  constructor(props: ListElementProps) {
+  constructor(props: TContactList) {
     super('div', {
       ...props,
       className: 'container',
       searchValue: "",
       selected_id: "",
+      isSearch: false,
       ButtonLink: new Button({
         type: "button",
         onClick: () => { window.router.go(ROUTES.profile)},
@@ -34,17 +37,25 @@ class ContactList extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setProps({
-              searchValue: value
+              searchValue: value,
+              isSearch: false
             })
-            console.log(this.props.searchValue)
+          }
+        },
+        onKeyDown: (e) => {
+          if(e.key === "Enter") {
+            getChats({limit: props.limitMessages, offset: props.offsetMessages, title: this.props.searchValue})
+            this.setProps({
+              isSearch: true
+            })
           }
         }
       }),
-      Chats: contactList.map(
+      Chats: props.chats?.map(
         (chatProps: TContactCardProps) =>
-            new ContactCard({
-                ...chatProps
-            }),
+          new ContactCard({
+              ...chatProps
+          }),
       ),
     })
   }
@@ -56,7 +67,7 @@ class ContactList extends Block {
       </div>
       <ul class="{{#if chatsLength}}container__list{{else}}container__list-whithout-scroll{{/if}}">
         {{#unless chatsLength}}
-          <p class="container__empty-list">Пока нет созданных чатов</p>
+          <p class="container__empty-list">{{#if isSearch}}Ничего не найдено{{else}}Пока нет созданных чатов{{/if}}</p>
           {{else}}
             {{#each Chats}}
               {{{ this }}}
@@ -71,7 +82,9 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     isLoading: state.isLoading,
     chats: state.chats,
-    chatsLength: state.chatsLength
+    chatsLength: state.chatsLength,
+    limitMessages: state.limitMessages,
+    offsetMessages: state.offsetMessages
   };
 };
 

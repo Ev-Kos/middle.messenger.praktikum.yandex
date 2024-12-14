@@ -8,6 +8,8 @@ type TInputSearchProps = {
   type: string;
   value?: string;
   onChange?: (e: Event) => void;
+  onKeyDown?: (e: KeyboardEvent) => void;
+
 }
 
 export default class InputSearch extends Block {
@@ -16,7 +18,8 @@ export default class InputSearch extends Block {
       ...props,
       className: 'input-search__label',
       events: {
-        change: props.onChange
+        change: props.onChange,
+        keydown: props.onKeyDown
       },
       LoupIcon: new LoupIcon
     })
