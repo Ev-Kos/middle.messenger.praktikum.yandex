@@ -4,3 +4,6 @@ export enum ROUTES {
 	chat = "/messenger",
 	profile = "/settings",
 }
+
+export const resurceApi = "https://ya-praktikum.tech/api/v2/resources"
+export const baseApi = "https://ya-praktikum.tech/api/v2"

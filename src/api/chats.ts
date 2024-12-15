@@ -18,13 +18,12 @@ export default class ChatsApi {
   async createChat(data: TCreateChatRequest): Promise< TCreateChatResponse | TErrorApi> {
     return chatsApi.post("", { data } );
   }
-  //data: TUploadChatAvatarRequest
+
   async uploadChatAvatar(id: number, file: File): Promise<TGetChatsResponse | TErrorApi> {
     const formData = new FormData();
     formData.append("avatar", file, file.name);
-    console.log(formData.getAll('avatar'))
-    const data = {id, formData}
-    console.log(data, 'data')
+    formData.append("chatId", String(id));
+    const data = formData
     return chatsApi.put("/avatar", { data });
   }
 }

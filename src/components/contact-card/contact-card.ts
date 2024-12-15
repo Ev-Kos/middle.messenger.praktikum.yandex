@@ -22,7 +22,7 @@ export default class ContactCard extends Block {
       <div class="contact-card {{#if isActive}}contact-card_selected{{/if}}">
         <div class="contact-card__message-and-photo-wrap">
           {{#if avatar}}
-            <img class="contact-card__photo" src={{avatar}} alt="Фотография пользователя"/>
+            <img class="contact-card__photo" src="{{getImage avatar}}" alt="Фотография чата"/>
           {{else}}
             <div class="contact-card__mock-photo"></div>
           {{/if}}

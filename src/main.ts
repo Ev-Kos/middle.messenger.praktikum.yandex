@@ -7,6 +7,7 @@ import { Store, StoreEvents } from './core/store';
 import Router from './core/router';
 import { checkSingInUser } from './services/auth';
 import { getChats } from './services/chats';
+import { getImage } from './utils/functions/getImage';
 
 declare global {
 	interface Window {
@@ -17,6 +18,10 @@ declare global {
 
 Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
   return getDate(date, isGotMessage, isOnlyTime)
+})
+
+Handlebars.registerHelper('getImage', function (path) {
+  return getImage(path)
 })
 
 Object.entries(Components).forEach(([ name, template ]) => {
@@ -39,10 +44,10 @@ const store = window.store = new Store({
   uploadChatAvatarError: null,
 });
 
-// store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
-//   console.log("prevState", prevState);
-//   console.log("newState", newState);
-// });
+store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
+  console.log("prevState", prevState);
+  console.log("newState", newState);
+});
 
 const APP_ROOT_ELEMNT = "#app";
 window.router = new Router(APP_ROOT_ELEMNT);

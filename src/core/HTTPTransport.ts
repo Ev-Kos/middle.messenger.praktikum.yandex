@@ -1,3 +1,5 @@
+import { baseApi } from "../utils/constants";
+
 const METHODS = {
   GET: 'GET',
   POST: 'POST',
@@ -31,7 +33,7 @@ export default class HTTPTransport {
   private apiUrl: string;
 
   constructor(apiPath: string) {
-    this.apiUrl = `https://ya-praktikum.tech/api/v2${apiPath}`;
+    this.apiUrl = `${baseApi}${apiPath}`;
   }
   get:TRequest = (url, options = {}) => {
     return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.GET}, options.timeout);
@@ -87,7 +89,6 @@ export default class HTTPTransport {
       );
 
       if (!(data instanceof FormData)) {
-        console.log(data, 'http')
           xhr.setRequestHeader('Content-type', 'application/json');
       }
 
