@@ -1,4 +1,4 @@
-.chat-modal, .chat-modal-file {
+.chat-modal, .chat-modal-file, .chat-modal-actions-chat {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
   border-radius: 12px;
 }
 
-.chat-modal {
+.chat-modal, .chat-modal-actions-chat {
   position: absolute;
   top: 65px;
   right: 10px;
@@ -30,7 +30,7 @@
     opacity: 0.7;
   }
 
-  &__icon, &__icon_rotate {
+  &__icon, &__icon_rotate, &__icon_delete {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,6 +43,16 @@
 
   &__icon_rotate {
     rotate: 45deg;
+  }
+
+  &__icon-dash {
+    width: 12px;
+    height: 2px;
+    background-color: var(--color-red)
+  }
+
+  &__icon_delete {
+    border: 1.5px solid var(--color-red);
   }
 
   &__text {
@@ -99,5 +109,15 @@
 
   &__avatar {
     position: relative;
+  }
+}
+
+.chat-modal-actions-chat {
+  gap: 25px;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 }

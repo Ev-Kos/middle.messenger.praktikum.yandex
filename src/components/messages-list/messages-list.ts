@@ -1,4 +1,6 @@
 import Block from "../../core/block";
+import { deleteChat } from "../../services/chats";
+import { connect } from "../../utils/connect";
 import { message } from "../../utils/contact-list";
 import { checkMessage } from "../../utils/validate-inputs";
 import { ButtonArrow } from "../buttons/button-arrow";
@@ -7,19 +9,14 @@ import { ButtonFile } from "../buttons/button-file";
 import { ImageMessage } from "../image-message";
 import { InputCreateMessage } from "../inputs/input-create-message";
 import Message from "../message/message";
-import { AddDeleteUserModal, AddDeleteUserSelectedModal, FilesModal } from "../modals";
+import { ActionsWithChatModal, AddDeleteUserSelectedModal, FilesModal } from "../modals";
 import { ModalWrapper } from "../wrappers/modals-wrapper";
 
-type TMessagesList = {
-  isSelectChat: boolean;
-}
-
-export default class MessagesList extends Block {
-  constructor(props: TMessagesList) {
+class MessagesList extends Block {
+  constructor() {
     super('div', {
-      ...props,
       className: 'messages',
-      isOpenAddDeleteUserModal: false,
+      //isOpenActionsWithChatModal: false,
       isClickAddUser: false,
       isClickDeleteUser: false,
       isClickAdd: false,
@@ -27,7 +24,7 @@ export default class MessagesList extends Block {
       message: "",
       ButtonDots: new ButtonDots({
         onClick: () => {
-          this.setProps({isOpenAddDeleteUserModal: !this.props.isOpenAddDeleteUserModal})
+          window.store.set({isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal})
         }
       }),
       GetMessage: new Message({
@@ -45,13 +42,18 @@ export default class MessagesList extends Block {
         alt: "Фотография",
         time: "15:00"
       }),
-      AddDeleteUserModal: new AddDeleteUserModal({
+      ActionsWithChatModal: new ActionsWithChatModal({
         onClickAddUser: () => {
           this.setProps({isClickAddUser: true, isOpenAddDeleteUserModal: false})
         },
         onClickDeleteUser: () => {
           this.setProps({isClickDeleteUser: true, isOpenAddDeleteUserModal: false})
         },
+        onClickDeleteChat: () => {
+          if(window.store.state.activeChatId) {
+            deleteChat({chatId: window.store.state.activeChatId})
+          }
+        }
       }),
       AddUserModal: new AddDeleteUserSelectedModal({
         isClickAdd: true
@@ -99,16 +101,16 @@ export default class MessagesList extends Block {
 
   public render(): string {
     return `
-      {{#if isSelectChat}}
+      {{#if activeChatId}}
         <div class="messages-list">
           <div class="messages-list__user-container">
             <div class="messages-list__user">
-              {{#if avatar}}
-                <img class="messages-list__photo" src={{avatar}} alt="Фотография пользователя"/>
+              {{#if activeChatAvatar}}
+                <img class="messages-list__photo" src={{getImage activeChatAvatar}} alt="Фотография пользователя"/>
               {{else}}
                 <div class="messages-list__mock-photo"></div>
               {{/if}}
-              <p class="messages-list__chat-name">Вадим</p> <!--{{title}} -->
+              <p class="messages-list__chat-name">{{activeChatTitle}}</p>
             </div>
             {{{ButtonDots}}}
           </div>
@@ -136,8 +138,8 @@ export default class MessagesList extends Block {
           <span class="not-select-chat__text">Выберите чат чтобы отправить сообщение</span>
         </div>
       {{/if}}
-      {{#if isOpenAddDeleteUserModal}}
-        {{{AddDeleteUserModal}}}
+      {{#if isOpenActionsWithChatModal}}
+        {{{ActionsWithChatModal}}}
       {{/if}}
       {{#if isClickAddUser}}
         {{{ModalWrapper}}}
@@ -150,3 +152,15 @@ export default class MessagesList extends Block {
     `
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    activeChatAvatar: state.activeChatAvatar,
+    activeChatTitle: state.activeChatTitle,
+    activeChatId: state.activeChatId,
+    isOpenActionsWithChatModal: state.isOpenActionsWithChatModal,
+    chats: state.chats
+  };
+};
+
+export default connect(mapStateToProps)(MessagesList);

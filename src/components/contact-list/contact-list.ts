@@ -3,6 +3,7 @@ import { getChats } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
 import { TGetChatsResponse } from "../../utils/types";
+import { withRouter } from "../../utils/withRouter";
 import { Button } from "../buttons/button";
 import { ButtonCreateChat } from "../buttons/button-create-chat";
 import { ContactCard } from "../contact-card";
@@ -12,7 +13,6 @@ import { ModalWrapper } from "../wrappers/modals-wrapper";
 
 type TContactList = {
   chats: TGetChatsResponse[],
-  onSelectChat?: (event: { }) => void,
   limitMessages: number,
   offsetMessages: number,
 }
@@ -24,7 +24,6 @@ class ContactList extends Block {
       className: 'container',
       searchValue: "",
       isSearch: false,
-      isCreateChatModal: false,
       ButtonLink: new Button({
         type: "button",
         onClick: () => { window.router.go(ROUTES.profile)},
@@ -60,41 +59,28 @@ class ContactList extends Block {
         (chatProps: TGetChatsResponse) =>
           new ContactCard({
               ...chatProps,
-              id: chatProps.id,
-              title: chatProps.title,
               onClick: () => {
-                this.setProps({activeChatId: chatProps.id})
+                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
               },
           }),
       ),
       ButtonCreateChat: new ButtonCreateChat({
         onClick: () => {
-          this.setProps({
-            isCreateChatModal: true
-          })
           window.store.set({isCreateChatModal: true})
         },
       }),
       CreateChatModal: new CreateChatModal({}),
       ModalWrapper: new ModalWrapper({
         onClick: () => {
-          this.setProps({
-            isCreateChatModal: false,
-          })
+          window.store.set({isCreateChatModal: false})
         }
       }),
     })
   }
+
   public render(): string {
-    const { activeChatId } = this.props;
-		const { Chats } = this.children;
 
-    if (Array.isArray(Chats)) {
-      Chats.forEach((item) => {
-        item.setProps({ isActive: item.props.id === activeChatId });
-      });
-    }
-
+console.log(this.props.chats)
     return `
       <div class="container__search">
         {{{ButtonLink}}}
@@ -121,13 +107,16 @@ class ContactList extends Block {
 }
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
+  console.log(state)
   return {
     isLoading: state.isLoading,
-    chats: state.chats,
+    //chats: state.chats,
     chatsLength: state.chatsLength,
     isScroll: state.isScroll,
     limitMessages: state.limitMessages,
     offsetMessages: state.offsetMessages,
+    isCreateChatModal: state.isCreateChatModal,
+    activeChatId: state.activeChatId
   };
 };
 

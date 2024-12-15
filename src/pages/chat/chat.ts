@@ -1,18 +1,18 @@
 import { ContactList, MessagesList } from "../../components";
 import Block from "../../core/block";
 import { connect } from "../../utils/connect";
-import { contactList } from "../../utils/contact-list";
+import { withRouter } from "../../utils/withRouter";
+
 
 class ChatPage extends Block {
-  constructor() {
+  constructor(props) {
     super('section', {
+      ...props,
       className: 'chat-page',
       ContactList: new ContactList({
-        chats: contactList
+        chats: props.chats
       }),
-      MessagesList: new MessagesList({
-        isSelectChat: true
-      })
+      MessagesList: new MessagesList({})
     })
   }
 
@@ -27,10 +27,10 @@ class ChatPage extends Block {
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     isLoading: state.isLoading,
-    chats: contactList,
     chatsLength: state.chatsLength,
     limitMessages: state.limitMessages,
-    offsetMessages: state.offsetMessages
+    offsetMessages: state.offsetMessages,
+    chats: state.chats,
   };
 };
 

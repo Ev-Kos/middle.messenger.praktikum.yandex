@@ -20,10 +20,12 @@ export function connect<T extends TBlockProps>(mapStateToProps: (state: any) => 
 					// если что-то из используемых данных поменялось, обновляем компонент
 					if (!isEqual(state, newState)) {
 						this.setProps({ ...newState });
+            console.log(newState, 'isEqual')
 					}
 
 					// не забываем сохранить новое состояние
 					state = newState;
+          console.log(state, 'state')
 				};
 
 				// подписываемся на событие

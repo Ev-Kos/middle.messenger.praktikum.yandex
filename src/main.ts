@@ -31,7 +31,7 @@ Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });
 
-const store = window.store = new Store({
+ window.store = new Store({
 	isLoading: false,
 	user: null,
 	singInError: null,
@@ -39,15 +39,16 @@ const store = window.store = new Store({
   logoutError: null,
   getChatError: null,
   chats: [],
-  limitMessages: 15,
+  limitMessages: 2,
   offsetMessages: 0,
   uploadChatAvatarError: null,
+  activeChatId: null
 });
 
-store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
-  console.log("prevState", prevState);
-  console.log("newState", newState);
-});
+// window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
+//   console.log("prevState", prevState);
+//   console.log("newState", newState);
+// });
 
 const APP_ROOT_ELEMNT = "#app";
 window.router = new Router(APP_ROOT_ELEMNT);
@@ -64,7 +65,7 @@ const protectedRouter = async () => {
         window.router.go(currentPath);
         if(currentPath === ROUTES.chat) {
           //@ts-ignore
-          await getChats({limit: store.state.limitMessages, offset: store.state.offsetMessages})
+          await getChats({limit: window.store.state.limitMessages, offset: window.store.state.offsetMessages})
         }
     }
   }

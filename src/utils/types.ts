@@ -58,6 +58,20 @@ export type TCreateChatResponse = {
   id: number
 }
 
+export type TDeleteChatRequest = {
+  chatId: number
+}
+
+export type TDeleteChatResponse = {
+  userId: number,
+  result: {
+    id: number,
+    title: string,
+    avatar: string,
+    created_by: number
+  }
+}
+
 // export type TUploadChatAvatarRequest = {
 //   id: number,
 //   avatar: File

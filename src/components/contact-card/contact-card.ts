@@ -2,7 +2,7 @@ import Block from "../../core/block";
 import { TGetChatsResponse } from "../../utils/types";
 
 export interface IGetChatsProps extends TGetChatsResponse {
-  onClick: (id?: number) => void,
+  onClick: (id: number) => void,
   isActive?: boolean
 }
 

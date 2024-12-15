@@ -17,7 +17,6 @@ export default class InputForm extends Block {
     super("label", {
       ...props,
       className: "input__label",
-      value: props.value ? props.value : "",
       events: {
         change: props.onChange
       },
@@ -25,7 +24,7 @@ export default class InputForm extends Block {
   }
   public render(): string {
     return `
-      <input class="input {{modifier }}" autocomplete={{ autocomplete }} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
+      <input class="input {{modifier}}" autocomplete={{autocomplete}} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
       <span class="input__text">{{ text }}</span>
       <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>
     `;

@@ -19,7 +19,7 @@ export { InputFile } from './inputs/input-file';
 export { ImageIcon } from './icons';
 export { InputProfile } from './inputs/input-profile';
 export { ProfileField } from './profile-field';
-export { AddDeleteUserModal } from './modals';
+export { ActionsWithChatModal } from './modals';
 export { PlusIcon } from './icons';
 export { FilesModal } from './modals';
 export { FileIcon } from './icons';

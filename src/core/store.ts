@@ -1,8 +1,19 @@
+import { TGetChatsResponse } from "../utils/types";
 import EventBus from "./event-bus";
 
 export enum StoreEvents {
   Updated = "Updated",
 }
+
+// type TState = {
+//   activeChatId: null | number,
+//   isOpenActionsWithChatModal: boolean,
+//   offsetMessages: number,
+//   limitMessages: number,
+//   chats: TGetChatsResponse[],
+//   chatAvatarFile: File | null,
+//   newChatTitle: string | null
+// }
 
 export class Store extends EventBus<string> {
   static __instance: unknown;

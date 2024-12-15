@@ -1,4 +1,4 @@
-import Block, { TBlockProps } from "../../core/block";
+import Block from "../../core/block";
 import { createChats } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { Button } from "../buttons/button";
@@ -38,7 +38,6 @@ class CreateChatModal extends Block {
           if(e.target instanceof HTMLInputElement) {
             window.store.set({ newChatId: null });
             const value = e.target.value;
-            this.setPropsForChildren(this.children.Input, {value: value});
             this.setProps({
               title: {title: value},
             });
@@ -52,6 +51,7 @@ class CreateChatModal extends Block {
           e.preventDefault();
           if(this.props.title.title.length > 0) {
             createChats(this.props.title)
+            window.store.set({ newChatTitle: this.props.title.title})
           }
         }
       }),
@@ -83,4 +83,4 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
   };
 };
 
-export default connect(mapStateToProps)(CreateChatModal as unknown as new (newProps: TBlockProps) => Block<TBlockProps>);
+export default connect(mapStateToProps)(CreateChatModal);

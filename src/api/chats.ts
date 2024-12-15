@@ -2,6 +2,8 @@ import HTTPTransport from "../core/HTTPTransport";
 import {
   TCreateChatRequest,
   TCreateChatResponse,
+  TDeleteChatRequest,
+  TDeleteChatResponse,
   TErrorApi,
   TGetChatsRequest,
   TGetChatsResponse,
@@ -25,5 +27,9 @@ export default class ChatsApi {
     formData.append("chatId", String(id));
     const data = formData
     return chatsApi.put("/avatar", { data });
+  }
+
+  async deleteChat(data: TDeleteChatRequest): Promise< TDeleteChatResponse | TErrorApi > {
+    return chatsApi.delete("", { data });
   }
 }
