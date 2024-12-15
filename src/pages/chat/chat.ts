@@ -1,18 +1,24 @@
 import { ContactList, MessagesList } from "../../components";
-import Block from "../../core/block";
+import Block, { TBlockProps } from "../../core/block";
 import { connect } from "../../utils/connect";
-import { withRouter } from "../../utils/withRouter";
+import { TGetChatsResponse } from "../../utils/types";
 
+type TChatPageProps = {
+  chats: TGetChatsResponse[],
+  limitMessages: number,
+  offsetMessages: number,
+}
 
 class ChatPage extends Block {
-  constructor(props) {
+  constructor(props: TChatPageProps) {
     super('section', {
-      ...props,
       className: 'chat-page',
       ContactList: new ContactList({
-        chats: props.chats
+        chatList: props.chats,
+        limitMessages: props.limitMessages,
+        offsetMessages: props.offsetMessages
       }),
-      MessagesList: new MessagesList({})
+      MessagesList: new MessagesList({}),
     })
   }
 
@@ -34,4 +40,4 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
   };
 };
 
-export default connect(mapStateToProps)(ChatPage);
+export default connect(mapStateToProps)(ChatPage as unknown as new (newProps: TBlockProps) => Block<TBlockProps>);

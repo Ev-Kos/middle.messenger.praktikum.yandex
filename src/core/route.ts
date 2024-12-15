@@ -43,7 +43,7 @@ export default class Route implements RouteInterface {
   render() {
     if (!this._block) {
       if(this._blockClass) {
-        this._block = new this._blockClass();
+        this._block = new this._blockClass({});
       }
     }
     if(this._block) {

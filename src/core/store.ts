@@ -1,25 +1,31 @@
-import { TGetChatsResponse } from "../utils/types";
+import { TGetChatsResponse, TUser } from "../utils/types";
 import EventBus from "./event-bus";
 
 export enum StoreEvents {
   Updated = "Updated",
 }
 
-// type TState = {
-//   activeChatId: null | number,
-//   isOpenActionsWithChatModal: boolean,
-//   offsetMessages: number,
-//   limitMessages: number,
-//   chats: TGetChatsResponse[],
-//   chatAvatarFile: File | null,
-//   newChatTitle: string | null
-// }
+type TState = {
+  activeChatId?: null | number,
+  isOpenActionsWithChatModal?: boolean,
+  offsetMessages?: number,
+  limitMessages?: number,
+  isLoadingSingIn?: boolean,
+  isLoadingSingUp?: boolean,
+  isLoadingChangeChats?: boolean,
+  chats?: TGetChatsResponse[],
+  chatAvatarFile?: File | null,
+  newChatId?: { id: number },
+  newChatTitle?: string | null,
+  uploadedChatAvatar?: string | null,
+  user?: TUser | null,
+}
 
 export class Store extends EventBus<string> {
-  static __instance: unknown;
-  public state = {};
-  //изменить типизацию
-  constructor(defaultState: any) {
+  static __instance: Store;
+  public state:TState = {};
+
+  constructor(defaultState: {}) {
     if (Store.__instance) {
       return Store.__instance as Store;
     }
@@ -35,7 +41,7 @@ export class Store extends EventBus<string> {
     return this.state;
   }
 
-  public set(nextState: any) {
+  public set(nextState: {}) {
     const prevState = { ...this.state };
 
     this.state = { ...this.state, ...nextState };

@@ -104,9 +104,9 @@ export default class Block<T extends TBlockProps = TBlockProps> {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
-    });
+    // Object.values(this.children).forEach((child) => {
+    //   child.dispatchComponentDidMount();
+    // });
   }
 
   componentDidMount() {}
@@ -179,7 +179,6 @@ export default class Block<T extends TBlockProps = TBlockProps> {
 
   _compile() {
     const propsAndStubs: { [key: string]: any } = { ...this.props };
-
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
         propsAndStubs[key] = child.map(
@@ -205,7 +204,6 @@ export default class Block<T extends TBlockProps = TBlockProps> {
         });
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-
         stub?.replaceWith(child.getContent());
       }
     });
@@ -216,7 +214,6 @@ export default class Block<T extends TBlockProps = TBlockProps> {
   _render() {
     this._removeEvents();
     const block = this._compile();
-
     if(this._element) {
       if (this._element.children.length === 0) {
         this._element.appendChild(block);

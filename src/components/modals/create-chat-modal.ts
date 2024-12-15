@@ -47,7 +47,8 @@ class CreateChatModal extends Block {
       ButtonCreate: new Button({
         type: "submit",
         text: "Создать",
-        onClick: (e) => {
+        isLoading: window.store.state.isLoadingChangeChats,
+        onClick: (e: Event) => {
           e.preventDefault();
           if(this.props.title.title.length > 0) {
             createChats(this.props.title)
@@ -55,31 +56,33 @@ class CreateChatModal extends Block {
           }
         }
       }),
+
     });
   }
 
   public render(): string {
-    const { newChatId } = this.props;
+    const { isCreateChat } = this.props;
     const { Input } = this.children;
 
-    if (!Array.isArray(Input) && (newChatId)) {
+    if (!Array.isArray(Input) && (isCreateChat)) {
       Input.setPropsForChildren(Input, {value: ""});
     }
 
     return `
       <h1 class="form-modal__title">Создать чат</h1>
-        {{{ButtonAvatar}}}
-      <div class="form-modal__form">
-        {{{Input}}}
-        {{{ButtonCreate}}}
-      </div>
+      {{{ButtonAvatar}}}
+         <div class="form-modal__form">
+           {{{Input}}}
+           {{{ButtonCreate}}}
+         </div>
     `
   }
 }
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
-    newChatId: state.newChatId,
+    isCreateChat: state.isCreateChat,
+    isLoadingChangeChats: state.isLoadingChangeChats
   };
 };
 

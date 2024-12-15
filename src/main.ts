@@ -32,18 +32,9 @@ Object.entries(Components).forEach(([ name, template ]) => {
 });
 
  window.store = new Store({
-	isLoading: false,
-	user: null,
-	singInError: null,
-  singUpError: null,
-  logoutError: null,
-  getChatError: null,
-  chats: [],
-  limitMessages: 2,
-  offsetMessages: 0,
-  uploadChatAvatarError: null,
-  activeChatId: null
-});
+  limitMessages: 15,
+  offsetMessages: 0
+ });
 
 // window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
 //   console.log("prevState", prevState);
@@ -56,6 +47,7 @@ const check = await checkSingInUser();
 const currentPath = window.location.pathname;
 
 const protectedRouter = async () => {
+
   if (!check) {
     window.router.go(ROUTES.login);
   } else {
@@ -64,12 +56,13 @@ const protectedRouter = async () => {
     } else {
         window.router.go(currentPath);
         if(currentPath === ROUTES.chat) {
-          //@ts-ignore
-          await getChats({limit: window.store.state.limitMessages, offset: window.store.state.offsetMessages})
+          await getChats({
+            limit: Number(window.store.state.limitMessages),
+            offset: Number(window.store.state.offsetMessages)
+          })
         }
     }
   }
-	window.router = new Router("#app");
 	window.router
 		.use(ROUTES.login, Pages.LoginPage)
 		.use(ROUTES.register, Pages.RegistrationPage)

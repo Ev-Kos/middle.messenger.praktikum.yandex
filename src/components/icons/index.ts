@@ -7,3 +7,4 @@ export { default as ImageIcon } from './image';
 export { default as PlusIcon } from './plus';
 export { default as FileIcon } from './file';
 export { default as LocationIcon } from './location';
+export { default as LoaderIcon } from './loader';

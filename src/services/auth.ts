@@ -5,7 +5,7 @@ import { TSingInRequest, TSingUpRequest } from "../utils/types";
 const authApi = new AuthApi();
 
 export const singIn = async (model: TSingInRequest) => {
-  window.store.set({ isLoading: true });
+  window.store.set({ isLoadingSingIn: true });
 	try {
 		const response = await authApi.singIn(model)
     if(response) {
@@ -15,12 +15,12 @@ export const singIn = async (model: TSingInRequest) => {
 	} catch (error: any) {
 		window.store.set({ singInError: error.reason });
 	} finally {
-		window.store.set({ isLoading: false });
+		window.store.set({ isLoadingSingIn: false });
 	}
 }
 
 export const singUp = async (model: TSingUpRequest) => {
-	window.store.set({ isLoading: true });
+	window.store.set({ isLoadingSingUp: true });
 	try {
 		await authApi.singUp(model);
     await checkSingInUser();
@@ -28,12 +28,11 @@ export const singUp = async (model: TSingUpRequest) => {
 	} catch (error: any) {
 		window.store.set({ singUpError: error.reason });
 	} finally {
-		window.store.set({ isLoading: false });
+		window.store.set({ isLoadingSingUp: false });
 	}
-};
+}
 
 export const checkSingInUser = async () => {
-  window.store.set({ isLoading: true });
   try {
     const user = await authApi.currentUser();
     window.store.set({ user });
@@ -43,20 +42,14 @@ export const checkSingInUser = async () => {
     window.store.set({ singInError: error.reason });
     return false
   }
-  finally {
-    window.store.set({ isLoading: false });
-  }
-};
+}
 
 export const logout = async () => {
-	window.store.set({ isLoading: true });
 	try {
 		await authApi.logout();
     window.store.set({});
     window.router.go(ROUTES.login);
 	} catch (error: any) {
 		window.store.set({ logoutError: error.reason });
-	} finally {
-		window.store.set({ isLoading: false });
 	}
-};
+}

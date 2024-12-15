@@ -3,7 +3,6 @@ import { getChats } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
 import { TGetChatsResponse } from "../../utils/types";
-import { withRouter } from "../../utils/withRouter";
 import { Button } from "../buttons/button";
 import { ButtonCreateChat } from "../buttons/button-create-chat";
 import { ContactCard } from "../contact-card";
@@ -78,9 +77,35 @@ class ContactList extends Block {
     })
   }
 
+  componentDidUpdate(oldProps?: TBlockProps, newProps?: TBlockProps): boolean {
+    if (oldProps === newProps) {
+      return false;
+    }
+    if (newProps && newProps.chats) {
+      this.children.Chats = newProps.chats.map(
+        (chatProps: any) =>
+          new ContactCard({
+            ...chatProps,
+            onClick: () => {
+              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
+            },
+        }),
+      )
+    }
+    return true;
+  }
+
   public render(): string {
 
-console.log(this.props.chats)
+    const activeChatId = window.store.state.activeChatId;
+    const { Chats } = this.children
+
+    if(Array.isArray(Chats)) {
+      Chats.forEach((item) => {
+        item.setProps({isActive: item.props.id === activeChatId})
+      })
+    }
+console.log(this.props.isScroll)
     return `
       <div class="container__search">
         {{{ButtonLink}}}
@@ -107,14 +132,11 @@ console.log(this.props.chats)
 }
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
-  console.log(state)
   return {
     isLoading: state.isLoading,
-    //chats: state.chats,
+    chats: state.chats,
     chatsLength: state.chatsLength,
     isScroll: state.isScroll,
-    limitMessages: state.limitMessages,
-    offsetMessages: state.offsetMessages,
     isCreateChatModal: state.isCreateChatModal,
     activeChatId: state.activeChatId
   };

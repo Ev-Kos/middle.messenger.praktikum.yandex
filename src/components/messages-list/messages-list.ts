@@ -16,7 +16,6 @@ class MessagesList extends Block {
   constructor() {
     super('div', {
       className: 'messages',
-      //isOpenActionsWithChatModal: false,
       isClickAddUser: false,
       isClickDeleteUser: false,
       isClickAdd: false,
@@ -95,7 +94,7 @@ class MessagesList extends Block {
           this.setPropsForChildren(this.children.InputCreateMessage, {value: ""});
         },
         isRight: true
-      })
+      }),
     })
   }
 
