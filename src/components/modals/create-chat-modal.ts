@@ -1,6 +1,7 @@
 import Block from "../../core/block";
 import { createChats } from "../../services/chats";
 import { connect } from "../../utils/connect";
+import { keydownHandler } from "../../utils/keydown-handler";
 import { Button } from "../buttons/button";
 import { ButtonAvatar } from "../buttons/button-avatar";
 import { InputForm } from "../inputs/input-form";
@@ -34,7 +35,7 @@ class CreateChatModal extends Block {
         name: "title",
         type: "text",
         text: "Название",
-        onChange: (e) => {
+        onChange: (e: Event) => {
           if(e.target instanceof HTMLInputElement) {
             window.store.set({ newChatId: null });
             const value = e.target.value;
@@ -43,6 +44,7 @@ class CreateChatModal extends Block {
             });
           }
         },
+        onKeyDown: (e: KeyboardEvent) => {keydownHandler(e)}
       }),
       ButtonCreate: new Button({
         type: "submit",

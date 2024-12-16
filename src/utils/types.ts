@@ -72,7 +72,11 @@ export type TDeleteChatResponse = {
   }
 }
 
-// export type TUploadChatAvatarRequest = {
-//   id: number,
-//   avatar: File
-// }
+export type TAddUserToChatRequest = {
+  users: number[],
+  chatId: number
+}
+
+export type TUsersSearchRequest = {
+  login: string,
+}

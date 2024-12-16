@@ -22,6 +22,7 @@ class RegistrationPage extends Block {
         name: "email",
         type: "text",
         text: "Почта",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -39,6 +40,7 @@ class RegistrationPage extends Block {
         name: "login",
         type: "text",
         text: "Логин",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -56,6 +58,7 @@ class RegistrationPage extends Block {
         name: "first_name",
         type: "text",
         text: "Имя",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -73,6 +76,7 @@ class RegistrationPage extends Block {
         name: "second_name",
         type: "text",
         text: "Фамилия",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -90,6 +94,7 @@ class RegistrationPage extends Block {
         name: "phone",
         type: "text",
         text: "Телефон",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -107,6 +112,7 @@ class RegistrationPage extends Block {
         name: "password",
         type: "password",
         text: "Пароль",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -124,6 +130,7 @@ class RegistrationPage extends Block {
         name: "repeat-password",
         type: "password",
         text: "Пароль (еще раз)",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -137,7 +144,7 @@ class RegistrationPage extends Block {
       Button: new Button({
         type: "submit",
         text: "Зарегистрироваться",
-        onClick: (e) => {
+        onClick: (e: Event) => {
           e.preventDefault();
 
           const errorEmail = checkEmail(this.props.formState.email)

@@ -8,8 +8,10 @@ type InputFormProps = {
   text: string;
   error?: string;
   isError?: boolean;
+  withError?: boolean;
   id?: string;
   onChange?: (e: Event) => void;
+  onKeyDown?: (e: KeyboardEvent) => void;
 };
 
 export default class InputForm extends Block {
@@ -18,15 +20,19 @@ export default class InputForm extends Block {
       ...props,
       className: "input__label",
       events: {
-        change: props.onChange
+        change: props.onChange,
+        keydown: props.onKeyDown
       },
+
     })
   }
   public render(): string {
     return `
-      <input class="input {{modifier}}" autocomplete={{autocomplete}} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
       <span class="input__text">{{ text }}</span>
-      <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>
+      <input class="input {{modifier}}" autocomplete={{autocomplete}} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
+      {{#if withError}}
+        <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>
+      {{/if}}
     `;
   }
 }

@@ -1,5 +1,5 @@
 import ChatsApi from "../api/chats";
-import { TCreateChatRequest, TDeleteChatRequest, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
+import { TAddUserToChatRequest, TCreateChatRequest, TDeleteChatRequest, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
 
 const chatsApi = new ChatsApi();
 
@@ -10,6 +10,9 @@ export const getChats = async (model: TGetChatsRequest) => {
     window.store.set({ chats });
     if(Array.isArray(chats) && chats.length > 0) {
       window.store.set({ chatsLength: chats.length });
+    }
+    if(Array.isArray(chats) && chats.length === 0) {
+      window.store.set({ chatsLength: null });
     }
     if(Array.isArray(chats) && chats.length > 14) {
       window.store.set({ isScroll: true });
@@ -102,5 +105,17 @@ export const deleteChat = async (data: TDeleteChatRequest) => {
 		window.store.set({ isDeleteChatError: error.reason });
 	} finally {
 		window.store.set({ isLoadingChangeChats: false });
+	}
+}
+
+export const addUsersToChat = async (data: TAddUserToChatRequest) => {
+	window.store.set({ isLoadingUserToChat: true });
+	try {
+		await chatsApi.addUsersToChat(data);
+    window.store.set({selectedUsers: [], isSelectedUsers: false, isClickAddUserModal: false})
+	} catch (error: any) {
+		window.store.set({ isAddUserToChatError: error.reason });
+	} finally {
+		window.store.set({ isLoadingUserToChat: false });
 	}
 }

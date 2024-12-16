@@ -100,6 +100,7 @@
   }
 
   &__form {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -109,6 +110,21 @@
 
   &__avatar {
     position: relative;
+  }
+
+  &__empty-list {
+    position: absolute;
+    top: 50px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-grey);
+    text-align: center;
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: 30px;
   }
 }
 
@@ -120,4 +136,58 @@
     flex-direction: column;
     gap: 16px;
   }
+}
+
+.search-list {
+  position: absolute;
+  top: 47px;
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 0 6px 0 var(--color-form-shadow);
+  z-index: 1;
+  border-radius: 5px;
+  list-style-type: none;
+  overflow: hidden;
+  max-height: 245px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.search-list-without-scroll {
+  position: absolute;
+  top: 47px;
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 0 6px 0 var(--color-form-shadow);
+  z-index: 1;
+  border-radius: 5px;
+  list-style-type: none;
+}
+
+.loader-modal {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+}
+
+.select-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.select-user-input {
+  padding: 7px 32px 2px 0;
 }

@@ -1,5 +1,6 @@
 import HTTPTransport from "../core/HTTPTransport";
 import {
+  TAddUserToChatRequest,
   TCreateChatRequest,
   TCreateChatResponse,
   TDeleteChatRequest,
@@ -31,5 +32,9 @@ export default class ChatsApi {
 
   async deleteChat(data: TDeleteChatRequest): Promise< TDeleteChatResponse | TErrorApi > {
     return chatsApi.delete("", { data });
+  }
+
+  async addUsersToChat(data: TAddUserToChatRequest): Promise< void | TErrorApi > {
+    return chatsApi.put("/users", { data });
   }
 }

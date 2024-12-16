@@ -16,9 +16,6 @@ class MessagesList extends Block {
   constructor() {
     super('div', {
       className: 'messages',
-      isClickAddUser: false,
-      isClickDeleteUser: false,
-      isClickAdd: false,
       isOpenFileModal: false,
       message: "",
       ButtonDots: new ButtonDots({
@@ -43,10 +40,10 @@ class MessagesList extends Block {
       }),
       ActionsWithChatModal: new ActionsWithChatModal({
         onClickAddUser: () => {
-          this.setProps({isClickAddUser: true, isOpenAddDeleteUserModal: false})
+          window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: true, isClickDeleteUserModal: false})
         },
         onClickDeleteUser: () => {
-          this.setProps({isClickDeleteUser: true, isOpenAddDeleteUserModal: false})
+          window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: false, isClickDeleteUserModal: true})
         },
         onClickDeleteChat: () => {
           if(window.store.state.activeChatId) {
@@ -62,7 +59,7 @@ class MessagesList extends Block {
       }),
       ModalWrapper: new ModalWrapper({
         onClick: () => {
-          this.setProps({isClickDeleteUser: false, isClickAddUser: false})
+          window.store.set({usersLength: null, users: [], isClickAddUserModal: false, isClickDeleteUserModal: false, isSearchUsers: null})
         }
       }),
       ButtonFile: new ButtonFile({
@@ -140,11 +137,11 @@ class MessagesList extends Block {
       {{#if isOpenActionsWithChatModal}}
         {{{ActionsWithChatModal}}}
       {{/if}}
-      {{#if isClickAddUser}}
+      {{#if isClickAddUserModal}}
         {{{ModalWrapper}}}
         {{{AddUserModal}}}
       {{/if}}
-      {{#if isClickDeleteUser}}
+      {{#if isClickDeleteUserModal}}
         {{{ModalWrapper}}}
         {{{DeleteUserModal}}}
       {{/if}}
@@ -158,7 +155,9 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     activeChatTitle: state.activeChatTitle,
     activeChatId: state.activeChatId,
     isOpenActionsWithChatModal: state.isOpenActionsWithChatModal,
-    chats: state.chats
+    chats: state.chats,
+    isClickAddUserModal: state.isClickAddUserModal,
+    isClickDeleteUserModal: state.isClickDeleteUserModal
   };
 };
 

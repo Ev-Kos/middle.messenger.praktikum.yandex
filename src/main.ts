@@ -33,7 +33,8 @@ Object.entries(Components).forEach(([ name, template ]) => {
 
  window.store = new Store({
   limitMessages: 15,
-  offsetMessages: 0
+  offsetMessages: 0,
+  selectedUsers: []
  });
 
 // window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {

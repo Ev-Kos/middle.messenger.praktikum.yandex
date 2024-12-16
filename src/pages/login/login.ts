@@ -17,6 +17,7 @@ class LoginPage extends Block {
         name: "login",
         type: "text",
         text: "Логин",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -34,6 +35,7 @@ class LoginPage extends Block {
         name: "password",
         type: "password",
         text: "Пароль",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -50,7 +52,7 @@ class LoginPage extends Block {
       Button: new Button({
         type: "submit",
         text: "Авторизоваться",
-        onClick: (e) => {
+        onClick: (e: Event) => {
           e.preventDefault();
 
           const errorLogin = checkLogin(this.props.formState.login);

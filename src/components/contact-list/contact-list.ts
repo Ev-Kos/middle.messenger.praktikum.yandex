@@ -21,7 +21,6 @@ class ContactList extends Block {
     super('div', {
       ...props,
       className: 'container',
-      searchValue: "",
       isSearch: false,
       ButtonLink: new Button({
         type: "button",
@@ -34,22 +33,17 @@ class ContactList extends Block {
         placeholderText: 'Поиск',
         name: 'seach',
         type: 'text',
-        onChange: (e) => {
-          if(e.target instanceof HTMLInputElement) {
-            const value = e.target.value;
-            this.setProps({
-              searchValue: value,
-              isSearch: false
-            })
-          }
-        },
-        onKeyDown: (e) => {
+        onKeyDown:(e) => {
+          const target = e.target as HTMLInputElement;
+          const value = target.value;
           if(e.key === "Enter") {
-            if(this.props.searchValue.length !== 0) {
-              getChats({limit: props.limitMessages, offset: props.offsetMessages, title: this.props.searchValue})
+            if(value.length !== 0) {
+              getChats({limit: props.limitMessages, offset: props.offsetMessages, title: value})
               this.setProps({
                 isSearch: true
               })
+            } else {
+              getChats({limit: props.limitMessages, offset: props.offsetMessages})
             }
           }
         }
@@ -105,7 +99,7 @@ class ContactList extends Block {
         item.setProps({isActive: item.props.id === activeChatId})
       })
     }
-console.log(this.props.isScroll)
+
     return `
       <div class="container__search">
         {{{ButtonLink}}}
@@ -114,14 +108,13 @@ console.log(this.props.isScroll)
       <div class="container__button-create">
         {{{ButtonCreateChat}}}
       </div>
+      {{#unless chatsLength}}
+        <p class="container__empty-list">{{#if isSearch}}Ничего не найдено{{else}}Пока нет созданных чатов{{/if}}</p>
+      {{/unless}}
       <ul class="{{#if isScroll}}container__list{{else}}container__list-whithout-scroll{{/if}}">
-        {{#unless chatsLength}}
-          <p class="container__empty-list">{{#if isSearch}}Ничего не найдено{{else}}Пока нет созданных чатов{{/if}}</p>
-          {{else}}
-            {{#each Chats}}
-              {{{ this }}}
-            {{/each}}
-        {{/unless}}
+        {{#each Chats}}
+          {{{ this }}}
+        {{/each}}
       </ul>
       {{#if isCreateChatModal}}
         {{{ModalWrapper}}}
