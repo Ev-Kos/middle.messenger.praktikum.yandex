@@ -1,4 +1,3 @@
-import { TSelectedUsers } from "../components/login-user-card/login-user-card";
 import { TGetChatsResponse, TUser } from "../utils/types";
 import EventBus from "./event-bus";
 
@@ -22,7 +21,7 @@ type TState = {
   user?: TUser | null,
   users?: TUser[] | [],
   isLoadingUserSearch?: boolean,
-  selectedUsers?: TSelectedUsers[]
+  selectedUsers?: TUser[]
 }
 
 export class Store extends EventBus<string> {

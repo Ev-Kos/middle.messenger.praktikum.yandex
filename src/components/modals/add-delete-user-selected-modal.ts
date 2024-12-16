@@ -8,14 +8,12 @@ import { checkLogin } from "../../utils/validate-inputs";
 import { Button } from "../buttons/button";
 import { InputForm } from "../inputs/input-form";
 import { Loader } from "../loader";
-import { LoginUserCard } from "../login-user-card";
-import { TSelectedUsers } from "../login-user-card/login-user-card";
-import { UserSearchCard } from "../user-search-card";
+import { UserCard } from "../user-card";
 
 type TAddDeleteUserSelectedModal = {
   isClickAdd?: boolean,
   users: TUser[],
-  selectedUsers: TSelectedUsers[],
+  selectedUsers: TUser[],
 }
 
 class AddDeleteUserSelectedModal extends Block {
@@ -79,18 +77,20 @@ class AddDeleteUserSelectedModal extends Block {
       }),
       Users: props.users?.map(
         (userProps: TUser) =>
-          new UserSearchCard({
+          new UserCard({
               ...userProps,
+              isDeleted: false,
               onClick: () => {
                 if(Array.isArray(window.store.state.selectedUsers))
-                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, {id: userProps.id, login: userProps.login}], usersLength: null, isSelectedUsers: true})
+                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
                   this.setPropsForChildren(this.children.Input, {value: ""})
               },
           }),
       ),
-      Logins: props.selectedUsers?.map((item: TSelectedUsers) =>
-        new LoginUserCard({
+      SelectedUsers: props.selectedUsers?.map((item: TUser) =>
+        new UserCard({
           ...item,
+          isDeleted: true,
           onClick: () => {
             window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
           }
@@ -106,21 +106,22 @@ class AddDeleteUserSelectedModal extends Block {
       if (newProps && newProps.users) {
         this.children.Users = newProps.users.map(
           (userProps: TUser) =>
-            new UserSearchCard({
+            new UserCard({
               ...userProps,
+              isDeleted: false,
               onClick: () => {
                 if(Array.isArray(window.store.state.selectedUsers))
-                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, {id: userProps.id, login: userProps.login}], usersLength: null, isSelectedUsers: true})
+                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
                   this.setPropsForChildren(this.children.Input, {value: ""})
                   console.log(window.store.state.selectedUsers)
               },
           }),
         )
         if (newProps && newProps.selectedUsers) {
-          console.log(newProps.selectedUsers)
-          this.children.Logins = newProps.selectedUsers.map((item: TSelectedUsers) =>
-            new LoginUserCard({
+          this.children.SelectedUsers = newProps.selectedUsers.map((item: TUser) =>
+            new UserCard({
               ...item,
+              isDeleted: true,
               onClick: () => {
                 window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
               }
@@ -128,7 +129,6 @@ class AddDeleteUserSelectedModal extends Block {
           )
         }
       }
-
       return true;
     }
 
@@ -158,7 +158,7 @@ class AddDeleteUserSelectedModal extends Block {
         {{/if}}
         {{#if isSelectedUsers}}
           <ul class="select-list">
-            {{#each Logins}}
+            {{#each SelectedUsers}}
               {{{ this }}}
             {{/each}}
           </ul>

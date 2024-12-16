@@ -33,5 +33,4 @@ export { ButtonCreateChat } from './buttons/button-create-chat';
 export { CreateChatModal } from './modals';
 export { Loader } from './loader';
 export { LoaderIcon } from './icons';
-export { UserSearchCard } from './user-search-card';
-export { LoginUserCard } from './login-user-card';
+export { UserCard } from './user-card';

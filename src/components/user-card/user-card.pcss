@@ -1,14 +1,23 @@
 .user-search-card {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid var(--color-grey-border);
   width: 100%;
-  padding: 3px 2px;
   cursor: pointer;
+  padding: 3px 7px;
 
   &:hover {
-    background-color: var(--color-blue-light)
+    background-color: var(--color-blue-light);
+    border-radius: 10px;
+
+  }
+
+  &__container  {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
   }
 
   &__name-wrap {
@@ -43,4 +52,7 @@
     color: var(--color-grey);
   }
 
+  &__icon {
+    rotate: 45deg;
+  }
 }
