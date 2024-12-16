@@ -1,5 +1,5 @@
 import Block from "../../core/block";
-import { deleteChat } from "../../services/chats";
+import { deleteChat, getChatUsers } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { message } from "../../utils/contact-list";
 import { checkMessage } from "../../utils/validate-inputs";
@@ -44,6 +44,7 @@ class MessagesList extends Block {
         },
         onClickDeleteUser: () => {
           window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: false, isClickDeleteUserModal: true})
+          getChatUsers(Number(window.store.state.activeChatId))
         },
         onClickDeleteChat: () => {
           if(window.store.state.activeChatId) {

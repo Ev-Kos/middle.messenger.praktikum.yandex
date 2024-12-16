@@ -119,3 +119,15 @@ export const addUsersToChat = async (data: TAddUserToChatRequest) => {
 		window.store.set({ isLoadingUserToChat: false });
 	}
 }
+
+export const getChatUsers = async (data: number) => {
+	window.store.set({ isLoadingChatUsers: true });
+	try {
+		await chatsApi.getChatUsers(data);
+    //window.store.set({selectedUsers: [], isSelectedUsers: false, isClickAddUserModal: false})
+	} catch (error: any) {
+		window.store.set({ isGetChatUsersError: error.reason });
+	} finally {
+		window.store.set({ isLoadingChatUsers: false });
+	}
+}

@@ -37,4 +37,8 @@ export default class ChatsApi {
   async addUsersToChat(data: TAddUserToChatRequest): Promise< void | TErrorApi > {
     return chatsApi.put("/users", { data });
   }
+
+  async getChatUsers(data: number) {
+    return chatsApi.get(`/${data}/users`);
+  }
 }
