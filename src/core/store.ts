@@ -23,7 +23,9 @@ type TState = {
   isLoadingUserSearch?: boolean,
   partisipants?: TUser[],
   isClickAddUserModal?: boolean,
-  selectedUsers?: TUser[]
+  selectedUsers?: TUser[],
+  userAvatarFile?: File | null,
+  isClickFileLoad?: boolean,
 }
 
 export class Store extends EventBus<string> {

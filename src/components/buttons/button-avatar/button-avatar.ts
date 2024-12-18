@@ -9,6 +9,7 @@ type TButtonAvatarProps = {
   onChange?: (e: Event) => void;
   deleteAvatar?: () => void;
   isCreateChat: boolean;
+  userAvatar: string;
 }
 
 class ButtonAvatar extends Block {
@@ -34,7 +35,6 @@ class ButtonAvatar extends Block {
         onClick: props.deleteAvatar,
         modifierButton: "button-image-avatar",
         modifierText: "button-avatar__text"
-
       })
     });
   }
@@ -56,7 +56,7 @@ class ButtonAvatar extends Block {
         {{/if}}
         {{else}}
           {{#if userAvatar}}
-            <img class="button-avatar__image" src={{userAvatar}} alt="Фотография пользователя">
+            <img class="button-avatar__image" src={{getImage userAvatar}} alt="Фотография пользователя">
             <div class="button-avatar__image-mask">
               {{{DeleteAvatar}}}
             </div>
@@ -67,7 +67,6 @@ class ButtonAvatar extends Block {
           {{{ImageIcon}}}
         {{/if}}
       {{/if}}
-
     `
   }
 }

@@ -1,27 +1,33 @@
-import Block from "../../core/block";
+
+import Block, { TBlockProps } from "../../core/block";
 import { logout } from "../../services/auth";
+import { connect } from "../../utils/connect";
+import { TUser } from "../../utils/types";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
 import { Button } from "../buttons/button";
 import { ButtonAvatar } from "../buttons/button-avatar";
+import fileLoadModal from "../modals/file-load-modal";
 import { ProfileField } from "../profile-field";
+import { ModalWrapper } from "../wrappers/modals-wrapper";
 
 type TProfileInfoProps = {
   onClickButtonAvatar: () => void;
+  user: TUser
 }
 
-export default class ProfileInfo extends Block {
+class ProfileInfo extends Block {
   constructor(props: TProfileInfoProps) {
     super("div", {
       className: "profile-info",
       isNotChange: true,
-      userName: "Иван",
+      userName: props.user.first_name,
       mainFieldState: {
-        email: "pochta@yandex.ru",
-        login: "ivanivanov",
-        first_name: "Иван",
-        second_name: "Иванов",
-        phone: "+79099673030",
-        display_name: "Иван",
+        email: props.user.email,
+        login: props.user.login,
+        first_name: props.user.first_name,
+        second_name: props.user.second_name,
+        phone: props.user.phone,
+        display_name: props.user.display_name,
       },
       passwordState: {
         oldPassword: "",
@@ -29,7 +35,10 @@ export default class ProfileInfo extends Block {
       },
       repeatedPassword: "",
       ButtonAvatar: new ButtonAvatar({
-        onClick: props.onClickButtonAvatar,
+        userAvatar: props.user.avatar,
+        onClick: () => {
+          window.store.set({isClickFileLoad: true})
+        },
         text: "Поменять аватар",
         isCreateChat: false
       }),
@@ -38,7 +47,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Почта",
         inputName: "email",
-        inputValue:"pochta@yandex.ru",
+        inputValue: props.user.email,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -59,7 +68,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Логин",
         inputName: "login",
-        inputValue:"ivanivanov",
+        inputValue: props.user.login,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -80,7 +89,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя",
         inputName: "first_name",
-        inputValue:"Иван",
+        inputValue: props.user.first_name,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -101,7 +110,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Фамилия",
         inputName: "second_name",
-        inputValue:"Иванов",
+        inputValue: props.user.second_name,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -122,7 +131,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя в чате",
         inputName: "display_name",
-        inputValue: "Иван",
+        inputValue: props.user.display_name,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -143,7 +152,7 @@ export default class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Телефон",
         inputName: "phone",
-        inputValue:"+79099673030",
+        inputValue: props.user.phone,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -305,6 +314,12 @@ export default class ProfileInfo extends Block {
           console.log(this.props.passwordState.newPassword)
         }
       }),
+      FileLoadModal: new fileLoadModal({}),
+      ModalWrapper: new ModalWrapper({
+        onClick: () => {
+          window.store.set({isClickFileLoad: false})
+        }
+      }),
     });
   }
 
@@ -352,6 +367,19 @@ export default class ProfileInfo extends Block {
         {{/if}}
         </div>
       </form>
+      {{#if isClickFileLoad}}
+        {{{ModalWrapper}}}
+        {{{FileLoadModal}}}
+      {{/if}}
     `
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    user: state.user,
+    isClickFileLoad: state.isClickFileLoad
+  };
+};
+
+export default connect(mapStateToProps)(ProfileInfo as unknown as new (newProps: TBlockProps) => Block<TBlockProps>);

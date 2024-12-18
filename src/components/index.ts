@@ -15,7 +15,6 @@ export { Message } from './message';
 export { CheckmarkIcon } from './icons';
 export { ImageMessage } from './image-message';
 export { ProfileInfo } from './profile-info';
-export { InputFile } from './inputs/input-file';
 export { ImageIcon } from './icons';
 export { InputProfile } from './inputs/input-profile';
 export { ProfileField } from './profile-field';

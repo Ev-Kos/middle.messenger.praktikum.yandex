@@ -8,4 +8,11 @@ export default class UsersApi {
   async usersSearch(data: TUsersSearchRequest): Promise<TUser[] | TErrorApi> {
     return usersApi.post("/search", { data });
   }
+
+  async changeUserAvatar(file: File): Promise<TUser | TErrorApi> {
+    const formData = new FormData();
+    formData.append("avatar", file, file.name);
+    const data = formData
+    return usersApi.put("/profile/avatar", { data });
+  }
 }

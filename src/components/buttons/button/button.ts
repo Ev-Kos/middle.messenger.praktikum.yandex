@@ -44,7 +44,8 @@ class Button extends Block {
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
-    isLoading: state.isLoadingChangeChats || state.isLoadingUserToChat || state.isLoadingDeleteUser,
+    isLoading: state.isLoadingChangeChats || state.isLoadingUserToChat || state.isLoadingDeleteUser
+      || state.isLoadingUploadUserAvatar,
   };
 };
 

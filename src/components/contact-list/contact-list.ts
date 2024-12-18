@@ -48,7 +48,7 @@ class ContactList extends Block {
           }
         }
       }),
-      Chats: props.chats.map(
+      Chats: props.chats?.map(
         (chatProps: TGetChatsResponse) =>
           new ContactCard({
               ...chatProps,

@@ -35,7 +35,8 @@ Object.entries(Components).forEach(([ name, template ]) => {
   limitMessages: 15,
   offsetMessages: 0,
   partisipants: [],
-  selectedUsers: []
+  selectedUsers: [],
+  user: {}
  });
 
 // window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
@@ -55,7 +56,12 @@ const protectedRouter = async () => {
   } else {
     if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
         window.router.go(ROUTES.chat);
-    } else {
+        await getChats({
+          limit: Number(window.store.state.limitMessages),
+          offset: Number(window.store.state.offsetMessages)
+        })
+    }
+    else {
         window.router.go(currentPath);
         if(currentPath === ROUTES.chat) {
           await getChats({
@@ -70,7 +76,7 @@ const protectedRouter = async () => {
 		.use(ROUTES.register, Pages.RegistrationPage)
 		.use(ROUTES.chat, Pages.ChatPage)
 		.use(ROUTES.profile, Pages.ProfilePage)
-		.use("*", Pages.NavigationPage)
+		.use("*", Pages.NotFoundPage)
 		.start();
 };
 

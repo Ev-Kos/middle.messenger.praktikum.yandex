@@ -23,3 +23,15 @@ export const usersSearch = async (model: TUsersSearchRequest) => {
     window.store.set({ isLoadingUserSearch: false });
   }
 }
+
+export const changeUserAvatar = async (file: File) => {
+  window.store.set({ isLoadingUploadUserAvatar: true });
+  try {
+    const user = await usersApi.changeUserAvatar(file);
+    window.store.set({user: user, userAvatar: null, userAvatarFile: null, isClickFileLoad: false})
+  } catch (error: any) {
+    window.store.set({ uploadUserAvatarError: error.reason });
+  } finally {
+    window.store.set({ isLoadingUploadUserAvatar: false });
+  }
+}

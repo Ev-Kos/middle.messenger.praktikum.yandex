@@ -104,12 +104,15 @@ export default class Block<T extends TBlockProps = TBlockProps> {
 
   _componentDidMount() {
     this.componentDidMount();
+
+  }
+
+  componentDidMount() {
+
     // Object.values(this.children).forEach((child) => {
     //   child.dispatchComponentDidMount();
     // });
   }
-
-  componentDidMount() {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -181,7 +184,6 @@ export default class Block<T extends TBlockProps = TBlockProps> {
     const propsAndStubs: { [key: string]: any } = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      console.log(this.children)
       if (Array.isArray(child)) {
         propsAndStubs[key] = child.map(
             (component) => `<div data-id="${component._id}"></div>`
