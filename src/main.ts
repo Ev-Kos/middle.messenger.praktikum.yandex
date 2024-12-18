@@ -36,7 +36,8 @@ Object.entries(Components).forEach(([ name, template ]) => {
   offsetMessages: 0,
   partisipants: [],
   selectedUsers: [],
-  user: {}
+  user: {},
+  isNotChange: true
  });
 
 // window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {

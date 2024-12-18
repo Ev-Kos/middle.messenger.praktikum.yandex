@@ -1,5 +1,5 @@
 import UsersApi from "../api/users";
-import { TUsersSearchRequest } from "../utils/types";
+import { TSingUpRequest, TUsersSearchRequest } from "../utils/types";
 
 const usersApi = new UsersApi();
 
@@ -33,5 +33,17 @@ export const changeUserAvatar = async (file: File) => {
     window.store.set({ uploadUserAvatarError: error.reason });
   } finally {
     window.store.set({ isLoadingUploadUserAvatar: false });
+  }
+}
+
+export const changeProfile = async (data: TSingUpRequest) => {
+  window.store.set({ isLoadingChangeProfile: true });
+  try {
+    const user = await usersApi.changeProfile(data);
+    window.store.set({user: user, isNotChange: true})
+  } catch (error: any) {
+    window.store.set({ changeProfileError: error.reason });
+  } finally {
+    window.store.set({ isLoadingChangeProfile: false });
   }
 }

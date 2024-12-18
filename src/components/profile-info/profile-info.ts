@@ -1,6 +1,7 @@
 
 import Block, { TBlockProps } from "../../core/block";
 import { logout } from "../../services/auth";
+import { changeProfile } from "../../services/users";
 import { connect } from "../../utils/connect";
 import { TUser } from "../../utils/types";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
@@ -19,8 +20,8 @@ class ProfileInfo extends Block {
   constructor(props: TProfileInfoProps) {
     super("div", {
       className: "profile-info",
-      isNotChange: true,
       userName: props.user.first_name,
+      isNotChange: window.store.state.isNotChange,
       mainFieldState: {
         email: props.user.email,
         login: props.user.login,
@@ -74,12 +75,12 @@ class ProfileInfo extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.LoginField, checkLogin(value));
-            this.setProps({
-              mainFieldState: {
-                ...this.props.mainFieldState,
-                login: value,
-              },
-            });
+              this.setProps({
+                mainFieldState: {
+                  ...this.props.mainFieldState,
+                  login: value,
+                },
+              });
           }
         },
         inputType: "text"
@@ -95,12 +96,12 @@ class ProfileInfo extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.FirstNameField, checkName(value, "Имя должно"));
-            this.setProps({
-              mainFieldState: {
-                ...this.props.mainFieldState,
-                first_name: value,
-              },
-            });
+              this.setProps({
+                mainFieldState: {
+                  ...this.props.mainFieldState,
+                  first_name: value,
+                },
+              });
           }
         },
         inputType: "text"
@@ -116,12 +117,12 @@ class ProfileInfo extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.LastNameField, checkName(value, "Фамилия должна"));
-            this.setProps({
-              mainFieldState: {
-                ...this.props.mainFieldState,
-                second_name: value,
-              },
-            });
+              this.setProps({
+                mainFieldState: {
+                  ...this.props.mainFieldState,
+                  second_name: value,
+                },
+              });
           }
         },
         inputType: "text"
@@ -131,16 +132,16 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя в чате",
         inputName: "display_name",
-        inputValue: props.user.display_name,
+        inputValue: props.user.display_name ? props.user.display_name : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
-            this.setPropsForChildren(this.children.DisplayNameField, checkName(value, "Имя должно"));
+            this.setPropsForChildren(this.children.DisplayNameField, value);
             this.setProps({
               mainFieldState: {
                 ...this.props.mainFieldState,
-                display_name: value,
+                display_name: value === "" ? null : value,
               },
             });
           }
@@ -158,12 +159,12 @@ class ProfileInfo extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.PhoneField, checkPhone(value));
-            this.setProps({
-              mainFieldState: {
-                ...this.props.mainFieldState,
-                phone: value,
-              },
-            });
+              this.setProps({
+                mainFieldState: {
+                  ...this.props.mainFieldState,
+                  phone: value,
+                },
+              });
           }
         },
         inputType: "text"
@@ -180,7 +181,7 @@ class ProfileInfo extends Block {
           this.setPropsForChildren(this.children.LastNameField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.DisplayNameField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.PhoneField, {inputIsDisabled: false});
-          this.setProps({isNotChange: false})
+          window.store.set({isNotChange: false})
         },
       }),
       ChangePasswordField: new ProfileField({
@@ -192,7 +193,8 @@ class ProfileInfo extends Block {
           this.setPropsForChildren(this.children.OldPasswordField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.NewPasswordField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.ReteatNewPasswordField, {inputIsDisabled: false})
-          this.setProps({isNotChange: false, isChangePassword: true})
+          window.store.set({isNotChange: false})
+          this.setProps({isChangePassword: true})
         },
       }),
       ExitField: new ProfileField({
@@ -269,7 +271,7 @@ class ProfileInfo extends Block {
         type: "submit",
         text: "Сохранить",
         modifierButton:"profile-info__save-button",
-        onClick: (e) => {
+        onClick: (e: Event) => {
           e.preventDefault();
 
           const errorEmail = checkEmail(this.props.mainFieldState.email)
@@ -277,23 +279,21 @@ class ProfileInfo extends Block {
           const errorName = checkName(this.props.mainFieldState.first_name, "Имя должно")
           const errorLastName = checkName(this.props.mainFieldState.second_name, "Фамилия должна")
           const errorPhone = checkPhone(this.props.mainFieldState.phone)
-          const errorDisplayName = checkName(this.props.mainFieldState.display_name, "Имя должно");
 
           const error = errorEmail.isError || errorLogin.isError || errorName.isError
-            || errorLastName.isError || errorPhone.isError || errorDisplayName.isError
+            || errorLastName.isError || errorPhone.isError
 
-          if (error) {
-            console.log(error)
-            this.setPropsForChildren(this.children.EmailField, errorEmail)
-            this.setPropsForChildren(this.children.LoginField, errorLogin)
-            this.setPropsForChildren(this.children.FirstNameField, errorName)
-            this.setPropsForChildren(this.children.LastNameField, errorLastName)
-            this.setPropsForChildren(this.children.DisplayNameField, errorDisplayName)
-            this.setPropsForChildren(this.children.PhoneField, errorPhone);
-
-            return;
+          if(!error) {
+            let obj:{[key: string]: any} = {}
+            for(let key in this.props.mainFieldState) {
+              // @ts-ignore
+              if(this.props.mainFieldState[key] !== props.user[key])
+               obj[key] = this.props.mainFieldState[key]
+            }
+            if(Object.keys(obj).length !== 0) {
+              changeProfile(obj)
+            }
           }
-          console.log(this.props.mainFieldState)
         }
       }),
       ButtonPassword: new Button({
@@ -324,6 +324,17 @@ class ProfileInfo extends Block {
   }
 
   public render(): string {
+    const isNotChange = window.store.state.isNotChange
+
+    if(isNotChange) {
+      this.setPropsForChildren(this.children.EmailField, {inputIsDisabled: true})
+      this.setPropsForChildren(this.children.LoginField, {inputIsDisabled: true})
+      this.setPropsForChildren(this.children.FirstNameField, {inputIsDisabled: true})
+      this.setPropsForChildren(this.children.LastNameField, {inputIsDisabled: true})
+      this.setPropsForChildren(this.children.DisplayNameField, {inputIsDisabled: true})
+      this.setPropsForChildren(this.children.PhoneField, {inputIsDisabled: true});
+    }
+
     return `
       <form class="profile-info__form">
         <div class="profile-info__avatar-wrap">
@@ -378,7 +389,8 @@ class ProfileInfo extends Block {
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     user: state.user,
-    isClickFileLoad: state.isClickFileLoad
+    isClickFileLoad: state.isClickFileLoad,
+    isNotChange: state.isNotChange
   };
 };
 
