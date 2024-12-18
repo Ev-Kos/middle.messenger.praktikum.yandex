@@ -41,6 +41,7 @@ class MessagesList extends Block {
       ActionsWithChatModal: new ActionsWithChatModal({
         onClickAddUser: () => {
           window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: true, isClickDeleteUserModal: false})
+          getChatUsers(Number(window.store.state.activeChatId))
         },
         onClickDeleteUser: () => {
           window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: false, isClickDeleteUserModal: true})

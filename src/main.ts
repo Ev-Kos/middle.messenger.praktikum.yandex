@@ -34,6 +34,7 @@ Object.entries(Components).forEach(([ name, template ]) => {
  window.store = new Store({
   limitMessages: 15,
   offsetMessages: 0,
+  partisipants: [],
   selectedUsers: []
  });
 

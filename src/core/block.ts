@@ -179,8 +179,9 @@ export default class Block<T extends TBlockProps = TBlockProps> {
 
   _compile() {
     const propsAndStubs: { [key: string]: any } = { ...this.props };
-    console.log(propsAndStubs, 'propsAndStubs')
+
     Object.entries(this.children).forEach(([key, child]) => {
+      console.log(this.children)
       if (Array.isArray(child)) {
         propsAndStubs[key] = child.map(
             (component) => `<div data-id="${component._id}"></div>`

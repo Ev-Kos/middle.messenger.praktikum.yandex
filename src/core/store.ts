@@ -21,6 +21,8 @@ type TState = {
   user?: TUser | null,
   users?: TUser[] | [],
   isLoadingUserSearch?: boolean,
+  partisipants?: TUser[],
+  isClickAddUserModal?: boolean,
   selectedUsers?: TUser[]
 }
 

@@ -1,10 +1,8 @@
 import Block, { TBlockProps } from "../../core/block";
-import { addUsersToChat } from "../../services/chats";
+import { addUsersToChat, deleteUsersFromChat } from "../../services/chats";
 import { usersSearch } from "../../services/users";
 import { connect } from "../../utils/connect";
-import { keydownHandler } from "../../utils/keydown-handler";
 import { TUser } from "../../utils/types";
-import { checkLogin } from "../../utils/validate-inputs";
 import { Button } from "../buttons/button";
 import { InputForm } from "../inputs/input-form";
 import { Loader } from "../loader";
@@ -13,6 +11,7 @@ import { UserCard } from "../user-card";
 type TAddDeleteUserSelectedModal = {
   isClickAdd?: boolean,
   users: TUser[],
+  partisipants: TUser[],
   selectedUsers: TUser[],
 }
 
@@ -50,7 +49,7 @@ class AddDeleteUserSelectedModal extends Block {
         onClick: (e: Event) => {
           e.preventDefault();
           const arr = window.store.state.selectedUsers?.map((item) => item.id)
-          if(Array.isArray(arr) && arr.length !== 0) {
+          if(arr && arr.length !== 0) {
             addUsersToChat({users: arr, chatId: Number(window.store.state.activeChatId)})
             this.setPropsForChildren(this.children.Input, {value: ""})
           }
@@ -59,15 +58,12 @@ class AddDeleteUserSelectedModal extends Block {
       ButtonDelete: new Button({
         type: "submit",
         text: "Удалить",
-        onClick: (e) => {
+        onClick: (e: Event) => {
           e.preventDefault();
-          const errorLogin = checkLogin(this.props.login);
-
-          if (errorLogin.isError) {
-            this.setPropsForChildren(this.children.Input, errorLogin);
-            return;
+          const arr = window.store.state.selectedUsers?.map((item) => item.id)
+          if(arr && arr.length !== 0) {
+            deleteUsersFromChat({users: arr, chatId: Number(window.store.state.activeChatId)})
           }
-          console.log(this.props.login)
         }
       }),
       Loader: new Loader({
@@ -81,18 +77,44 @@ class AddDeleteUserSelectedModal extends Block {
               ...userProps,
               isDeleted: false,
               onClick: () => {
-                if(Array.isArray(window.store.state.selectedUsers))
+                if(Array.isArray(window.store.state.selectedUsers)) {
                   window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
                   this.setPropsForChildren(this.children.Input, {value: ""})
+                }
               },
           }),
+      ),
+      Partisipants: props.partisipants?.map((item: TUser) =>
+        new UserCard({
+          ...item,
+          isDeleted: window.store.state.isClickAddUserModal ? false : true,
+          onClick: () => {
+            if(!window.store.state.isClickAddUserModal) {
+              if(Array.isArray(window.store.state.partisipants)) {
+                const id = window.store.state.user?.id;
+                if(Array.isArray(window.store.state.selectedUsers)) {
+                  if(item.id !== id) {
+                    window.store.set({selectedUsers: [...window.store.state.selectedUsers, item], isSelectedUsers: true})
+                    window.store.set({partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)})
+                  }
+                }
+              }
+            }
+          }
+        })
       ),
       SelectedUsers: props.selectedUsers?.map((item: TUser) =>
         new UserCard({
           ...item,
-          isDeleted: true,
+          isDeleted: false,
           onClick: () => {
             window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
+            if(window.store.state.selectedUsers?.length === 0) {
+              window.store.set({isSelectedUsers: false})
+            }
+            if(!window.store.state.isClickAddUserModal && Array.isArray(window.store.state.partisipants)) {
+              window.store.set({partisipants: [...window.store.state.partisipants, item]})
+            }
           }
         })
       )
@@ -110,37 +132,76 @@ class AddDeleteUserSelectedModal extends Block {
               ...userProps,
               isDeleted: false,
               onClick: () => {
-                if(Array.isArray(window.store.state.selectedUsers))
+                if(Array.isArray(window.store.state.selectedUsers)) {
                   window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
                   this.setPropsForChildren(this.children.Input, {value: ""})
-                  console.log(window.store.state.selectedUsers)
+                }
               },
           }),
         )
-        if (newProps && newProps.selectedUsers) {
-          this.children.SelectedUsers = newProps.selectedUsers.map((item: TUser) =>
-            new UserCard({
-              ...item,
-              isDeleted: true,
-              onClick: () => {
-                window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
+      }
+      if (newProps && newProps.partisipants) {
+        this.children.Partisipants = newProps.partisipants.map((item: TUser) =>
+          new UserCard({
+            ...item,
+            isDeleted: window.store.state.isClickAddUserModal ? false : true,
+            onClick: () => {
+              if(!window.store.state.isClickAddUserModal) {
+                if(Array.isArray(window.store.state.partisipants)) {
+                  const id = window.store.state.user?.id;
+                  if(Array.isArray(window.store.state.selectedUsers)) {
+                    if(item.id !== id) {
+                      window.store.set({selectedUsers: [...window.store.state.selectedUsers, item], isSelectedUsers: true})
+                      window.store.set({partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)})
+                    }
+                  }
+                }
               }
-            })
-          )
-        }
+            }
+          })
+        )
+      }
+      if (newProps && newProps.selectedUsers) {
+        this.children.SelectedUsers = newProps.selectedUsers?.map((item: TUser) =>
+          new UserCard({
+            ...item,
+            isDeleted: true,
+            onClick: () => {
+              window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
+              if(window.store.state.selectedUsers?.length === 0) {
+                window.store.set({isSelectedUsers: false})
+              }
+              if(!window.store.state.isClickAddUserModal && Array.isArray(window.store.state.partisipants)) {
+                window.store.set({partisipants: [...window.store.state.partisipants, item]})
+              }
+            }
+          })
+        )
       }
       return true;
     }
 
   public render(): string {
+    const id = window.store.state.user?.id;
+    const { Partisipants } = this.children;
+
+    if(Array.isArray(Partisipants)) {
+      Partisipants.forEach((item) => {
+        item.setProps({isYou: item.props.id === id})
+      })
+    }
+
     return `
+
       {{#if isClickAdd}}
         <h1 class="form-modal__title">Добавить пользователя</h1>
       {{else}}
         <h1 class="form-modal__title">Удалить пользователя</h1>
       {{/if}}
       <div class="form-modal__form">
-        {{{Input}}}
+        {{#if isClickAdd}}
+          {{{Input}}}
+        {{/if}}
         {{#if isLoaderAddUser}}
           <div class="loader-modal">
             {{{Loader}}}
@@ -156,13 +217,22 @@ class AddDeleteUserSelectedModal extends Block {
             {{/each}}
           </ul>
         {{/if}}
-        {{#if isSelectedUsers}}
+        <div class="select-list-container">
+          <p class="textForDel">Участники:</p>
           <ul class="select-list">
-            {{#each SelectedUsers}}
+            {{#each Partisipants}}
               {{{ this }}}
             {{/each}}
           </ul>
-        {{/if}}
+          {{#if isSelectedUsers}}
+            <p class="textForDel">{{#if isClickAddUserModal}}Добавить:{{else}}Удалить:{{/if}}</p>
+            <ul class="select-list">
+              {{#each SelectedUsers}}
+                {{{ this }}}
+              {{/each}}
+            </ul>
+          {{/if}}
+        <div/>
         <div class="form-modal__button">
           {{#if isClickAdd}}
             {{{ButtonAdd}}}
@@ -185,7 +255,8 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     isSearchUsers: state.isSearchUsers,
     isClickAddUserModal: state.isClickAddUserModal,
     selectedUsers: state.selectedUsers,
-    isSelectedUsers: state.isSelectedUsers
+    isSelectedUsers: state.isSelectedUsers,
+    partisipants: state.partisipants
   };
 };
 

@@ -1,6 +1,6 @@
 import HTTPTransport from "../core/HTTPTransport";
 import {
-  TAddUserToChatRequest,
+  TAddOrDeleteUserToChatRequest,
   TCreateChatRequest,
   TCreateChatResponse,
   TDeleteChatRequest,
@@ -34,11 +34,15 @@ export default class ChatsApi {
     return chatsApi.delete("", { data });
   }
 
-  async addUsersToChat(data: TAddUserToChatRequest): Promise< void | TErrorApi > {
+  async addUsersToChat(data: TAddOrDeleteUserToChatRequest): Promise< void | TErrorApi > {
     return chatsApi.put("/users", { data });
   }
 
   async getChatUsers(data: number) {
     return chatsApi.get(`/${data}/users`);
+  }
+
+  async deleteUsersFromChat(data: TAddOrDeleteUserToChatRequest): Promise< void | TErrorApi > {
+    return chatsApi.delete("/users", { data });
   }
 }

@@ -28,7 +28,8 @@ export type TUser = {
   phone: string,
   login: string,
   avatar: string,
-  email: string
+  email: string,
+  role?: string
 }
 
 export type TGetChatsRequest = {
@@ -72,7 +73,7 @@ export type TDeleteChatResponse = {
   }
 }
 
-export type TAddUserToChatRequest = {
+export type TAddOrDeleteUserToChatRequest = {
   users: number[],
   chatId: number
 }

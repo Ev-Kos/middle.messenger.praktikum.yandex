@@ -1,5 +1,5 @@
 import ChatsApi from "../api/chats";
-import { TAddUserToChatRequest, TCreateChatRequest, TDeleteChatRequest, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
+import { TAddOrDeleteUserToChatRequest, TCreateChatRequest, TDeleteChatRequest, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
 
 const chatsApi = new ChatsApi();
 
@@ -108,7 +108,7 @@ export const deleteChat = async (data: TDeleteChatRequest) => {
 	}
 }
 
-export const addUsersToChat = async (data: TAddUserToChatRequest) => {
+export const addUsersToChat = async (data: TAddOrDeleteUserToChatRequest) => {
 	window.store.set({ isLoadingUserToChat: true });
 	try {
 		await chatsApi.addUsersToChat(data);
@@ -123,11 +123,24 @@ export const addUsersToChat = async (data: TAddUserToChatRequest) => {
 export const getChatUsers = async (data: number) => {
 	window.store.set({ isLoadingChatUsers: true });
 	try {
-		await chatsApi.getChatUsers(data);
-    //window.store.set({selectedUsers: [], isSelectedUsers: false, isClickAddUserModal: false})
+		const users = await chatsApi.getChatUsers(data);
+    window.store.set({partisipants: users})
 	} catch (error: any) {
 		window.store.set({ isGetChatUsersError: error.reason });
 	} finally {
 		window.store.set({ isLoadingChatUsers: false });
 	}
 }
+
+export const deleteUsersFromChat = async (data: TAddOrDeleteUserToChatRequest) => {
+	window.store.set({ isLoadingDeleteUser: true });
+	try {
+		await chatsApi.deleteUsersFromChat(data);
+    window.store.set({selectedUsers: [], isSelectedUsers: false, isClickDeleteUserModal: false})
+	} catch (error: any) {
+		window.store.set({ isDeleteUserToChatError: error.reason });
+	} finally {
+		window.store.set({ isLoadingDeleteUser: false });
+	}
+}
+

@@ -25,22 +25,31 @@ export default class UserCard extends Block {
 
   public render(): string {
     return `
-      <div class="user-search-card__container">
-        <div class="user-search-card__name-wrap">
-          {{#if avatar}}
-            <img src="{{getImage avatar}}" class="user-search-card__avatar" alt="Аватар пользователя" />
-          {{else}}
-            <div class="user-search-card__mock-photo"></div>
-          {{/if}}
-          <p class="user-search-card__name">{{first_name}} {{second_name}}</p>
+      <div class="{{#if isYou}}user-search-card__wrap-you{{else}}user-search-card__wrap{{/if}}">
+        <div class="user-search-card__container">
+          <div class="user-search-card__name-wrap">
+            {{#if avatar}}
+              <img src="{{getImage avatar}}" class="user-search-card__avatar" alt="Аватар пользователя" />
+            {{else}}
+              <div class="user-search-card__mock-photo"></div>
+            {{/if}}
+            <p class="user-search-card__name">{{#unless isYou}}{{first_name}} {{second_name}}{{else}}Вы{{/unless}}</p>
+          </div>
+            {{#unless isYou}}
+              <p class="user-search-card__login">Логин: {{login}}</p>
+            {{/unless}}
+            {{#if isYou}}
+              <p class="user-search-card__admin">Администратор чата</p>
+            {{/if}}
         </div>
-        <p class="user-search-card__login">Логин: {{login}}</p>
+        {{#if isDeleted}}
+          {{#unless isYou}}
+            <div class="user-search-card__icon">
+              {{{PlusIcon}}}
+            </div>
+          {{/unless}}
+        {{/if}}
       </div>
-      {{#if isDeleted}}
-        <div class="user-search-card__icon">
-          {{{PlusIcon}}}
-        </div>
-      {{/if}}
     `
   }
 }
