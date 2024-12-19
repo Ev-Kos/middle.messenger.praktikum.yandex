@@ -48,11 +48,12 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Почта",
         inputName: "email",
-        inputValue: props.user.email,
+        value: props.user.email,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
+            console.log(value)
             this.setPropsForChildren(this.children.EmailField, checkEmail(value));
             this.setProps({
               mainFieldState: {
@@ -69,7 +70,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Логин",
         inputName: "login",
-        inputValue: props.user.login,
+        value: props.user.login,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -90,7 +91,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя",
         inputName: "first_name",
-        inputValue: props.user.first_name,
+        value: props.user.first_name,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -111,18 +112,18 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Фамилия",
         inputName: "second_name",
-        inputValue: props.user.second_name,
+        value: props.user.second_name,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.LastNameField, checkName(value, "Фамилия должна"));
-              this.setProps({
-                mainFieldState: {
-                  ...this.props.mainFieldState,
-                  second_name: value,
-                },
-              });
+            this.setProps({
+              mainFieldState: {
+                ...this.props.mainFieldState,
+                second_name: value,
+              },
+            });
           }
         },
         inputType: "text"
@@ -132,7 +133,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя в чате",
         inputName: "display_name",
-        inputValue: props.user.display_name ? props.user.display_name : "",
+        value: props.user.display_name ? props.user.display_name : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -153,7 +154,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Телефон",
         inputName: "phone",
-        inputValue: props.user.phone,
+        value: props.user.phone,
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -208,7 +209,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Старый пароль",
         inputName: "oldPassword",
-        inputValue:"",
+        value:"",
         inputIsDisabled: true,
         modifierNameField: "password-field",
         onChangeInput: (e) => {
@@ -230,7 +231,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Новый пароль",
         inputName: "newPassword",
-        inputValue:"",
+        value:"",
         inputIsDisabled: true,
         modifierNameField: "password-field",
         onChangeInput: (e) => {
@@ -252,7 +253,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Повторите новый пароль",
         inputName: "repeat_password",
-        inputValue:"",
+        value:"",
         inputIsDisabled: true,
         modifierNameField: "password-field",
         onChangeInput: (e) => {
@@ -326,12 +327,15 @@ class ProfileInfo extends Block {
     const isNotChange = window.store.state.isNotChange
 
     if(isNotChange) {
-      this.setPropsForChildren(this.children.EmailField, {inputIsDisabled: true})
-      this.setPropsForChildren(this.children.LoginField, {inputIsDisabled: true})
-      this.setPropsForChildren(this.children.FirstNameField, {inputIsDisabled: true})
-      this.setPropsForChildren(this.children.LastNameField, {inputIsDisabled: true})
-      this.setPropsForChildren(this.children.DisplayNameField, {inputIsDisabled: true})
-      this.setPropsForChildren(this.children.PhoneField, {inputIsDisabled: true});
+      this.setPropsForChildren(this.children.EmailField, {inputIsDisabled: true, value: window.store.state.user?.email})
+      this.setPropsForChildren(this.children.LoginField, {inputIsDisabled: true, value: window.store.state.user?.login})
+      this.setPropsForChildren(this.children.FirstNameField, {inputIsDisabled: true, value: window.store.state.user?.first_name})
+      this.setPropsForChildren(this.children.LastNameField, {inputIsDisabled: true, value: window.store.state.user?.second_name})
+      this.setPropsForChildren(this.children.DisplayNameField, {inputIsDisabled: true, value: window.store.state.user?.display_name})
+      this.setPropsForChildren(this.children.PhoneField, {inputIsDisabled: true, value: window.store.state.user?.phone});
+      this.setPropsForChildren(this.children.OldPasswordField, {value: "", isError: false, error: ""});
+      this.setPropsForChildren(this.children.NewPasswordField, {value: "", isError: false,  error: ""});
+      this.setPropsForChildren(this.children.ReteatNewPasswordField, {value: "", isError: false,  error: ""});
     }
 
     return `

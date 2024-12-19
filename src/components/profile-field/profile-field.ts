@@ -1,5 +1,4 @@
 import Block from "../../core/block";
-import { InputProfile } from "../inputs/input-profile";
 
 type TProfileFieldProps = {
   isButton: boolean;
@@ -9,7 +8,7 @@ type TProfileFieldProps = {
   modifierNameField?: string;
   isWithInput: boolean;
   inputName?: string;
-  inputValue?: string;
+  value?: string;
   inputIsDisabled?: boolean;
   onChangeInput?: (e: Event) => void;
   inputType?: string;
@@ -23,18 +22,20 @@ export default class ProfileField extends Block {
       ...props,
       className: "profile-field",
       events: {
-        click: props.onClick
+        click: props.onClick,
+        change: props.onChangeInput
       },
-      InputProfile: new InputProfile({
-        name: String(props.inputName),
-        value: props.inputValue,
-        type: String(props.inputType),
-        onChange: props.onChangeInput,
-      })
+      // InputProfile: new InputProfile({
+      //   name: String(props.inputName),
+      //   value: props.inputValue,
+      //   type: String(props.inputType),
+      //   onChange: props.onChangeInput,
+      // })
     });
   }
 
   public render(): string {
+    console.log(this.props);
     return `
       <div class="profile-field__info-wrap">
         {{#if isButton}}
@@ -44,9 +45,11 @@ export default class ProfileField extends Block {
         {{/if}}
         {{#if isWithInput}}
           {{#if inputIsDisabled}}
-            <p class="profile-field__value">{{inputValue}}</p>
+            <p class="profile-field__value">{{value}}</p>
           {{else}}
-            {{{InputProfile}}}
+            <label class="profile-field__label">
+              <input class="profile-field__input-profile" type={{type}} name={{name}} value={{value}} >
+            </label>
           {{/if}}
         {{/if}}
       </div>
