@@ -15,6 +15,7 @@ export default class ProfilePage extends Block {
             limit: Number(window.store.state.limitMessages),
             offset: Number(window.store.state.offsetMessages)
           })
+          window.store.set({isNotChange: true, isChangePassword: false})
         },
         isRight: false
       }),

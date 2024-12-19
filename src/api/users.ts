@@ -1,5 +1,5 @@
 import HTTPTransport from "../core/HTTPTransport";
-import { TErrorApi, TSingUpRequest, TUser, TUsersSearchRequest } from "../utils/types";
+import { TChangePasswordRequest, TErrorApi, TSingUpRequest, TUser, TUsersSearchRequest } from "../utils/types";
 
 const usersApi = new HTTPTransport("/user");
 
@@ -16,7 +16,11 @@ export default class UsersApi {
     return usersApi.put("/profile/avatar", { data });
   }
 
-  async changeProfile(data: TSingUpRequest): Promise<TUser | TErrorApi | unknown> {
+  async changeProfile(data: TSingUpRequest): Promise<TUser | TErrorApi > {
     return usersApi.put("/profile", { data });
-}
+  }
+
+  async changePassword(data: TChangePasswordRequest): Promise<void | TErrorApi> {
+    return usersApi.put("/password", { data });
+  }
 }

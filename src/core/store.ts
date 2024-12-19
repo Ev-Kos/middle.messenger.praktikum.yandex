@@ -26,6 +26,7 @@ type TState = {
   selectedUsers?: TUser[],
   userAvatarFile?: File | null,
   isClickFileLoad?: boolean,
+  isNotChange?: boolean,
 }
 
 export class Store extends EventBus<string> {

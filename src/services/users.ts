@@ -1,5 +1,5 @@
 import UsersApi from "../api/users";
-import { TSingUpRequest, TUsersSearchRequest } from "../utils/types";
+import { TChangePasswordRequest, TSingUpRequest, TUsersSearchRequest } from "../utils/types";
 
 const usersApi = new UsersApi();
 
@@ -45,5 +45,17 @@ export const changeProfile = async (data: TSingUpRequest) => {
     window.store.set({ changeProfileError: error.reason });
   } finally {
     window.store.set({ isLoadingChangeProfile: false });
+  }
+}
+
+export const changePassword = async (data: TChangePasswordRequest) => {
+  window.store.set({ isLoadingChangePassword: true });
+  try {
+    await usersApi.changePassword(data);
+    window.store.set({isNotChange: true, isChangePassword: false})
+  } catch (error: any) {
+    window.store.set({ changePasswordError: error.reason });
+  } finally {
+    window.store.set({ isLoadingChangePassword: false });
   }
 }

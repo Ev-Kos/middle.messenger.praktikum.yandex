@@ -81,3 +81,8 @@ export type TAddOrDeleteUserToChatRequest = {
 export type TUsersSearchRequest = {
   login: string,
 }
+
+export type TChangePasswordRequest = {
+  oldPassword: string,
+  newPassword: string
+}

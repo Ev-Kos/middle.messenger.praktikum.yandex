@@ -1,7 +1,7 @@
 
 import Block, { TBlockProps } from "../../core/block";
 import { logout } from "../../services/auth";
-import { changeProfile } from "../../services/users";
+import { changePassword, changeProfile } from "../../services/users";
 import { connect } from "../../utils/connect";
 import { TUser } from "../../utils/types";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
@@ -193,8 +193,7 @@ class ProfileInfo extends Block {
           this.setPropsForChildren(this.children.OldPasswordField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.NewPasswordField, {inputIsDisabled: false})
           this.setPropsForChildren(this.children.ReteatNewPasswordField, {inputIsDisabled: false})
-          window.store.set({isNotChange: false})
-          this.setProps({isChangePassword: true})
+          window.store.set({isNotChange: false, isChangePassword: true})
         },
       }),
       ExitField: new ProfileField({
@@ -267,7 +266,7 @@ class ProfileInfo extends Block {
         },
         inputType: "password"
       }),
-      ButtonMainFields: new Button({
+      ButtonMainFieldsSave: new Button({
         type: "submit",
         text: "Сохранить",
         modifierButton:"profile-info__save-button",
@@ -300,7 +299,7 @@ class ProfileInfo extends Block {
         type: "submit",
         text: "Сохранить",
         modifierButton:"profile-info__save-button",
-        onClick: (e) => {
+        onClick: (e: Event) => {
           e.preventDefault();
 
           const errorPassword = checkPassword(this.props.passwordState.oldPassword);
@@ -311,7 +310,7 @@ class ProfileInfo extends Block {
             this.setPropsForChildren(this.children.InputRepeatedPassword, errorRepeatedPassword);
             return;
           }
-          console.log(this.props.passwordState.newPassword)
+          changePassword(this.props.passwordState)
         }
       }),
       FileLoadModal: new fileLoadModal({}),
@@ -370,7 +369,7 @@ class ProfileInfo extends Block {
         <div class="profile-info__button-wrap">
         {{#unless isNotChange}}
           {{#unless isChangePassword }}
-            {{{ButtonMainFields}}}
+            {{{ButtonMainFieldsSave}}}
           {{/unless}}
         {{/unless}}
         {{#if isChangePassword}}
@@ -390,7 +389,8 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     user: state.user,
     isClickFileLoad: state.isClickFileLoad,
-    isNotChange: state.isNotChange
+    isNotChange: state.isNotChange,
+    isChangePassword: state.isChangePassword
   };
 };
 
