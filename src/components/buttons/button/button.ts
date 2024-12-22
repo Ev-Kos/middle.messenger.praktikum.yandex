@@ -10,6 +10,7 @@ type TButtonProps = {
   modifierButton?: string;
   onClick?: (e: Event) => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
 };
 
 class Button extends Block {
@@ -33,19 +34,22 @@ class Button extends Block {
 
   public render(): string {
     return `
-      {{#if isLoading}}
-        {{{Loader}}}
-      {{else}}
-        <span class="button__text {{modifierText}}">{{text}}</span>
-      {{/if}}
+      <div class="{{#if isDisabled}}button__mask-disabled{{else}}button__mask{{/if}}">
+        {{#if isLoading}}
+          {{{Loader}}}
+        {{else}}
+          <span class="button__text {{modifierText}}">{{text}}</span>
+        {{/if}}
+      </div>
     `
   }
 }
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
+
   return {
     isLoading: state.isLoadingChangeChats || state.isLoadingUserToChat || state.isLoadingDeleteUser
-      || state.isLoadingUploadUserAvatar,
+      || state.isLoadingUploadUserAvatar || state.isLoadingUploadResouse || state.isLoadingUploadUserAvatar,
   };
 };
 

@@ -1,4 +1,9 @@
-export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean) => {
+const MonthNameArr = [
+    'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+    'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
+  ]
+
+export const getDate = (date: string, isChatCard: boolean, isOnlyTime: boolean) => {
   const messageDate = new Date(date);
 
   const now = new Date();
@@ -10,8 +15,9 @@ export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean
   let monthNow = now.getMonth();
   let messageMonthNumber = messageDate.getMonth();
   let month = messageDate.toLocaleString('default', { month: 'short' });
+  let monthNum = messageDate.getMonth();
   let monthMod = month[0].toUpperCase() + month.slice(1, month.length - 1)
-
+  let monthModFull = MonthNameArr.find((item, index) => index === monthNum)
   let weekDay = messageDate.toLocaleString('default', { weekday: 'short' });
   let weekDayMod = weekDay[0].toUpperCase() + weekDay.slice(1)
 
@@ -27,11 +33,10 @@ export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean
     messageDay = Number('0' + messageDay)
   };
 
-  if(!isGotMessage && !isOnlyTime) {
+  if(isChatCard && !isOnlyTime) {
     if (nowDay - messageDay < 7 && messageMonthNumber === monthNow && year === yearNow && nowDay - messageDay !== 0) {
       return `${weekDayMod}`;
     }
-
     else if (nowDay - messageDay === 0 && messageMonthNumber === monthNow && year === yearNow) {
       return `${hour}:${min}`
     } else {
@@ -39,14 +44,14 @@ export const getDate = (date: string, isGotMessage: boolean, isOnlyTime: boolean
     }
   }
 
-  if(isGotMessage && !isOnlyTime) {
+  if(!isChatCard && !isOnlyTime) {
     if(yearNow === year) {
-      return `${messageDay} ${monthMod}`;
+      return `${messageDay} ${monthModFull}`;
     }
-    return `${messageDay} ${monthMod} ${year}`;
+    return `${messageDay} ${monthModFull} ${year}`;
   }
 
-  if(!isGotMessage && isOnlyTime) {
+  if(!isChatCard && isOnlyTime) {
     return `${hour}:${min}`
   }
 }

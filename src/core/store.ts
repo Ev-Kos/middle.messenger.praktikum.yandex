@@ -1,4 +1,4 @@
-import { TGetChatsResponse, TUser } from "../utils/types";
+import { TGetChatsResponse, TMessages, TUser } from "../utils/types";
 import EventBus from "./event-bus";
 
 export enum StoreEvents {
@@ -8,8 +8,8 @@ export enum StoreEvents {
 type TState = {
   activeChatId?: null | number,
   isOpenActionsWithChatModal?: boolean,
-  offsetMessages?: number,
-  limitMessages?: number,
+  offsetChat?: number,
+  limitChat?: number,
   isLoadingSingIn?: boolean,
   isLoadingSingUp?: boolean,
   isLoadingChangeChats?: boolean,
@@ -26,7 +26,20 @@ type TState = {
   selectedUsers?: TUser[],
   userAvatarFile?: File | null,
   isClickFileLoad?: boolean,
+  isOpenFileModal?: boolean,
   isNotChange?: boolean,
+  messages?: TMessages[],
+  newMessage?: TMessages | null,
+  activeChatToken?: string,
+  offsetMessages?: string,
+  chatScrolled?: boolean,
+  idsChats?: number[],
+  isNewCount?: boolean,
+  isMessagePhoto?: boolean,
+  isLoadingUploadResouse?: boolean,
+  isLoadingUploadUserAvatar?: boolean,
+  messagePhotoFile?: File | null,
+  uploadedMessagePhoto?: {path: string, id: number},
 }
 
 export class Store extends EventBus<string> {

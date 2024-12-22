@@ -1,29 +1,47 @@
 import Block from "../../core/block";
+import { TMessages, TUser } from "../../utils/types";
 import { CheckmarkIcon } from "../icons";
 
-type TMessage = {
-  text: string;
-  time: string;
-  isSend: boolean;
+interface IMessageProps extends TMessages {
+  isSend?: boolean;
+  isText?: boolean;
+  user?: TUser;
 }
 
 export default class Message extends Block {
-  constructor(props: TMessage) {
-    super("div", {
+  constructor(props: IMessageProps) {
+    super("li", {
       ...props,
-      className: props.isSend ? "message message_send" : "message",
       CheckmarkIcon: new CheckmarkIcon
     });
   }
 
   public render(): string {
     return `
-      <div class="message__text">{{text}}
-        <div class="message__time-wrap">
-          <span class="message__time">{{time}}</span>
-          {{{CheckmarkIcon}}}
-        </div>
+    <div class="{{#if isSend}}message-wrap-send{{else}}message-wrap{{/if}}">
+      <div class="{{#if isSend}}message message_send{{else}}message{{/if}}">
+        {{#unless isSend}}
+          <p class="message__user-name">{{#if user.display_name}}{{user.display_name}}
+            {{else}}{{user.first_name}} {{user.last_name}}{{/if}}
+          </p>
+        {{/unless}}
+        {{#if isText}}
+          <div class="message__text">{{content}}
+            <div class="message__time-wrap">
+              <span class="message__time">{{getDate time false true}}</span>
+              {{{CheckmarkIcon}}}
+            </div>
+          </div>
+          {{else}}
+            <div class="image-message">
+              <img class="image-message__image" src={{getImage file.path}} alt={{file.filename}} />
+              <div class="image-message__time-wrap">
+                <p class="image-message__time">{{getDate time false true}}</p>
+              </div>
+            </div>
+        {{/if}}
       </div>
+    </div>
     `
   }
 }

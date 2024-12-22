@@ -1,11 +1,13 @@
 import AuthApi from "../api/auth";
 import { ROUTES } from "../utils/constants";
 import { TSingInRequest, TSingUpRequest } from "../utils/types";
+import { getChats } from "./chats";
 
 const authApi = new AuthApi();
 
 export const singIn = async (model: TSingInRequest) => {
   window.store.set({ isLoadingSingIn: true });
+  window.store.set({ singInError: null });
 	try {
 		const response = await authApi.singIn(model)
     if(response) {
@@ -35,6 +37,10 @@ export const singUp = async (model: TSingUpRequest) => {
 export const checkSingInUser = async () => {
   try {
     const user = await authApi.currentUser();
+    await getChats({
+      limit: Number(window.store.state.limitChat),
+      offset: Number(window.store.state.offsetChat)
+    })
     window.store.set({ user });
     return true
   }
@@ -47,7 +53,7 @@ export const checkSingInUser = async () => {
 export const logout = async () => {
 	try {
 		await authApi.logout();
-    window.store.set({});
+    window.store.set({ singInError: null });
     window.router.go(ROUTES.login);
 	} catch (error: any) {
 		window.store.set({ logoutError: error.reason });

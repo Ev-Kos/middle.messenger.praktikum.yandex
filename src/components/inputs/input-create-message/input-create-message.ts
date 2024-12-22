@@ -6,6 +6,7 @@ type TInputCreateMessageProps = {
   name: string;
   value?: string;
   type: string;
+  onKeyDown?: (e: KeyboardEvent) => void;
 }
 
 export default class InputCreateMessage extends Block {
@@ -14,7 +15,8 @@ export default class InputCreateMessage extends Block {
       ...props,
       className: "input-create-message__label",
       events: {
-        change: props.onChange
+        change: props.onChange,
+        keydown: props.onKeyDown
       }
     })
   }

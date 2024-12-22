@@ -35,7 +35,6 @@ export default class ProfileField extends Block {
   }
 
   public render(): string {
-    console.log(this.props);
     return `
       <div class="profile-field__info-wrap">
         {{#if isButton}}

@@ -1,5 +1,5 @@
 import Block, { TBlockProps } from "../../core/block";
-import { getChats } from "../../services/chats";
+import { getChats, getNewMessagesCount } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { ROUTES } from "../../utils/constants";
 import { TGetChatsResponse } from "../../utils/types";
@@ -12,8 +12,8 @@ import { ModalWrapper } from "../wrappers/modals-wrapper";
 
 type TContactList = {
   chats: TGetChatsResponse[],
-  limitMessages: number,
-  offsetMessages: number,
+  limitChat: number,
+  offsetChat: number,
 }
 
 class ContactList extends Block {
@@ -38,12 +38,12 @@ class ContactList extends Block {
           const value = target.value;
           if(e.key === "Enter") {
             if(value.length !== 0) {
-              getChats({limit: props.limitMessages, offset: props.offsetMessages, title: value})
+              getChats({limit: props.limitChat, offset: props.offsetChat, title: value})
               this.setProps({
                 isSearch: true
               })
             } else {
-              getChats({limit: props.limitMessages, offset: props.offsetMessages})
+              getChats({limit: props.limitChat, offset: props.offsetChat})
             }
           }
         }
@@ -53,7 +53,7 @@ class ContactList extends Block {
           new ContactCard({
               ...chatProps,
               onClick: () => {
-                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
+                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id,messages: [], groups: []})
               },
           }),
       ),
@@ -75,13 +75,25 @@ class ContactList extends Block {
     if (oldProps === newProps) {
       return false;
     }
+    if(newProps && newProps.coordinates !== oldProps?.coordinates && window.store.state.isNewCount) {
+      const allChats = window.store.state.chats;
+      const idsChats = allChats?.map((item) => item.id)
+      setTimeout(() => {
+        if(idsChats && idsChats.length > 0) {
+          idsChats.forEach((item) => {
+            getNewMessagesCount(item)
+          })
+        }
+        window.store.set({isNewCount: false})
+      }, 8000)
+    }
     if (newProps && newProps.chats) {
       this.children.Chats = newProps.chats.map(
         (chatProps: any) =>
           new ContactCard({
             ...chatProps,
             onClick: () => {
-              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
+              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id, messages: [], groups: []})
             },
         }),
       )
@@ -90,16 +102,17 @@ class ContactList extends Block {
   }
 
   public render(): string {
-
-    const activeChatId = window.store.state.activeChatId;
+    const {activeChatId, newMessage} = window.store.state
+    const userId = window.store.state.user?.id;
     const { Chats } = this.children
 
     if(Array.isArray(Chats)) {
       Chats.forEach((item) => {
-        item.setProps({isActive: item.props.id === activeChatId})
+        item.setProps({isActive: item.props.id === activeChatId, isYou: newMessage?.user_id === userId
+        })
       })
     }
-
+//, unread_count: newUnread_count?.unread_count
     return `
       <div class="container__search">
         {{{ButtonLink}}}
@@ -131,7 +144,9 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     chatsLength: state.chatsLength,
     isScroll: state.isScroll,
     isCreateChatModal: state.isCreateChatModal,
-    activeChatId: state.activeChatId
+    activeChatId: state.activeChatId,
+    coordinates: state.coordinates,
+    isNewCount: state.isNewCount,
   };
 };
 

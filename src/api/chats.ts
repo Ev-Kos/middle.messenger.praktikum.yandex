@@ -8,6 +8,7 @@ import {
   TErrorApi,
   TGetChatsRequest,
   TGetChatsResponse,
+  TNewMessagesCountResponse,
 } from "../utils/types";
 
 const chatsApi = new HTTPTransport("/chats");
@@ -45,4 +46,12 @@ export default class ChatsApi {
   async deleteUsersFromChat(data: TAddOrDeleteUserToChatRequest): Promise< void | TErrorApi > {
     return chatsApi.delete("/users", { data });
   }
+
+  async getTokenChat(data: number) {
+    return chatsApi.post(`/token/${data}`);
+  }
+
+  async getNewMessagesCount(id: number): Promise<TNewMessagesCountResponse | TErrorApi> {
+		return chatsApi.get(`/new/${id}`);
+	}
 }

@@ -12,8 +12,8 @@ export default class ProfilePage extends Block {
         onClick: () => {
           window.router.go(ROUTES.chat)
           getChats({
-            limit: Number(window.store.state.limitMessages),
-            offset: Number(window.store.state.offsetMessages)
+            limit: Number(window.store.state.limitChat),
+            offset: Number(window.store.state.offsetChat)
           })
           window.store.set({isNotChange: true, isChangePassword: false})
         },

@@ -1,10 +1,26 @@
+.message-wrap, .message-wrap-send {
+  display: flex;
+  justify-content: start;
+}
+
+.message-wrap-send {
+  justify-content: end;
+}
+
 .message {
   padding: 11px;
   box-sizing: border-box;
   background-color: var(--color-got-message);
   border-radius: 12px 12px 12px 0;
   max-width: 50%;
-  align-self: start;
+  justify-items: start;
+
+  &__user-name {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-blue);
+  }
 
   &__text, &__time {
     font-weight: 500;
@@ -32,6 +48,37 @@
   &_send {
     background-color: var(--color-blue-light);
     border-radius: 12px 12px 0;
-    align-self: end;
+    width: fit-content;
   }
 }
+
+.image-message {
+  position: relative;
+
+  &__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid var(--color-grey-border);
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+
+  &__time-wrap {
+    position: absolute;
+    bottom: 5%;
+    right: 3%;
+    background-color: var(--color-gray-dark);
+    border-radius: 30px;
+    padding: 2px 7px;
+    opacity: 1;
+  }
+
+  &__time {
+    margin: 0;
+    color: var(--color-white);
+    font-size: 9px;
+    font-weight: 500;
+  }
+}
+

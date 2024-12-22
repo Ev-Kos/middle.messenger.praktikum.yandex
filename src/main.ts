@@ -8,16 +8,18 @@ import Router from './core/router';
 import { checkSingInUser } from './services/auth';
 import { getChats } from './services/chats';
 import { getImage } from './utils/functions/getImage';
+import WebScoketClass from './services/ws';
 
 declare global {
 	interface Window {
 		router: Router;
 		store: Store;
+    socket: WebScoketClass;
 	}
 }
 
-Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
-  return getDate(date, isGotMessage, isOnlyTime)
+Handlebars.registerHelper('getDate', function (date, isChatCard, isOnlyTime) {
+  return getDate(date, isChatCard, isOnlyTime)
 })
 
 Handlebars.registerHelper('getImage', function (path) {
@@ -32,12 +34,15 @@ Object.entries(Components).forEach(([ name, template ]) => {
 });
 
  window.store = new Store({
-  limitMessages: 15,
-  offsetMessages: 0,
+  limitChat: 15,
+  offsetChat: 0,
   partisipants: [],
   selectedUsers: [],
   user: {},
-  isNotChange: true
+  isNotChange: true,
+  messages: [],
+  offsetMessages: "0",
+  //newMessage: null
  });
 
 // window.store.on(StoreEvents.Updated, (prevState: any, newState: any) => {
@@ -58,16 +63,16 @@ const protectedRouter = async () => {
     if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
         window.router.go(ROUTES.chat);
         await getChats({
-          limit: Number(window.store.state.limitMessages),
-          offset: Number(window.store.state.offsetMessages)
+          limit: Number(window.store.state.limitChat),
+          offset: Number(window.store.state.offsetChat)
         })
     }
     else {
         window.router.go(currentPath);
         if(currentPath === ROUTES.chat) {
           await getChats({
-            limit: Number(window.store.state.limitMessages),
-            offset: Number(window.store.state.offsetMessages)
+            limit: Number(window.store.state.limitChat),
+            offset: Number(window.store.state.offsetChat)
           })
         }
     }

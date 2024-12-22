@@ -1,7 +1,8 @@
 import ChatsApi from "../api/chats";
 import { TAddOrDeleteUserToChatRequest, TCreateChatRequest, TDeleteChatRequest, TGetChatsRequest, TGetChatsResponse } from "../utils/types";
+import WebScoketClass from "./ws";
 
-const chatsApi = new ChatsApi();
+export const chatsApi = new ChatsApi();
 
 export const getChats = async (model: TGetChatsRequest) => {
   window.store.set({ isLoading: true });
@@ -14,7 +15,7 @@ export const getChats = async (model: TGetChatsRequest) => {
     if(Array.isArray(chats) && chats.length === 0) {
       window.store.set({ chatsLength: null });
     }
-    if(Array.isArray(chats) && chats.length > 14) {
+    if(Array.isArray(chats) && chats.length > 11) {
       window.store.set({ isScroll: true });
     }
   } catch (error: any) {
@@ -143,4 +144,61 @@ export const deleteUsersFromChat = async (data: TAddOrDeleteUserToChatRequest) =
 		window.store.set({ isLoadingDeleteUser: false });
 	}
 }
+
+export const getTokenChat = async (id: number) => {
+	window.store.set({ isLoadingGetToken: true });
+	try {
+		const token = await chatsApi.getTokenChat(id);
+    window.store.set({ activeChatToken: token.token });
+	} catch (error: any) {
+		window.store.set({ isGetTokenChatError: error.reason });
+	} finally {
+		window.store.set({ isLoadingGetToken: false });
+	}
+}
+
+export const wsChat = async (id: number) => {
+	await getTokenChat(id);
+	const { user, activeChatId, activeChatToken, offsetMessages } = window.store.state;
+
+	let interval;
+  const data = {
+    user_id: Number(user?.id),
+	  chat_id: id,
+	  token_value: String(activeChatToken),
+	  content: String(offsetMessages)
+  }
+  const socket = new WebScoketClass(data);
+	if (user && activeChatToken && offsetMessages) {
+    if (socket && interval) {
+			clearInterval(interval);
+		}
+		socket.connect();
+		interval = setInterval(() => {
+			socket.ping();
+		}, 10000);
+		window.socket = socket;
+	}
+};
+
+export const getNewMessagesCount = async (id: number) => {
+	window.store.set({ isLoadingNewMessagesCount: true });
+	try {
+		const newUnreadCount = await chatsApi.getNewMessagesCount(id);
+    //const unreadCount = window.store.state.unreadCount
+    const chats = window.store.state.chats
+    if (newUnreadCount) {
+      console.log(newUnreadCount.unread_count, 'unread_count')
+      const newChats = chats?.map((item => item.id === id
+        ? {...item, unread_count: newUnreadCount.unread_count}
+        : item
+      ))
+      window.store.set({ chats: newChats })
+    }
+	} catch (error: any) {
+		window.store.set({ newMessagesCountError: error.reason });
+	} finally {
+		window.store.set({ isLoadingNewMessagesCount: false });
+	}
+};
 
