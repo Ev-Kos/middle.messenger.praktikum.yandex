@@ -14,11 +14,37 @@
   border-radius: 12px 12px 12px 0;
   max-width: 50%;
   justify-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  &__user-info {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__mock-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color-grey-light);
+  }
+
+  &__avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
   &__user-name {
     margin: 0;
     font-size: 12px;
     font-weight: 500;
+    max-width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--color-blue);
   }
 

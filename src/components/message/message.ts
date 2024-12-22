@@ -21,9 +21,16 @@ export default class Message extends Block {
     <div class="{{#if isSend}}message-wrap-send{{else}}message-wrap{{/if}}">
       <div class="{{#if isSend}}message message_send{{else}}message{{/if}}">
         {{#unless isSend}}
-          <p class="message__user-name">{{#if user.display_name}}{{user.display_name}}
-            {{else}}{{user.first_name}} {{user.last_name}}{{/if}}
-          </p>
+          <div class="message__user-info">
+            {{#if user.avatar}}
+              <img class="message__avatar" src={{getImage user.avatar}} alt="Аватар" >
+              {{else}}
+              <div class="message__mock-avatar"></div>
+            {{/if}}
+            <p class="message__user-name">{{#if user.display_name}}{{user.display_name}}
+              {{else}}{{user.first_name}} {{user.last_name}}{{/if}}
+            </p>
+          </div>
         {{/unless}}
         {{#if isText}}
           <div class="message__text">{{content}}
