@@ -163,46 +163,13 @@ class MessagesList extends Block {
 		return true;
 	}
 
-  //public componentDidMount() {
-		// setTimeout(() => {
-		// 	const scrollContent = document.querySelector(".messages-list-content");
+  public componentDidMount() {
+		setTimeout(() => {
+			const scrollContent = document.querySelector(".messages-list__messages-groups");
 
-		// 	if (this.props.messages && scrollContent) {
-		// 		const socket = window.socket;
-		// 		const lastMessageId =
-		// 			this.props.messages[this.props.messages.length - 1].id;
 
-		// 		const getOldMessages = (e) => {
-		// 			const element = e.target;
-		// 			window.store.set({ lastMessageId, chatScrolled: true });
-
-		// 			if (element.scrollTop === 0) {
-		// 				socket.getOldMessages(lastMessageId)
-		// 			}
-		// 		};
-
-		// 		scrollContent?.addEventListener("scroll", getOldMessages);
-
-		// 		const getMessages = () => {
-		// 			const chatScrolled  = window.store.state.chatScrolled;
-
-		// 			console.log("scrolled", chatScrolled);
-
-		// 			const isBottom =
-		// 				Math.floor(scrollContent.scrollTop + scrollContent.clientHeight) ===
-		// 				scrollContent.scrollHeight + 1;
-		// 			if (!isBottom && !chatScrolled) {
-		// 				scrollContent.scrollTop = scrollContent.scrollHeight;
-		// 			}
-		// 		};
-
-		// 		getMessages();
-		// 		setInterval(getMessages, 10000);
-		// 	}
-
-		// 	return true;
-		// }, 0);
-	//}
+		}, 0);
+	}
 
   public render(): string {
     return `
