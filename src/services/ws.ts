@@ -30,7 +30,7 @@ export default class WebScoketClass {
 		this.socket.onmessage = (event: MessageEvent) => {
 			const messages = JSON.parse(event.data);
 			if (Array.isArray(messages)) {
-        const storeMessages = window.store.state.messages;
+        const storeMessages = window.store.state.messagesArr;
 				const filter = messages.filter((item) => item.type === "message" || item.type === "file");
 
 				if(storeMessages && storeMessages.some((item) => filter.findIndex((elem) => item.id === elem.id) !== -1)) {
@@ -38,7 +38,7 @@ export default class WebScoketClass {
         }
         if(Array.isArray(storeMessages)) {
           const arr = [...storeMessages, ...messages]
-          window.store.set({ messages: arr });
+          window.store.set({ messagesArr: arr });
         }
 			} else {
 				if (messages.type === "message" || messages.type === "file") {
@@ -57,8 +57,8 @@ export default class WebScoketClass {
                 content: messages.type === "file" ? "Изображение" : messages.content,
               }}
             : item)
-            if(window.store.state.messages) {
-              window.store.set({ messages: [...window.store.state.messages, messages], newMessage: messages, chats: newChats });
+            if(window.store.state.messagesArr) {
+              window.store.set({ messagesArr: [...window.store.state.messagesArr, messages], newMessage: messages, chats: newChats });
             }
 				}
 			}

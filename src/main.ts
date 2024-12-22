@@ -40,7 +40,7 @@ Object.entries(Components).forEach(([ name, template ]) => {
   selectedUsers: [],
   user: {},
   isNotChange: true,
-  messages: [],
+  messagesArr: [],
   offsetMessages: "0",
   //newMessage: null
  });

@@ -7,7 +7,7 @@ export type TMessagesGroupProps = {
   messages: TMessages[],
   date: string,
   isSend?: boolean,
-  isText?: boolean
+  isText?:  boolean,
 }
 
 class MessagesGroup extends Block {
@@ -25,17 +25,15 @@ class MessagesGroup extends Block {
     if (oldProps === newProps) {
       return false;
     }
-    if(newProps && newProps.isScrollMessages !== false) {
+    if(newProps && newProps.isScrollMessages) {
       // @ts-ignore
-      console.log(this.children.Messages, 'child')
       const lastMessage = this.children.Messages[this.children.Messages.length - 1];
       if(lastMessage) {
-        setTimeout(() => {
-          console.log(lastMessage,'scroll 222')
-          lastMessage.element.scrollIntoView({
-            behavior: 'smooth', block: 'nearest', inline: 'start'
-        });
-      }, 0)
+          setTimeout(() => {
+            lastMessage.element.scrollIntoView({
+              behavior: 'smooth', block: 'nearest', inline: 'start'
+          });
+        }, 0)
       }
       window.store.set({isScrollMessages: false})
     }
@@ -54,7 +52,6 @@ class MessagesGroup extends Block {
         item.setProps({isSend: item.props.user_id === id, isText: item.props.type === "message", user: user})
       })
     }
-
     return `
       <p class="messages-group__date">{{date}}</p>
       <ul class="messages-group__messages">

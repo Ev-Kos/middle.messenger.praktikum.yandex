@@ -28,7 +28,7 @@ type TState = {
   isClickFileLoad?: boolean,
   isOpenFileModal?: boolean,
   isNotChange?: boolean,
-  messages?: TMessages[],
+  messagesArr?: TMessages[],
   newMessage?: TMessages | null,
   activeChatToken?: string,
   offsetMessages?: string,

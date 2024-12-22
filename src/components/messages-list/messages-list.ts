@@ -151,9 +151,10 @@ class MessagesList extends Block {
       getChatUsers(newProps.activeChatId)
 		}
 
-		if ((newProps && newProps.messages !== oldProps.messages) || (newProps && newProps.newMessage !== oldProps.newMessage)) {
-			const { messages } = newProps;
-			let allMessages = [...messages]
+		if ((newProps && newProps.messagesArr !== oldProps.messagesArr) || (newProps && newProps.newMessage !== oldProps.newMessage)) {
+			const { messagesArr } = newProps;
+			let allMessages = [...messagesArr]
+
       const groups: TMessagesGroupProps[] = [];
       const sortedMessages = allMessages.sort((a, b) => Number(new Date(a.time)) - Number(new Date(b.time)));
 
@@ -166,33 +167,21 @@ class MessagesList extends Block {
           groups.push({messages: [item], date: String(date)})
         }
       })
-
       if(groups && groups.length !== 0) {
         this.children.GroupsList = groups.map((item: TMessagesGroupProps) =>
           new MessagesGroup({ ...item}))
-          const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
-          //const last = lastGroup.children.Messages[lastGroup.children.Messages.length - 1];
-
-          //console.log(last.element)
-          if(lastGroup) {
-            setTimeout(() => {
-              console.log('scroll')
-              scrollToBottom(lastGroup)
-              window.store.set({isScrollMessages: true})
-            }, 0)
-            // if(last) {
-            //   setTimeout(() => {
-            //     console.log(last,'scroll 222')
-            //     last.element.scrollIntoView({
-            //       behavior: 'smooth', block: 'nearest', inline: 'start'
-            //   });
-            // }, 0)
-          //}
+        const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
+        if(lastGroup) {
+          setTimeout(() => {
+            scrollToBottom(lastGroup)
+            window.store.set({isScrollMessages: true})
+          }, 0)
+        }
       }
-		}
-		return true;
-	}
+    }
+    return true;
   }
+
   public render(): string {
     return `
       {{#if activeChatId}}
@@ -257,7 +246,7 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     isClickAddUserModal: state.isClickAddUserModal,
     isClickDeleteUserModal: state.isClickDeleteUserModal,
     newMessage: state.newMessage,
-    messages: state.messages,
+    messagesArr: state.messagesArr,
     isClickFileLoad: state.isClickFileLoad,
     isOpenFileModal: state.isOpenFileModal,
     uploadedMessagePhoto: state.uploadedMessagePhoto,
