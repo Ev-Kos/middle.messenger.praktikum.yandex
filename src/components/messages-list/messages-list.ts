@@ -17,6 +17,19 @@ type TMessagesListProps = {
   groups: TMessagesGroupProps[]
 }
 
+export const scrollToBottom = (element: Block) => {
+  if (element) {
+      const messageElement = element.element;
+      if (messageElement) {
+          messageElement.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "start"
+          });
+      }
+  }
+}
+
 class MessagesList extends Block {
   constructor(props: TMessagesListProps) {
     super('div', {
@@ -141,36 +154,45 @@ class MessagesList extends Block {
 		if ((newProps && newProps.messages !== oldProps.messages) || (newProps && newProps.newMessage !== oldProps.newMessage)) {
 			const { messages } = newProps;
 			let allMessages = [...messages]
-      const gropus: TMessagesGroupProps[] = [];
+      const groups: TMessagesGroupProps[] = [];
       const sortedMessages = allMessages.sort((a, b) => Number(new Date(a.time)) - Number(new Date(b.time)));
 
       sortedMessages.forEach((item) => {
         const date = getDate(item.time, false, false)
-        const index = gropus.findIndex((elem) => elem.date === date);
+        const index = groups.findIndex((elem) => elem.date === date);
         if(index !== -1) {
-          gropus[index].messages.push({...item})
+          groups[index].messages.push({...item})
         } else {
-          gropus.push({messages: [item], date: String(date)})
+          groups.push({messages: [item], date: String(date)})
         }
       })
 
-      if(gropus && gropus.length !== 0) {
-        this.children.GroupsList = gropus.map((item: TMessagesGroupProps) =>
+      if(groups && groups.length !== 0) {
+        this.children.GroupsList = groups.map((item: TMessagesGroupProps) =>
           new MessagesGroup({ ...item}))
+          const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
+          //const last = lastGroup.children.Messages[lastGroup.children.Messages.length - 1];
+
+          //console.log(last.element)
+          if(lastGroup) {
+            setTimeout(() => {
+              console.log('scroll')
+              scrollToBottom(lastGroup)
+              window.store.set({isScrollMessages: true})
+            }, 0)
+            // if(last) {
+            //   setTimeout(() => {
+            //     console.log(last,'scroll 222')
+            //     last.element.scrollIntoView({
+            //       behavior: 'smooth', block: 'nearest', inline: 'start'
+            //   });
+            // }, 0)
+          //}
       }
 		}
-
 		return true;
 	}
-
-  public componentDidMount() {
-		setTimeout(() => {
-			const scrollContent = document.querySelector(".messages-list__messages-groups");
-
-
-		}, 0);
-	}
-
+  }
   public render(): string {
     return `
       {{#if activeChatId}}
@@ -236,7 +258,6 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     isClickDeleteUserModal: state.isClickDeleteUserModal,
     newMessage: state.newMessage,
     messages: state.messages,
-    groups: state.groups,
     isClickFileLoad: state.isClickFileLoad,
     isOpenFileModal: state.isOpenFileModal,
     uploadedMessagePhoto: state.uploadedMessagePhoto,

@@ -53,7 +53,7 @@ class ContactList extends Block {
           new ContactCard({
               ...chatProps,
               onClick: () => {
-                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id,messages: [], groups: []})
+                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id, groups: []})
               },
           }),
       ),

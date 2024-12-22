@@ -21,23 +21,24 @@ export const getDate = (date: string, isChatCard: boolean, isOnlyTime: boolean) 
   let weekDay = messageDate.toLocaleString('default', { weekday: 'short' });
   let weekDayMod = weekDay[0].toUpperCase() + weekDay.slice(1)
 
-  let messageDay = messageDate.getUTCDate();
+  let messageDay = String(messageDate.getUTCDate());
 
   let hour = messageDate.getHours();
-  let min = messageDate.getMinutes();
+  let min = String(messageDate.getMinutes());
 
-  if (min < 10) {
-    min = Number('0' + min)
+  if (Number(min) < 10) {
+    min = '0' + String(min)
   };
-  if (messageDay < 10) {
-    messageDay = Number('0' + messageDay)
+
+  if (Number(messageDay) < 10) {
+    messageDay = '0' + messageDay
   };
 
   if(isChatCard && !isOnlyTime) {
-    if (nowDay - messageDay < 7 && messageMonthNumber === monthNow && year === yearNow && nowDay - messageDay !== 0) {
+    if (nowDay - Number(messageDay) < 7 && messageMonthNumber === monthNow && year === yearNow && nowDay - Number(messageDay) !== 0) {
       return `${weekDayMod}`;
     }
-    else if (nowDay - messageDay === 0 && messageMonthNumber === monthNow && year === yearNow) {
+    else if (nowDay - Number(messageDay) === 0 && messageMonthNumber === monthNow && year === yearNow) {
       return `${hour}:${min}`
     } else {
       return `${messageDay} ${monthMod} ${year}`;

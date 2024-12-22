@@ -25,7 +25,7 @@ export default class Block<T extends TBlockProps = TBlockProps> {
   protected  _id: string = makeUUID();
   public  props: T;
   protected eventBus: () => EventBus<string>;
-  protected children: Record<string, Block> | Record<string, Block[]>;
+  public children: Record<string, Block> | Record<string, Block[]>;
 
   constructor(tagName = "div", propsWithChildren = {}) {
     const eventBus = new EventBus();
@@ -107,12 +107,7 @@ export default class Block<T extends TBlockProps = TBlockProps> {
 
   }
 
-  componentDidMount() {
-
-    // Object.values(this.children).forEach((child) => {
-    //   child.dispatchComponentDidMount();
-    // });
-  }
+  componentDidMount() {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
