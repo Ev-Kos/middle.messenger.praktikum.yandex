@@ -55,6 +55,9 @@ class MessagesList extends Block {
           if(window.store.state.activeChatId) {
             deleteChat({chatId: window.store.state.activeChatId})
           }
+        },
+        onClickChangeChatAvatar: () => {
+          window.store.set({isOpenActionsWithChatModal: false, isClickFileLoad: true, isChangeChatAvatar: true})
         }
       }),
       AddUserModal: new AddDeleteUserSelectedModal({
@@ -73,7 +76,8 @@ class MessagesList extends Block {
             isSearchUsers: null,
             isClickFileLoad: false,
             isMessagePhoto: false,
-            messagePhoto: null, messagePhotoFile: null
+            messagePhoto: null, messagePhotoFile: null,
+            isChangeChatAvatar: false
           })
         }
       }),

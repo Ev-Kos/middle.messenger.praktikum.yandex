@@ -32,3 +32,4 @@ export { Loader } from './loader';
 export { LoaderIcon } from './icons';
 export { UserCard } from './user-card';
 export { MessagesGroup } from './messages-group';
+export { ChangeIcon } from './icons';

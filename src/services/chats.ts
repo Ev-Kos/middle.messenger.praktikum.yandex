@@ -81,7 +81,16 @@ export const uploadChatAvatar = async (id: number, file: File) => {
   try {
     const uploadChatAvatar = await chatsApi.uploadChatAvatar(id, file);
     //@ts-ignore
-    window.store.set({ isCreateChatModal: false, uploadedChatAvatar: uploadChatAvatar.avatar });
+    window.store.set({ isCreateChatModal: false, uploadedChatAvatar: uploadChatAvatar.avatar, activeChatAvatar: uploadChatAvatar.avatar });
+    if(window.store.state.isClickFileLoad && window.store.state.isChangeChatAvatar) {
+      const chats = window.store.state.chats?.map((item) => item.id === window.store.state.activeChatId
+      //@ts-ignore
+        ? {...item, avatar: uploadChatAvatar.avatar}
+        : item
+      )
+      window.store.set({ chats: chats, isChangeChatAvatar: false, isClickFileLoad: false});
+
+    }
   } catch (error: any) {
     window.store.set({ uploadChatAvatarError: error.reason });
   } finally {

@@ -8,3 +8,4 @@ export { default as PlusIcon } from './plus';
 export { default as FileIcon } from './file';
 export { default as LocationIcon } from './location';
 export { default as LoaderIcon } from './loader';
+export { default as ChangeIcon } from './change';

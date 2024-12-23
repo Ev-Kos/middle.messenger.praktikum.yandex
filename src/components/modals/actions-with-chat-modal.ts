@@ -1,10 +1,11 @@
 import Block from "../../core/block";
-import { PlusIcon } from "../icons";
+import { ChangeIcon, PlusIcon } from "../icons";
 
 type TAddDeleteUserModal = {
   onClickAddUser: () => void;
   onClickDeleteUser: () => void;
   onClickDeleteChat: (id?: number) => void;
+  onClickChangeChatAvatar: () => void;
 }
 
 type TBtn = {
@@ -12,6 +13,7 @@ type TBtn = {
   text: string;
   isDeleteUser: boolean;
   isDeleteChat: boolean;
+  isChangeChatAvatar: boolean;
 }
 
 class Button extends Block {
@@ -30,6 +32,7 @@ class Button extends Block {
         width: "12",
         height: "12"
       }),
+      ChangeIcon: new ChangeIcon
     });
   }
 
@@ -38,6 +41,10 @@ class Button extends Block {
       {{#if isDeleteChat}}
         <div class="chat-modal__icon chat-modal__icon_delete">
           <div class="chat-modal__icon-dash"></div>
+        </div>
+      {{else if isChangeChatAvatar}}
+      <div class="chat-modal__icon">
+        {{{ChangeIcon}}}
         </div>
       {{else}}
         <div class="{{#if isDeleteUser}}chat-modal__icon_rotate{{else}}chat-modal__icon{{/if}}">
@@ -57,19 +64,29 @@ export default class ActionsWithChatModal extends Block {
         text: "Добавить пользователя",
         onClick: props.onClickAddUser,
         isDeleteUser: false,
-        isDeleteChat: false
+        isDeleteChat: false,
+        isChangeChatAvatar: false,
       }),
       DeleteUserButton: new Button({
         text: "Удалить пользователя",
         onClick: props.onClickDeleteUser,
         isDeleteUser: true,
-        isDeleteChat: false
+        isDeleteChat: false,
+        isChangeChatAvatar: false
       }),
       DeleteChatButton: new Button({
         text: "Удалить чат",
         onClick: props.onClickDeleteChat,
         isDeleteUser: false,
-        isDeleteChat: true
+        isDeleteChat: true,
+        isChangeChatAvatar: false
+      }),
+      ChangeChatAvatarButton: new Button({
+        text: "Изменить аватар чата",
+        onClick: props.onClickChangeChatAvatar,
+        isDeleteUser: false,
+        isDeleteChat: false,
+        isChangeChatAvatar: true
       })
     });
   }
@@ -79,6 +96,7 @@ export default class ActionsWithChatModal extends Block {
       <div class="chat-modal-actions-chat__container">
         {{{AddUserButton}}}
         {{{DeleteUserButton}}}
+        {{{ChangeChatAvatarButton}}}
       </div>
       {{{DeleteChatButton}}}
     `

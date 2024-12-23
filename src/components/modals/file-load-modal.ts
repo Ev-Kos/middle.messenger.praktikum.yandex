@@ -1,4 +1,5 @@
 import Block from "../../core/block";
+import { uploadChatAvatar } from "../../services/chats";
 import { uploadResource } from "../../services/resources";
 import { changeUserAvatar } from "../../services/users";
 import { connect } from "../../utils/connect";
@@ -12,17 +13,23 @@ class FileLoadModal extends Block {
         change: (e: Event) => {
           if(e.target instanceof HTMLInputElement) {
             const { files } = e.target;
-            console.log(files)
             if(files?.length) {
-              if(!window.store.state.isMessagePhoto) {
-                window.store.set(
-                  {userAvatar: {src: URL.createObjectURL(files[0]), alt: files[0].name},
-                    userAvatarFile: files[0]
-                })
-              } else {
+              if(window.store.state.isMessagePhoto) {
                 window.store.set(
                   {messagePhoto: {src: URL.createObjectURL(files[0]), alt: files[0].name},
                     messagePhotoFile: files[0]
+                })
+              }
+              else if(window.store.state.isChangeChatAvatar) {
+                window.store.set(
+                  {chatAvatar: {src: URL.createObjectURL(files[0]), alt: files[0].name},
+                    chatAvatarFile: files[0]
+                })
+              }
+              else {
+                window.store.set(
+                  {userAvatar: {src: URL.createObjectURL(files[0]), alt: files[0].name},
+                    userAvatarFile: files[0]
                 })
               }
             }
@@ -40,6 +47,9 @@ class FileLoadModal extends Block {
           }
           if(window.store.state.messagePhotoFile) {
             uploadResource(window.store.state.messagePhotoFile)
+          }
+          if(window.store.state.chatAvatarFile && window.store.state.activeChatId) {
+            uploadChatAvatar(window.store.state.activeChatId, window.store.state.chatAvatarFile)
           }
         }
       }),
@@ -60,7 +70,17 @@ class FileLoadModal extends Block {
         },
         modifierButton: "button-delete-message-photo",
         modifierText: "button-delete-message-photo__text"
-      })
+      }),
+      DeleteChatAvatar: new Button({
+        text: "Заменить аватар",
+        type: "button",
+        onClick: () => {
+          window.store.set({activeChatAvatar: null, chatAvatar: null, chatAvatarFile: null})
+        },
+        modifierButton: "button-image-avatar",
+        modifierText: "button-avatar__text"
+      }),
+
     });
   }
 
@@ -82,6 +102,16 @@ class FileLoadModal extends Block {
           <div class="message-photo-image-mask">
             {{{DeleteMessagePhoto}}}
           </div>
+        {{else if activeChatAvatar}}
+          <img class="button-avatar__image" src={{getImage activeChatAvatar}} alt="Аватар" >
+          <div class="user-avatar-mask">
+            {{{DeleteChatAvatar}}}
+          </div>
+        {{else if chatAvatar}}
+          <img class="button-avatar__image" src={{chatAvatar.src}} alt={{chatAvatar.alt}} >
+          <div class="user-avatar-mask">
+            {{{DeleteChatAvatar}}}
+          </div>
         {{else}}
           <div class="{{#if isMessagePhoto}}input-file__wrap-message{{else}}input-file__wrap{{/if}}">
             <input class="input-file" type="file" name="input-file" value={{ value }}/>
@@ -101,7 +131,11 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     isMessagePhoto: state.isMessagePhoto,
     messagePhoto: state.messagePhoto,
     isLoadingUploadResouse: state.isLoadingUploadResouse,
-    isLoadingUploadUserAvatar: state.isLoadingUpload
+    isLoadingUploadUserAvatar: state.isLoadingUpload,
+    activeChatAvatar: state.activeChatAvatar,
+    isChangeChatAvatar: state.isChangeChatAvatar,
+    chatAvatarFile: state.chatAvatar,
+    activeChatId: state.activeChatId
   };
 };
 
