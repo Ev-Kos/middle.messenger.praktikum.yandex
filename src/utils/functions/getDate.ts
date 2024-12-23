@@ -17,6 +17,7 @@ export const getDate = (date: string, isChatCard: boolean, isOnlyTime: boolean) 
   let month = messageDate.toLocaleString('default', { month: 'short' });
   let monthNum = messageDate.getMonth();
   let monthMod = month[0].toUpperCase() + month.slice(1, month.length - 1)
+  // @ts-ignore
   let monthModFull = MonthNameArr.find((item, index) => index === monthNum)
   let weekDay = messageDate.toLocaleString('default', { weekday: 'short' });
   let weekDayMod = weekDay[0].toUpperCase() + weekDay.slice(1)

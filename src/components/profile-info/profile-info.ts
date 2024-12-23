@@ -137,7 +137,7 @@ class ProfileInfo extends Block {
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
-            this.setPropsForChildren(this.children.DisplayNameField, value);
+            this.setPropsForChildren(this.children.DisplayNameField, {value: value});
             this.setProps({
               mainFieldState: {
                 ...this.props.mainFieldState,
