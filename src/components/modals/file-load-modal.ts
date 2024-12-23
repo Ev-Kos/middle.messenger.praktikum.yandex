@@ -39,7 +39,11 @@ class FileLoadModal extends Block {
       Button: new Button({
         type: "submit",
         text: "Загрузить",
-        isLoading: window.store.state.isMessagePhoto ? window.store.state.isLoadingUploadResouse : window.store.state.isLoadingUploadUserAvatar,
+        isLoading: window.store.state.isMessagePhoto
+          ? window.store.state.isLoadingUploadResouse
+          : window.store.state.isChangeChatAvatar
+          ? window.store.state.isLoadingUploadAvatar
+          : window.store.state.isLoadingUploadUserAvatar,
         onClick: (e: Event) => {
           e.preventDefault();
           if(window.store.state.userAvatarFile) {
@@ -132,6 +136,7 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     messagePhoto: state.messagePhoto,
     isLoadingUploadResouse: state.isLoadingUploadResouse,
     isLoadingUploadUserAvatar: state.isLoadingUpload,
+    isLoadingUploadAvatar: state.isLoadingUpload,
     activeChatAvatar: state.activeChatAvatar,
     isChangeChatAvatar: state.isChangeChatAvatar,
     chatAvatarFile: state.chatAvatar,

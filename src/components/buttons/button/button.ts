@@ -49,7 +49,8 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
 
   return {
     isLoading: state.isLoadingChangeChats || state.isLoadingUserToChat || state.isLoadingDeleteUser
-      || state.isLoadingUploadUserAvatar || state.isLoadingUploadResouse || state.isLoadingUploadUserAvatar,
+      || state.isLoadingUploadUserAvatar || state.isLoadingUploadResouse || state.isLoadingUploadUserAvatar
+      || state.isLoadingUploadAvatar,
   };
 };
 
