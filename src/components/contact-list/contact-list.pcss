@@ -55,10 +55,6 @@
     scrollbar-width: thin;
   }
 
-  &__list:last-child, &__list-whithout-scroll:last-child {
-    border-bottom: 1px solid var(--color-grey-border);
-  }
-
   &__list-whithout-scroll {
     list-style-type: none;
     padding: 0;
@@ -74,5 +70,9 @@
     font-weight: 500;
     color: var(--color-grey);
     text-align: center;
+  }
+
+  &__list:last-child, &__list-whithout-scroll:last-child {
+    border-bottom: 1px solid var(--color-grey-border);
   }
 }
