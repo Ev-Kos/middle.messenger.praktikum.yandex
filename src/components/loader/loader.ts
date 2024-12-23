@@ -22,7 +22,9 @@ export default class Loader extends Block {
 
   public render(): string {
     return `
-      {{{LoaderIcon}}}
+      <div class="loader__animation">
+        {{{LoaderIcon}}}
+      <div>
     `
   }
 }
