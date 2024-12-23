@@ -37,10 +37,10 @@ export const singUp = async (model: TSingUpRequest) => {
 export const checkSingInUser = async () => {
   try {
     const user = await authApi.currentUser();
-    await getChats({
-      limit: Number(window.store.state.limitChat),
-      offset: Number(window.store.state.offsetChat)
-    })
+    // await getChats({
+    //   limit: Number(window.store.state.limitChat),
+    //   offset: Number(window.store.state.offsetChat)
+    // })
     window.store.set({ user });
     return true
   }

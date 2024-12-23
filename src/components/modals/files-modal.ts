@@ -51,6 +51,11 @@ export default class FilesModal extends Block {
   constructor() {
     super('form', {
       className: "chat-modal-file",
+      events: {
+        mouseleave: () => {
+          window.store.set({isOpenFileModal: false})
+        }
+      },
       ButtonPhoto: new Button({
         text: "Фото",
         isPhoto: true,

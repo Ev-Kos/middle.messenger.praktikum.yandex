@@ -35,9 +35,8 @@ class MessagesList extends Block {
     super('div', {
       ...props,
       className: 'messages',
-      message: "",
       ButtonDots: new ButtonDots({
-        onClick: () => {
+        onMouseEnter: () => {
           window.store.set({isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal})
         }
       }),
@@ -77,12 +76,12 @@ class MessagesList extends Block {
             isClickFileLoad: false,
             isMessagePhoto: false,
             messagePhoto: null, messagePhotoFile: null,
-            isChangeChatAvatar: false
+            isChangeChatAvatar: false,
           })
         }
       }),
       ButtonFile: new ButtonFile({
-        onClick: () => {
+        onMouseEnter: () => {
           window.store.set({isOpenFileModal: !window.store.state.isOpenFileModal})
         }
       }),
@@ -96,7 +95,8 @@ class MessagesList extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.InputCreateMessage, checkMessage(value));
-            this.setProps({message: value});
+            //console.log(this.children.InputCreateMessage.props.value)
+            //this.setProps({message: value});
           }
         },
         onKeyDown:(e) => {
@@ -112,7 +112,6 @@ class MessagesList extends Block {
                 }
                 socket.sendMessage(value)
                 this.setPropsForChildren(this.children.InputCreateMessage, {value: ""});
-                this.setProps({message: ""});
               }
               if(window.store.state.uploadedMessagePhoto) {
                 socket.sendFile(String(window.store.state.uploadedMessagePhoto.id))
@@ -123,17 +122,17 @@ class MessagesList extends Block {
         }
       }),
       ButtonArrow: new ButtonArrow({
-        onClick: () => {
+        onClick: (e) => {
+          e.preventDefault();
           const socket = window.socket;
-          if(this.props.message.length > 0) {
-            const error = checkMessage(this.props.message)
+          if(this.children.InputCreateMessage.props.value.length > 0) {
+            const error = checkMessage(this.children.InputCreateMessage.props.value)
             if (error.isError) {
               this.setPropsForChildren(this.children.InputCreateMessage, error);
               return;
             }
-            socket.sendMessage(this.props.message)
+            socket.sendMessage(this.children.InputCreateMessage.props.value)
             this.setPropsForChildren(this.children.InputCreateMessage, {value: ""});
-            this.setProps({message: ""});
           }
           if(window.store.state.uploadedMessagePhoto) {
             socket.sendFile(String(window.store.state.uploadedMessagePhoto.id))
@@ -171,17 +170,16 @@ class MessagesList extends Block {
           groups.push({messages: [item], date: String(date)})
         }
       })
-      if(groups && groups.length !== 0) {
+
         this.children.GroupsList = groups.map((item: TMessagesGroupProps) =>
           new MessagesGroup({ ...item}))
         const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
+
         if(lastGroup) {
           setTimeout(() => {
-            scrollToBottom(lastGroup)
             window.store.set({isScrollMessages: true})
           }, 0)
         }
-      }
     }
     return true;
   }
@@ -201,13 +199,11 @@ class MessagesList extends Block {
             </div>
             {{{ButtonDots}}}
           </div>
-          <div class="messages-list__content">
-            <ul class="messages-list__messages-groups">
-              {{#each GroupsList}}
-                {{{ this }}}
-              {{/each}}
-            </ul>
-          </div>
+          <ul class="messages-list__messages-groups">
+            {{#each GroupsList}}
+              {{{ this }}}
+            {{/each}}
+          </ul>
           <div class="messages-list__create-message-container">
             {{{ButtonFile}}}
             {{{InputCreateMessage}}}

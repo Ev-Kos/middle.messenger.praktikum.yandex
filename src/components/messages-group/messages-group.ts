@@ -25,13 +25,16 @@ class MessagesGroup extends Block {
     if (oldProps === newProps) {
       return false;
     }
-    if(newProps && newProps.isScrollMessages) {
-      // @ts-ignore
-      const lastMessage = this.children.Messages[this.children.Messages.length - 1];
+    if(newProps && newProps.isScrollMessages === true) {
+      const messagesGroup = document.querySelectorAll(".messages-group")
+      const lastMessagesGroup = messagesGroup[messagesGroup.length - 1]
+
+      const mess = lastMessagesGroup.getElementsByTagName("li")
+      const lastMessage = mess[mess.length - 1];
       if(lastMessage) {
           setTimeout(() => {
-            lastMessage.element.scrollIntoView({
-              behavior: 'smooth', block: 'nearest', inline: 'start'
+            lastMessage.scrollIntoView({
+              behavior: 'smooth', block: 'nearest', inline: 'end'
           });
         }, 0)
       }
@@ -41,7 +44,7 @@ class MessagesGroup extends Block {
   }
 
   public render(): string {
-
+    this.dispatchComponentDidMount();
     const id = window.store.state.user?.id;
     const { Messages } =  this.children;
     const {partisipants} = window.store.state
@@ -66,6 +69,7 @@ class MessagesGroup extends Block {
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     isScrollMessages: state.isScrollMessages,
+    groups: state.groups
   };
 }
 

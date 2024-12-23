@@ -53,7 +53,7 @@ class ContactList extends Block {
           new ContactCard({
               ...chatProps,
               onClick: () => {
-                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id, groups: []})
+                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
               },
           }),
       ),
@@ -93,7 +93,7 @@ class ContactList extends Block {
           new ContactCard({
             ...chatProps,
             onClick: () => {
-              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id, messagesArr: [], groups: []})
+              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
             },
         }),
       )
@@ -112,7 +112,7 @@ class ContactList extends Block {
         })
       })
     }
-//, unread_count: newUnread_count?.unread_count
+
     return `
       <div class="container__search">
         {{{ButtonLink}}}
@@ -147,6 +147,8 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     activeChatId: state.activeChatId,
     coordinates: state.coordinates,
     isNewCount: state.isNewCount,
+    limitChat: state.limitChat,
+    offsetChat: state.offsetChat
   };
 };
 

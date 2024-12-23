@@ -42,6 +42,7 @@ type TState = {
   uploadedMessagePhoto?: {path: string, id: number},
   isChangeChatAvatar?: boolean,
   isLoadingUploadAvatar?: boolean,
+  isScrollMessages?: boolean
 }
 
 export class Store extends EventBus<string> {

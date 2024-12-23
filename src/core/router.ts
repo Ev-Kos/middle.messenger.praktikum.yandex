@@ -36,7 +36,7 @@ export default class Router {
 
   start() {
 //исправить типизацию
-    window.onpopstate = ((event: any) => {
+    window.onpopstate = ((event: PopStateEvent) => {
 			this._onRoute(event.currentTarget.location.pathname);
 		}).bind(this);
 
@@ -55,6 +55,7 @@ export default class Router {
     }
 
     this._currentRoute = route;
+    console.log(route, 'route')
     //route.render(route, pathname);
     route.render();
   }

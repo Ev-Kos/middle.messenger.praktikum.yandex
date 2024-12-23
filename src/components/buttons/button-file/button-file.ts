@@ -3,7 +3,8 @@ import { connect } from "../../../utils/connect";
 import { PaperClipIcon } from "../../icons";
 
 type TButtonFile = {
-  onClick: () => void;
+  onClick?: () => void;
+  onMouseEnter?: () => void;
 }
 
 class ButtonFile extends Block {
@@ -15,7 +16,8 @@ class ButtonFile extends Block {
         type: "button"
       },
       events: {
-        click: props.onClick
+        click: props.onClick,
+        mouseenter: props.onMouseEnter
       },
       PaperClipIcon: new PaperClipIcon
     })

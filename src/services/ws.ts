@@ -1,4 +1,5 @@
 import { wsApi } from "../utils/constants";
+import isEqual from "../utils/functions/isEqual";
 
 export type WSChatOptions = {
 	user_id: number;
@@ -29,20 +30,25 @@ export default class WebScoketClass {
 
 		this.socket.onmessage = (event: MessageEvent) => {
 			const messages = JSON.parse(event.data);
+      const activeChatId = window.store.state.activeChatId
 			if (Array.isArray(messages)) {
-        const storeMessages = window.store.state.messagesArr;
-				const filter = messages.filter((item) => item.type === "message" || item.type === "file");
+        if(messages.length > 0) {
+          const storeMessages = window.store.state.messagesArr;
+          const filter = messages.filter((item) => item.type === "message" || item.type === "file");
 
-				if(storeMessages && storeMessages.some((item) => filter.findIndex((elem) => item.id === elem.id) !== -1)) {
-          return;
-        }
-        if(Array.isArray(storeMessages)) {
-          const arr = [...storeMessages, ...messages]
-          window.store.set({ messagesArr: arr });
+          if(storeMessages) {
+            if(isEqual(storeMessages, filter)) {
+              return
+            }
+          }
+          window.store.set({ messagesArr: filter });
+        } else {
+          window.store.set({ messagesArr: [] });
+          console.log('empty')
         }
 			} else {
 				if (messages.type === "message" || messages.type === "file") {
-          const {chats, partisipants, activeChatId} = window.store.state
+          const {chats, partisipants} = window.store.state
           const user = partisipants?.find((item) => item.id === messages.user_id)
           const newChats = chats?.map((item) => item.id === activeChatId
             ? {...item,

@@ -8,11 +8,11 @@ class ChatPage extends Block {
       className: 'chat-page',
       events: {
         mousemove : (event: MouseEvent) => {
-          // if(!window.store.state.isNewCount) {
-          //   let  x = event.pageX
-          //   let y = event.pageY
-          //   window.store.set({coordinates: {x: x, y: y}, isNewCount: true})
-          // }
+          if(!window.store.state.isNewCount) {
+            let  x = event.pageX
+            let y = event.pageY
+            window.store.set({coordinates: {x: x, y: y}, isNewCount: true})
+          }
         }
       },
       ContactList: new ContactList({}),

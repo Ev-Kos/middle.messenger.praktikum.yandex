@@ -60,6 +60,11 @@ export default class ActionsWithChatModal extends Block {
   constructor(props: TAddDeleteUserModal) {
     super("div", {
       className: "chat-modal-actions-chat",
+      events: {
+        mouseleave: () => {
+          window.store.set({isOpenActionsWithChatModal: false})
+        }
+      },
       AddUserButton: new Button({
         text: "Добавить пользователя",
         onClick: props.onClickAddUser,

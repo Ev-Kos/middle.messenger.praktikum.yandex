@@ -2,7 +2,7 @@ import Block from "../../../core/block";
 import { ArrowIcon } from "../../icons";
 
 type TButtonArrowProps = {
-  onClick: () => void;
+  onClick: (e: Event) => void;
   isRight: boolean;
 }
 
