@@ -5,18 +5,15 @@
   &__animation {
     width: 100%;
     height: 100%;
-    animation: rotation-right 1s linear infinite;
+    animation: rotate-right 1s linear infinite;
   }
 }
 
-/* @keyframes rotation-right { from {transform: rotate(0deg)} to {transform: rotate(360deg)} } */
-
-@keyframes rotation-right {
+@keyframes rotate-right {
   from {
-    transform: translateX(0%);
+    transform: rotate(0deg)
   }
-
   to {
-    transform: translateX(100%);
+    transform: rotate(360deg)
   }
 }
