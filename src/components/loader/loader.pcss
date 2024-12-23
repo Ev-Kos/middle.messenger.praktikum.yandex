@@ -1,14 +1,14 @@
 .loader {
-  animation: rotation-right 1.5s linear infinite normal forwards running;
+  animation: rotation-right 1s linear infinite;
   height: 80%;
   aspect-ratio: 1 / 1;
 }
 
 @keyframes rotation-right {
-  from {
-    transform: rotate(0deg);
+  0% {
+      transform: rotate(0deg);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+      transform: rotate(360deg);
   }
 }
