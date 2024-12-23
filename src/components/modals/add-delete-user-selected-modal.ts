@@ -227,14 +227,14 @@ class AddDeleteUserSelectedModal extends Block {
           </ul>
         {{/if}}
         <div class="select-list-container">
-          <p class="textForDel">Участники:</p>
+          <p class="text-for-del">Участники:</p>
           <ul class="select-list">
             {{#each Partisipants}}
               {{{ this }}}
             {{/each}}
           </ul>
           {{#if isSelectedUsers}}
-            <p class="textForDel">{{#if isClickAddUserModal}}Добавить:{{else}}Удалить:{{/if}}</p>
+            <p class="text-for-del">{{#if isClickAddUserModal}}Добавить:{{else}}Удалить:{{/if}}</p>
             <ul class="select-list">
               {{#each SelectedUsers}}
                 {{{ this }}}
