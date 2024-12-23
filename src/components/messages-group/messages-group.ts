@@ -68,8 +68,7 @@ class MessagesGroup extends Block {
 
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
-    isScrollMessages: state.isScrollMessages,
-    groups: state.groups
+    isScrollMessages: state.isScrollMessages
   };
 }
 

@@ -44,7 +44,6 @@ export default class WebScoketClass {
           window.store.set({ messagesArr: filter });
         } else {
           window.store.set({ messagesArr: [] });
-          console.log('empty')
         }
 			} else {
 				if (messages.type === "message" || messages.type === "file") {

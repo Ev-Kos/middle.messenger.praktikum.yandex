@@ -36,7 +36,6 @@ class ProfileInfo extends Block {
       },
       repeatedPassword: "",
       ButtonAvatar: new ButtonAvatar({
-        userAvatar: props.user.avatar,
         onClick: () => {
           window.store.set({isClickFileLoad: true})
         },
@@ -97,12 +96,12 @@ class ProfileInfo extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.FirstNameField, checkName(value, "Имя должно"));
-              this.setProps({
-                mainFieldState: {
-                  ...this.props.mainFieldState,
-                  first_name: value,
-                },
-              });
+            this.setProps({
+              mainFieldState: {
+                ...this.props.mainFieldState,
+                first_name: value,
+              },
+            });
           }
         },
         inputType: "text"
@@ -286,7 +285,7 @@ class ProfileInfo extends Block {
           if(!error) {
             let obj:{[key: string]: any} = {}
             for(let key in this.props.mainFieldState) {
-              // @ts-ignore
+              //@ts-ignore
               if(this.props.mainFieldState[key] !== props.user[key])
                obj[key] = this.props.mainFieldState[key]
             }

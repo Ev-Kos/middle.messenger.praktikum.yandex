@@ -1,7 +1,6 @@
 import AuthApi from "../api/auth";
 import { ROUTES } from "../utils/constants";
 import { TSingInRequest, TSingUpRequest } from "../utils/types";
-import { getChats } from "./chats";
 
 const authApi = new AuthApi();
 
@@ -37,10 +36,6 @@ export const singUp = async (model: TSingUpRequest) => {
 export const checkSingInUser = async () => {
   try {
     const user = await authApi.currentUser();
-    // await getChats({
-    //   limit: Number(window.store.state.limitChat),
-    //   offset: Number(window.store.state.offsetChat)
-    // })
     window.store.set({ user });
     return true
   }

@@ -25,12 +25,6 @@ export default class ProfileField extends Block {
         click: props.onClick,
         change: props.onChangeInput
       },
-      // InputProfile: new InputProfile({
-      //   name: String(props.inputName),
-      //   value: props.inputValue,
-      //   type: String(props.inputType),
-      //   onChange: props.onChangeInput,
-      // })
     });
   }
 

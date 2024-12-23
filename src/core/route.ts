@@ -3,8 +3,7 @@ import { RouteInterface } from "./router";
 
 export default class Route implements RouteInterface {
   private _pathname: string;
-  //private readonly _blockClass: typeof Block | null = null;
-  private _blockClass: any;
+  private readonly _blockClass: typeof Block | null = null;
   private _block: Block | null = null;
   private readonly _props: TBlockProps = {};
 
@@ -43,7 +42,7 @@ export default class Route implements RouteInterface {
   render() {
     if (!this._block) {
       if(this._blockClass) {
-        this._block = new this._blockClass({});
+        this._block = new this._blockClass();
       }
     }
     if(this._block) {

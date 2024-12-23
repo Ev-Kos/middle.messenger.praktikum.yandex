@@ -29,7 +29,13 @@ export default class InputForm extends Block {
   public render(): string {
     return `
       <span class="input__text">{{ text }}</span>
-      <input class="input {{modifier}}" autocomplete={{autocomplete}} placeholder="" name={{ name }} type={{ type }} value={{ value }} >
+      <input class="input {{modifier}}"
+        autocomplete={{autocomplete}}
+        placeholder=""
+        name={{ name }}
+        type={{ type }}
+        value={{ value }}
+      >
       {{#if withError}}
         <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>
       {{/if}}

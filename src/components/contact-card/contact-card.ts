@@ -40,7 +40,11 @@ export default class ContactCard extends Block {
           </div>
         </div>
         <div class="contact-card__time-and-count">
-          <p class="{{#if last_message.content}}contact-card__time{{else}}contact-card__time contact-card__time_hidden{{/if}}">{{getDate last_message.time true false}}</p>
+          <p class="
+            {{#if last_message.content}}contact-card__time
+              {{else}}contact-card__time contact-card__time_hidden
+            {{/if}}">{{getDate last_message.time true false}}
+          </p>
           {{#if unread_count}}
             <div class="contact-card__count">
               <span class="contact-card__count-num">{{unread_count}}</span>

@@ -1,8 +1,7 @@
 import Block, { TBlockProps } from "../../core/block";
-import { deleteChat, getChatUsers, getNewMessagesCount, getTokenChat, wsChat } from "../../services/chats";
+import { deleteChat, getChatUsers, wsChat } from "../../services/chats";
 import { connect } from "../../utils/connect";
 import { getDate } from "../../utils/functions/getDate";
-import { TMessages } from "../../utils/types";
 import { checkMessage } from "../../utils/validate-inputs";
 import { ButtonArrow } from "../buttons/button-arrow";
 import { ButtonDots } from "../buttons/button-dots";
@@ -17,19 +16,6 @@ type TMessagesListProps = {
   groups: TMessagesGroupProps[]
 }
 
-export const scrollToBottom = (element: Block) => {
-  if (element) {
-      const messageElement = element.element;
-      if (messageElement) {
-          messageElement.scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "start"
-          });
-      }
-  }
-}
-
 class MessagesList extends Block {
   constructor(props: TMessagesListProps) {
     super('div', {
@@ -37,17 +23,25 @@ class MessagesList extends Block {
       className: 'messages',
       ButtonDots: new ButtonDots({
         onMouseEnter: () => {
-          window.store.set({isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal})
+          window.store.set({
+            isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal
+          })
         }
       }),
       GroupsList: props.groups?.map((item) => new MessagesGroup({ ...item})),
       ActionsWithChatModal: new ActionsWithChatModal({
         onClickAddUser: () => {
-          window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: true, isClickDeleteUserModal: false})
+          window.store.set({
+            isOpenActionsWithChatModal: false,
+            isClickAddUserModal: true,
+            })
           getChatUsers(Number(window.store.state.activeChatId))
         },
         onClickDeleteUser: () => {
-          window.store.set({isOpenActionsWithChatModal: false, isClickAddUserModal: false, isClickDeleteUserModal: true})
+          window.store.set({
+            isOpenActionsWithChatModal: false,
+            isClickDeleteUserModal: true
+          })
           getChatUsers(Number(window.store.state.activeChatId))
         },
         onClickDeleteChat: () => {
@@ -56,7 +50,11 @@ class MessagesList extends Block {
           }
         },
         onClickChangeChatAvatar: () => {
-          window.store.set({isOpenActionsWithChatModal: false, isClickFileLoad: true, isChangeChatAvatar: true})
+          window.store.set({
+            isOpenActionsWithChatModal: false,
+            isClickFileLoad: true,
+            isChangeChatAvatar: true
+          })
         }
       }),
       AddUserModal: new AddDeleteUserSelectedModal({
@@ -95,8 +93,6 @@ class MessagesList extends Block {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.InputCreateMessage, checkMessage(value));
-            //console.log(this.children.InputCreateMessage.props.value)
-            //this.setProps({message: value});
           }
         },
         onKeyDown:(e) => {
@@ -125,13 +121,15 @@ class MessagesList extends Block {
         onClick: (e) => {
           e.preventDefault();
           const socket = window.socket;
-          if(this.children.InputCreateMessage.props.value.length > 0) {
-            const error = checkMessage(this.children.InputCreateMessage.props.value)
+          // @ts-ignore
+          const props = this.children.InputCreateMessage.props
+          if(props.value.length > 0) {
+            const error = checkMessage(props.value)
             if (error.isError) {
               this.setPropsForChildren(this.children.InputCreateMessage, error);
               return;
             }
-            socket.sendMessage(this.children.InputCreateMessage.props.value)
+            socket.sendMessage(props.value)
             this.setPropsForChildren(this.children.InputCreateMessage, {value: ""});
           }
           if(window.store.state.uploadedMessagePhoto) {
@@ -154,7 +152,8 @@ class MessagesList extends Block {
       getChatUsers(newProps.activeChatId)
 		}
 
-		if ((newProps && newProps.messagesArr !== oldProps.messagesArr) || (newProps && newProps.newMessage !== oldProps.newMessage)) {
+		if ((newProps && newProps.messagesArr !== oldProps.messagesArr)
+      || (newProps && newProps.newMessage !== oldProps.newMessage)) {
 			const { messagesArr } = newProps;
 			let allMessages = [...messagesArr]
 

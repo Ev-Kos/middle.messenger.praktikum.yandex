@@ -23,7 +23,12 @@ export default class InputCreateMessage extends Block {
 
   public render(): string {
     return `
-      <input class="{{#if isError}} input-create-message_error {{/if}} input-create-message" placeholder={{placeholderText}} name={{ name }} type={{ type }} value={{ value }} >
+      <input class="{{#if isError}} input-create-message_error {{/if}} input-create-message"
+        placeholder={{placeholderText}}
+        name={{ name }}
+        type={{ type }}
+        value={{ value }}
+      >
     `
   }
 }

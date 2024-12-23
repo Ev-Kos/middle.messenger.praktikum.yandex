@@ -9,7 +9,6 @@ type TButtonAvatarProps = {
   onChange?: (e: Event) => void;
   deleteAvatar?: () => void;
   isCreateChat: boolean;
-  userAvatar: string;
 }
 
 class ButtonAvatar extends Block {
@@ -55,8 +54,8 @@ class ButtonAvatar extends Block {
           {{{ImageIcon}}}
         {{/if}}
         {{else}}
-          {{#if userAvatar}}
-            <img class="button-avatar__image" src={{getImage userAvatar}} alt="Фотография пользователя">
+          {{#if user.avatar}}
+            <img class="button-avatar__image" src={{getImage user.avatar}} alt="Фотография пользователя">
             <div class="button-avatar__image-mask">
               {{{DeleteAvatar}}}
             </div>
@@ -74,8 +73,7 @@ class ButtonAvatar extends Block {
 const mapStateToProps = (state: {[key: string]: unknown}) => {
   return {
     chatAvatar: state.chatAvatar,
-    //@ts-ignore
-    userAvatar: state.user?.avatar,
+    user: state.user,
   };
 };
 

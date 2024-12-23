@@ -7,6 +7,7 @@ import { Button } from "../buttons/button";
 import { ButtonCreateChat } from "../buttons/button-create-chat";
 import { ContactCard } from "../contact-card";
 import { InputSearch } from "../inputs/input-search";
+import { Loader } from "../loader";
 import { CreateChatModal } from "../modals";
 import { ModalWrapper } from "../wrappers/modals-wrapper";
 
@@ -48,12 +49,21 @@ class ContactList extends Block {
           }
         }
       }),
+      Loader: new Loader({
+        width: "100%",
+        height: "100%",
+        color: "#EFEFEF",
+      }),
       Chats: props.chats?.map(
         (chatProps: TGetChatsResponse) =>
           new ContactCard({
               ...chatProps,
               onClick: () => {
-                window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
+                window.store.set({
+                  activeChatAvatar: chatProps.avatar,
+                  activeChatTitle: chatProps.title,
+                  activeChatId: chatProps.id
+                })
               },
           }),
       ),
@@ -85,7 +95,7 @@ class ContactList extends Block {
           })
         }
         window.store.set({isNewCount: false})
-      }, 8000)
+      }, 9000)
     }
     if (newProps && newProps.chats) {
       this.children.Chats = newProps.chats.map(
@@ -93,7 +103,12 @@ class ContactList extends Block {
           new ContactCard({
             ...chatProps,
             onClick: () => {
-              window.store.set({activeChatAvatar: chatProps.avatar, activeChatTitle: chatProps.title, activeChatId: chatProps.id})
+              window.store.set({
+                activeChatAvatar: chatProps.avatar,
+                activeChatTitle: chatProps.title,
+                activeChatId:
+                chatProps.id
+              })
             },
         }),
       )
@@ -121,14 +136,20 @@ class ContactList extends Block {
       <div class="container__button-create">
         {{{ButtonCreateChat}}}
       </div>
-      {{#unless chatsLength}}
-        <p class="container__empty-list">{{#if isSearch}}Ничего не найдено{{else}}Пока нет созданных чатов{{/if}}</p>
-      {{/unless}}
-      <ul class="{{#if isScroll}}container__list{{else}}container__list-whithout-scroll{{/if}}">
-        {{#each Chats}}
-          {{{ this }}}
-        {{/each}}
-      </ul>
+      {{#if isLoadingGetChats}}
+          <div class="container__loader">
+            {{{Loader}}}
+          </div>
+        {{else}}
+          {{#unless chatsLength}}
+            <p class="container__empty-list">{{#if isSearch}}Ничего не найдено{{else}}Пока нет созданных чатов{{/if}}</p>
+          {{/unless}}
+          <ul class="{{#if isScroll}}container__list{{else}}container__list-whithout-scroll{{/if}}">
+            {{#each Chats}}
+              {{{ this }}}
+            {{/each}}
+          </ul>
+      {{/if}}
       {{#if isCreateChatModal}}
         {{{ModalWrapper}}}
         {{{CreateChatModal}}}
@@ -148,7 +169,8 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     coordinates: state.coordinates,
     isNewCount: state.isNewCount,
     limitChat: state.limitChat,
-    offsetChat: state.offsetChat
+    offsetChat: state.offsetChat,
+    isLoadingGetChats: state.isLoadingGetChats,
   };
 };
 

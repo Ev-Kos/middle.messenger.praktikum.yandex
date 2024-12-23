@@ -5,7 +5,7 @@ import WebScoketClass from "./ws";
 export const chatsApi = new ChatsApi();
 
 export const getChats = async (model: TGetChatsRequest) => {
-  window.store.set({ isLoading: true });
+  window.store.set({ isLoadingGetChats: true });
   try {
     const chats = await chatsApi.getChats(model);
     window.store.set({ chats });
@@ -21,14 +21,16 @@ export const getChats = async (model: TGetChatsRequest) => {
   } catch (error: any) {
     window.store.set({ getChatError: error.reason });
   } finally {
-    window.store.set({ isLoading: false });
+    window.store.set({ isLoadingGetChats: false });
   }
 }
 
 export const createChats = async (model: TCreateChatRequest) => {
   window.store.set({ isLoadingChangeChats: true });
   try {
-    const newChatId = await chatsApi.createChat(model);
+    const newChatRes = await chatsApi.createChat(model);
+    //@ts-ignore
+    const newChatId = newChatRes.id
     const chats = window.store.state.chats
     if(newChatId) {
       window.store.set({ newChatId });
@@ -36,13 +38,12 @@ export const createChats = async (model: TCreateChatRequest) => {
       if(!avatar) {
         window.store.set({isCreateChatModal: false})
         const newChat = {
-          //@ts-ignore
-          id: newChatId.id,
+          id: newChatId,
           title: window.store.state.newChatTitle,
           avatar: null,
           unread_count: 0,
           created_by: 0,
-          last_message: {}
+          last_message: null
         }
         if(chats) {
           const newChats = [newChat, ...chats]
@@ -50,17 +51,15 @@ export const createChats = async (model: TCreateChatRequest) => {
         }
       }
       if(avatar) {
-        //@ts-ignore
-        await uploadChatAvatar(newChatId.id, avatar)
+        await uploadChatAvatar(newChatId, avatar)
         const newAvatar = window.store.state.uploadedChatAvatar
         const newChat = {
-          //@ts-ignore
-          id: newChatId.id,
+          id: newChatId,
           title: window.store.state.newChatTitle,
           avatar: newAvatar,
           unread_count: 0,
           created_by: window.store.state.user?.id,
-          last_message: {}
+          last_message: null
         }
         if(chats) {
           const newChats = [newChat, ...chats]
@@ -81,11 +80,16 @@ export const uploadChatAvatar = async (id: number, file: File) => {
   try {
     const uploadChatAvatar = await chatsApi.uploadChatAvatar(id, file);
     //@ts-ignore
-    window.store.set({ isCreateChatModal: false, uploadedChatAvatar: uploadChatAvatar.avatar, activeChatAvatar: uploadChatAvatar.avatar });
+    const chatAvatar = uploadChatAvatar.avatar
+
+    window.store.set({
+      isCreateChatModal: false,
+      uploadedChatAvatar: chatAvatar,
+      activeChatAvatar: chatAvatar
+    });
     if(window.store.state.isClickFileLoad && window.store.state.isChangeChatAvatar) {
       const chats = window.store.state.chats?.map((item) => item.id === window.store.state.activeChatId
-      //@ts-ignore
-        ? {...item, avatar: uploadChatAvatar.avatar}
+        ? {...item, avatar: chatAvatar}
         : item
       )
       window.store.set({ chats: chats, isChangeChatAvatar: false, isClickFileLoad: false});
@@ -106,7 +110,11 @@ export const deleteChat = async (data: TDeleteChatRequest) => {
     const chats = window.store.state.chats
     if(chats) {
       const newChats = chats.filter((item: TGetChatsResponse) => item.id !== deleteChatId)
-      window.store.set({isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal, chats: newChats, activeChatId: null})
+      window.store.set({
+        isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal,
+        chats: newChats,
+        activeChatId: null
+      })
     }
     if(Array.isArray(chats) && chats.length < 15) {
       window.store.set({ isScroll: false });
@@ -168,7 +176,7 @@ export const getTokenChat = async (id: number) => {
 
 export const wsChat = async (id: number) => {
 	await getTokenChat(id);
-	const { user, activeChatId, activeChatToken, offsetMessages } = window.store.state;
+	const { user, activeChatToken, offsetMessages } = window.store.state;
 
 	let interval;
   const data = {
@@ -193,13 +201,13 @@ export const wsChat = async (id: number) => {
 export const getNewMessagesCount = async (id: number) => {
 	window.store.set({ isLoadingNewMessagesCount: true });
 	try {
-		const newUnreadCount = await chatsApi.getNewMessagesCount(id);
-    //const unreadCount = window.store.state.unreadCount
+		const unreadCount = await chatsApi.getNewMessagesCount(id);
+    // @ts-ignore
+    const newUnreadCount = unreadCount.unread_count
     const chats = window.store.state.chats
     if (newUnreadCount) {
-      console.log(newUnreadCount.unread_count, 'unread_count')
       const newChats = chats?.map((item => item.id === id
-        ? {...item, unread_count: newUnreadCount.unread_count}
+        ? {...item, unread_count: newUnreadCount}
         : item
       ))
       window.store.set({ chats: newChats })

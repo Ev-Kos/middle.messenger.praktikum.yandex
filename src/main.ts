@@ -33,12 +33,11 @@ Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });
 
- window.store = new Store({
+window.store = new Store({
   limitChat: 15,
   offsetChat: 0,
   partisipants: [],
   selectedUsers: [],
-  user: {},
   isNotChange: true,
   messagesArr: [],
   offsetMessages: "0",
@@ -49,32 +48,32 @@ window.router = new Router(APP_ROOT_ELEMNT);
 const check = await checkSingInUser();
 const currentPath = window.location.pathname
 
-  if (!check) {
-    window.router.go(ROUTES.login);
-  }
+if (!check) {
+  window.router.go(ROUTES.login);
+}
 
-  if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
-      window.router.go(ROUTES.chat);
-      await getChats({
-        limit: Number(window.store.state.limitChat),
-        offset: Number(window.store.state.offsetChat)
-      })
-    } else {
-      window.router.go(currentPath)
-  }
-
-  if(currentPath === ROUTES.chat) {
+if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
+    window.router.go(ROUTES.chat);
     await getChats({
       limit: Number(window.store.state.limitChat),
       offset: Number(window.store.state.offsetChat)
     })
-  }
+  } else {
+    window.router.go(currentPath)
+}
 
-	window.router
-		.use(ROUTES.login, Pages.LoginPage)
-		.use(ROUTES.register, Pages.RegistrationPage)
-		.use(ROUTES.chat, Pages.ChatPage)
-		.use(ROUTES.profile, Pages.ProfilePage)
-    .use(ROUTES.servError, Pages.ErrorPage)
-		.use("*", Pages.NotFoundPage)
-		.start();
+if(currentPath === ROUTES.chat) {
+  await getChats({
+    limit: Number(window.store.state.limitChat),
+    offset: Number(window.store.state.offsetChat)
+  })
+}
+
+window.router
+  .use(ROUTES.login, Pages.LoginPage)
+  .use(ROUTES.register, Pages.RegistrationPage)
+  .use(ROUTES.chat, Pages.ChatPage)
+  .use(ROUTES.profile, Pages.ProfilePage)
+  .use(ROUTES.servError, Pages.ErrorPage)
+  .use("*", Pages.NotFoundPage)
+  .start();

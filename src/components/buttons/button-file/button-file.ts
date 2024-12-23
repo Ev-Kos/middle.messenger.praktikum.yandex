@@ -28,7 +28,7 @@ class ButtonFile extends Block {
       {{#if uploadedMessagePhoto}}
         <img class="button-file__image" src={{getImage uploadedMessagePhoto.path}} alt="Загруженное изображение">
         {{else}}
-        {{{PaperClipIcon}}}
+          {{{PaperClipIcon}}}
       {{/if}}
     `
   }

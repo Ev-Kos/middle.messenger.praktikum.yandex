@@ -6,7 +6,7 @@ export interface RouteInterface {
 	match: (path: string) => boolean;
 	leave: () => void;
 }
-export type RouteBlock = new (...args: any[]) => Block;
+export type BlockRouter = new (...args: any[]) => Block;
 
 export default class Router {
   static __instance: Router | null;
@@ -28,19 +28,19 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: RouteBlock) {
+  use(pathname: string, block: BlockRouter) {
     const route = new Route(pathname, block, {rootQuery: this._rootQuery});
     this.routes.push(route);
     return this;
   }
 
   start() {
-//исправить типизацию
     window.onpopstate = ((event: PopStateEvent) => {
-			this._onRoute(event.currentTarget.location.pathname);
-		}).bind(this);
+      const target = event.target as Window;
+      this._onRoute(target.location.pathname);
+  });
 
-		this._onRoute(window.location.pathname);
+  this._onRoute(window.location.pathname);
   }
 
   _onRoute(pathname: string) {
@@ -56,7 +56,6 @@ export default class Router {
 
     this._currentRoute = route;
     console.log(route, 'route')
-    //route.render(route, pathname);
     route.render();
   }
 

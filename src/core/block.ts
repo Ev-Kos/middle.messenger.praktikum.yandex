@@ -140,7 +140,7 @@ export default class Block<T extends TBlockProps = TBlockProps> {
     Object.assign(this.props, nextProps);
   };
 
-  setPropsForChildren(children: Block | Block[], newProps: any) {
+  setPropsForChildren(children: Block | Block[], newProps: TBlockProps) {
     if (Array.isArray(children)) {
         children.forEach(child => {
             if (child instanceof Block) {

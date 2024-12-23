@@ -78,7 +78,11 @@ class AddDeleteUserSelectedModal extends Block {
               isDeleted: false,
               onClick: () => {
                 if(Array.isArray(window.store.state.selectedUsers)) {
-                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
+                  window.store.set({
+                    selectedUsers: [...window.store.state.selectedUsers, userProps],
+                    usersLength: null,
+                    isSelectedUsers: true
+                  })
                   this.setPropsForChildren(this.children.Input, {value: ""})
                 }
               },
@@ -94,8 +98,11 @@ class AddDeleteUserSelectedModal extends Block {
                 const id = window.store.state.user?.id;
                 if(Array.isArray(window.store.state.selectedUsers)) {
                   if(item.id !== id) {
-                    window.store.set({selectedUsers: [...window.store.state.selectedUsers, item], isSelectedUsers: true})
-                    window.store.set({partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)})
+                    window.store.set({
+                      selectedUsers: [...window.store.state.selectedUsers, item],
+                      isSelectedUsers: true,
+                      partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)
+                    })
                   }
                 }
               }
@@ -122,64 +129,67 @@ class AddDeleteUserSelectedModal extends Block {
   }
 
   componentDidUpdate(oldProps?: TBlockProps, newProps?: TBlockProps): boolean {
-      if (oldProps === newProps) {
-        return false;
-      }
-      if (newProps && newProps.users) {
-        this.children.Users = newProps.users.map(
-          (userProps: TUser) =>
-            new UserCard({
-              ...userProps,
-              isDeleted: false,
-              onClick: () => {
-                if(Array.isArray(window.store.state.selectedUsers)) {
-                  window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
-                  this.setPropsForChildren(this.children.Input, {value: ""})
-                }
-              },
-          }),
-        )
-      }
-      if (newProps && newProps.partisipants) {
-        this.children.Partisipants = newProps.partisipants.map((item: TUser) =>
+    if (oldProps === newProps) {
+      return false;
+    }
+    if (newProps && newProps.users) {
+      this.children.Users = newProps.users.map(
+        (userProps: TUser) =>
           new UserCard({
-            ...item,
-            isDeleted: window.store.state.isClickAddUserModal ? false : true,
+            ...userProps,
+            isDeleted: false,
             onClick: () => {
-              if(!window.store.state.isClickAddUserModal) {
-                if(Array.isArray(window.store.state.partisipants)) {
-                  const id = window.store.state.user?.id;
-                  if(Array.isArray(window.store.state.selectedUsers)) {
-                    if(item.id !== id) {
-                      window.store.set({selectedUsers: [...window.store.state.selectedUsers, item], isSelectedUsers: true})
-                      window.store.set({partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)})
-                    }
+              if(Array.isArray(window.store.state.selectedUsers)) {
+                window.store.set({selectedUsers: [...window.store.state.selectedUsers, userProps], usersLength: null, isSelectedUsers: true})
+                this.setPropsForChildren(this.children.Input, {value: ""})
+              }
+            },
+        }),
+      )
+    }
+    if (newProps && newProps.partisipants) {
+      this.children.Partisipants = newProps.partisipants.map((item: TUser) =>
+        new UserCard({
+          ...item,
+          isDeleted: window.store.state.isClickAddUserModal ? false : true,
+          onClick: () => {
+            if(!window.store.state.isClickAddUserModal) {
+              if(Array.isArray(window.store.state.partisipants)) {
+                const id = window.store.state.user?.id;
+                if(Array.isArray(window.store.state.selectedUsers)) {
+                  if(item.id !== id) {
+                    window.store.set({
+                      selectedUsers: [...window.store.state.selectedUsers, item],
+                      isSelectedUsers: true,
+                      partisipants: window.store.state.partisipants?.filter((elem) => item.id !== elem.id)
+                    })
                   }
                 }
               }
             }
-          })
-        )
-      }
-      if (newProps && newProps.selectedUsers) {
-        this.children.SelectedUsers = newProps.selectedUsers?.map((item: TUser) =>
-          new UserCard({
-            ...item,
-            isDeleted: true,
-            onClick: () => {
-              window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
-              if(window.store.state.selectedUsers?.length === 0) {
-                window.store.set({isSelectedUsers: false})
-              }
-              if(!window.store.state.isClickAddUserModal && Array.isArray(window.store.state.partisipants)) {
-                window.store.set({partisipants: [...window.store.state.partisipants, item]})
-              }
-            }
-          })
-        )
-      }
-      return true;
+          }
+        })
+      )
     }
+    if (newProps && newProps.selectedUsers) {
+      this.children.SelectedUsers = newProps.selectedUsers?.map((item: TUser) =>
+        new UserCard({
+          ...item,
+          isDeleted: true,
+          onClick: () => {
+            window.store.set({selectedUsers: window.store.state.selectedUsers?.filter((elem) => item.id !== elem.id)})
+            if(window.store.state.selectedUsers?.length === 0) {
+              window.store.set({isSelectedUsers: false})
+            }
+            if(!window.store.state.isClickAddUserModal && Array.isArray(window.store.state.partisipants)) {
+              window.store.set({partisipants: [...window.store.state.partisipants, item]})
+            }
+          }
+        })
+      )
+    }
+    return true;
+  }
 
   public render(): string {
     const id = window.store.state.user?.id;
@@ -192,7 +202,6 @@ class AddDeleteUserSelectedModal extends Block {
     }
 
     return `
-
       {{#if isClickAdd}}
         <h1 class="form-modal__title">Добавить пользователя</h1>
       {{else}}
