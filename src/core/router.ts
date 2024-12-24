@@ -35,7 +35,6 @@ export default class Router {
   }
 
   start() {
-    console.log('init')
     window.onpopstate = ((event: PopStateEvent) => {
       const target = event.target as Window;
       this._onRoute(target.location.pathname);
