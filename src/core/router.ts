@@ -55,7 +55,6 @@ export default class Router {
     }
 
     this._currentRoute = route;
-    console.log(route, 'route')
     route.render();
   }
 
