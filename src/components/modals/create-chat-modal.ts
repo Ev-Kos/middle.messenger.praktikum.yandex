@@ -16,7 +16,7 @@ class CreateChatModal extends Block {
       ButtonAvatar: new ButtonAvatar({
         text: "Загрузить аватар",
         isCreateChat: true,
-        onChange: (e: Event) => {
+        onChange: (e: InputEvent) => {
           if(e.target instanceof HTMLInputElement) {
             const { files } = e.target;
             if(files?.length) {
@@ -35,7 +35,7 @@ class CreateChatModal extends Block {
         name: "title",
         type: "text",
         text: "Название",
-        onChange: (e: Event) => {
+        onChange: (e: InputEvent) => {
           if(e.target instanceof HTMLInputElement) {
             window.store.set({ newChatId: null });
             const value = e.target.value;
@@ -50,7 +50,7 @@ class CreateChatModal extends Block {
         type: "submit",
         text: "Создать",
         isLoading: window.store.state.isLoadingChangeChats,
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
           if(this.props.title.title.length > 0) {
             createChats(this.props.title)

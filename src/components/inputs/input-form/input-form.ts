@@ -10,7 +10,7 @@ type InputFormProps = {
   isError?: boolean;
   withError?: boolean;
   id?: string;
-  onChange?: (e: Event) => void;
+  onChange?: (e: InputEvent) => void;
   onKeyDown?: (e: KeyboardEvent) => void;
 };
 
@@ -32,9 +32,9 @@ export default class InputForm extends Block {
       <input class="input {{modifier}}"
         autocomplete={{autocomplete}}
         placeholder=""
-        name={{ name }}
-        type={{ type }}
-        value={{ value }}
+        name="{{ name }}"
+        type="{{ type }}"
+        value="{{ value }}"
       >
       {{#if withError}}
         <span class="input__error">{{#if isError}}{{error}}{{/if}}</span>

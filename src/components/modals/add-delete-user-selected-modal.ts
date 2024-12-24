@@ -46,7 +46,7 @@ class AddDeleteUserSelectedModal extends Block {
       ButtonAdd: new Button({
         type: "submit",
         text: "Добавить",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
           const arr = window.store.state.selectedUsers?.map((item) => item.id)
           if(arr && arr.length !== 0) {
@@ -58,7 +58,7 @@ class AddDeleteUserSelectedModal extends Block {
       ButtonDelete: new Button({
         type: "submit",
         text: "Удалить",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
           const arr = window.store.state.selectedUsers?.map((item) => item.id)
           if(arr && arr.length !== 0) {

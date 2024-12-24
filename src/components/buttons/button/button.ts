@@ -8,7 +8,7 @@ type TButtonProps = {
   text: string;
   modifierText?: string;
   modifierButton?: string;
-  onClick?: (e: Event) => void;
+  onClick: (e: MouseEvent) => void;
   isLoading?: boolean;
   isDisabled?: boolean;
 };

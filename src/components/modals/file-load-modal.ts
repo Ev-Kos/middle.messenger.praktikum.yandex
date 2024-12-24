@@ -10,7 +10,7 @@ class FileLoadModal extends Block {
     super("form", {
       className: "form-modal form-modal__file-load-modal",
       events: {
-        change: (e: Event) => {
+        change: (e: InputEvent) => {
           if(e.target instanceof HTMLInputElement) {
             const { files } = e.target;
             if(files?.length) {
@@ -44,7 +44,7 @@ class FileLoadModal extends Block {
           : window.store.state.isChangeChatAvatar
           ? window.store.state.isLoadingUploadAvatar
           : window.store.state.isLoadingUploadUserAvatar,
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
           if(window.store.state.userAvatarFile) {
             changeUserAvatar(window.store.state.userAvatarFile)
@@ -97,28 +97,28 @@ class FileLoadModal extends Block {
       {{/if}}
       <div class="form-modal__form">
         {{#if userAvatar}}
-          <img class="button-avatar__image" src={{userAvatar.src}} alt={{userAvatar.alt}}>
+          <img class="button-avatar__image" src="{{userAvatar.src}}" alt="{{userAvatar.alt}}">
           <div class="user-avatar-mask">
             {{{DeleteAvatar}}}
           </div>
         {{else if messagePhoto}}
-          <img class="message-photo-image" src={{messagePhoto.src}} alt={{messagePhoto.alt}} >
+          <img class="message-photo-image" src="{{messagePhoto.src}}" alt="{{messagePhoto.alt}}" >
           <div class="message-photo-image-mask">
             {{{DeleteMessagePhoto}}}
           </div>
         {{else if activeChatAvatar}}
-          <img class="button-avatar__image" src={{getImage activeChatAvatar}} alt="Аватар" >
+          <img class="button-avatar__image" src="{{getImage activeChatAvatar}}" alt="Аватар" >
           <div class="user-avatar-mask">
             {{{DeleteChatAvatar}}}
           </div>
         {{else if chatAvatar}}
-          <img class="button-avatar__image" src={{chatAvatar.src}} alt={{chatAvatar.alt}} >
+          <img class="button-avatar__image" src="{{chatAvatar.src}}" alt="{{chatAvatar.alt}}" >
           <div class="user-avatar-mask">
             {{{DeleteChatAvatar}}}
           </div>
         {{else}}
           <div class="{{#if isMessagePhoto}}input-file__wrap-message{{else}}input-file__wrap{{/if}}">
-            <input class="input-file" type="file" name="input-file" value={{ value }}/>
+            <input class="input-file" type="file" name="input-file" value="{{ value }}"/>
             <p class="input-file__text">Выбрать файл на компьютере</p>
           </div>
         {{/if}}

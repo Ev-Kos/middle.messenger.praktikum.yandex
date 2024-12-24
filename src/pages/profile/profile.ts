@@ -28,10 +28,6 @@ export default class ProfilePage extends Block {
       <div class="profile-page__button-back">
         {{{ButtonArrow}}}
       </div>
-      {{!-- isChangeInfo="true" (Изменение основной информации)
-        isChangePassword="true" (Изменение пароля)
-        isNotChange="true" (Профиль)
-      --}}
       {{{ProfileInfo}}}
     `
   }

@@ -10,7 +10,7 @@ type TProfileFieldProps = {
   inputName?: string;
   value?: string;
   inputIsDisabled?: boolean;
-  onChangeInput?: (e: Event) => void;
+  onChangeInput?: (e: InputEvent) => void;
   inputType?: string;
   onClick?: () => void;
   error?: string;
@@ -41,7 +41,7 @@ export default class ProfileField extends Block {
             <p class="profile-field__value">{{value}}</p>
           {{else}}
             <label class="profile-field__label">
-              <input class="profile-field__input-profile" type={{type}} name={{name}} value={{value}} >
+              <input class="profile-field__input-profile" type="{{type}}" name="{{name}}" value="{{value}}" >
             </label>
           {{/if}}
         {{/if}}

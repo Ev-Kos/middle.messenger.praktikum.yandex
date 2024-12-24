@@ -26,7 +26,7 @@ class ButtonFile extends Block {
   public render(): string {
     return `
       {{#if uploadedMessagePhoto}}
-        <img class="button-file__image" src={{getImage uploadedMessagePhoto.path}} alt="Загруженное изображение">
+        <img class="button-file__image" src="{{getImage uploadedMessagePhoto.path}}" alt="Загруженное изображение">
         {{else}}
           {{{PaperClipIcon}}}
       {{/if}}

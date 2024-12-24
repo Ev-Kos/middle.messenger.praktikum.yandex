@@ -6,7 +6,7 @@ import Button from "../button/button";
 type TButtonAvatarProps = {
   onClick?: () => void;
   text: string;
-  onChange?: (e: Event) => void;
+  onChange?: (e: MouseEvent) => void;
   deleteAvatar?: () => void;
   isCreateChat: boolean;
 }
@@ -42,20 +42,20 @@ class ButtonAvatar extends Block {
     return `
       {{#if isCreateChat}}
         {{#if chatAvatar}}
-          <img class="button-avatar__image" src={{chatAvatar.src}} alt={{chatAvatar.alt}}>
+          <img class="button-avatar__image" src="{{chatAvatar.src}}" alt="{{chatAvatar.alt}}">
           <div class="button-avatar__image-mask">
             {{{DeleteAvatar}}}
           </div>
         {{else}}
           <div class="button-avatar__mask">
-            <input class="button-avatar__input-file" type="file" name="input-file" value={{ value }}/>
+            <input class="button-avatar__input-file" type="file" name="input-file" value="{{ value }}"/>
             <p class="button-avatar__text">{{text}}</p>
           </div>
           {{{ImageIcon}}}
         {{/if}}
         {{else}}
           {{#if user.avatar}}
-            <img class="button-avatar__image" src={{getImage user.avatar}} alt="Фотография пользователя">
+            <img class="button-avatar__image" src="{{getImage user.avatar}}" alt="Фотография пользователя">
             <div class="button-avatar__image-mask">
               {{{DeleteAvatar}}}
             </div>

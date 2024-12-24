@@ -144,7 +144,7 @@ class RegistrationPage extends Block {
       Button: new Button({
         type: "submit",
         text: "Зарегистрироваться",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorEmail = checkEmail(this.props.formState.email)

@@ -12,7 +12,6 @@ import { ProfileField } from "../profile-field";
 import { ModalWrapper } from "../wrappers/modals-wrapper";
 
 type TProfileInfoProps = {
-  onClickButtonAvatar: () => void;
   user: TUser
 }
 
@@ -270,7 +269,7 @@ class ProfileInfo extends Block {
         type: "submit",
         text: "Сохранить",
         modifierButton:"profile-info__save-button",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorEmail = checkEmail(this.props.mainFieldState.email)
@@ -299,7 +298,7 @@ class ProfileInfo extends Block {
         type: "submit",
         text: "Сохранить",
         modifierButton:"profile-info__save-button",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorPassword = checkPassword(this.props.passwordState.oldPassword);
@@ -323,6 +322,7 @@ class ProfileInfo extends Block {
   }
 
   public render(): string {
+    console.log(this.props)
     const isNotChange = window.store.state.isNotChange
 
     if(isNotChange) {

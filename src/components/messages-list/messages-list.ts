@@ -75,6 +75,7 @@ class MessagesList extends Block {
             isMessagePhoto: false,
             messagePhoto: null, messagePhotoFile: null,
             isChangeChatAvatar: false,
+            chatAvatar: null, chatAvatarFile: null
           })
         }
       }),
@@ -170,15 +171,15 @@ class MessagesList extends Block {
         }
       })
 
-        this.children.GroupsList = groups.map((item: TMessagesGroupProps) =>
-          new MessagesGroup({ ...item}))
-        const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
+      this.children.GroupsList = groups.map((item: TMessagesGroupProps) =>
+        new MessagesGroup({ ...item}))
+      const lastGroup = this.children.GroupsList[this.children.GroupsList.length - 1];
 
-        if(lastGroup) {
-          setTimeout(() => {
-            window.store.set({isScrollMessages: true})
-          }, 0)
-        }
+      if(lastGroup) {
+        setTimeout(() => {
+          window.store.set({isScrollMessages: true})
+        }, 0)
+      }
     }
     return true;
   }
@@ -190,7 +191,7 @@ class MessagesList extends Block {
           <div class="messages-list__user-container">
             <div class="messages-list__user">
               {{#if activeChatAvatar}}
-                <img class="messages-list__photo" src={{getImage activeChatAvatar}} alt="Фотография пользователя"/>
+                <img class="messages-list__photo" src="{{getImage activeChatAvatar}}" alt="Фотография пользователя"/>
               {{else}}
                 <div class="messages-list__mock-photo"></div>
               {{/if}}
