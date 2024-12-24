@@ -99,7 +99,7 @@ class ContactList extends Block {
     }
     if (newProps && newProps.chats) {
       this.children.Chats = newProps.chats.map(
-        (chatProps: any) =>
+        (chatProps: TGetChatsResponse) =>
           new ContactCard({
             ...chatProps,
             onClick: () => {

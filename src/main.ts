@@ -45,31 +45,14 @@ window.store = new Store({
 
 const APP_ROOT_ELEMNT = "#app";
 window.router = new Router(APP_ROOT_ELEMNT);
-const check = await checkSingInUser();
-const currentPath = window.location.pathname
 
-if (!check) {
-  window.router.go(ROUTES.login);
-}
 
-if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
-    window.router.go(ROUTES.chat);
-    await getChats({
-      limit: Number(window.store.state.limitChat),
-      offset: Number(window.store.state.offsetChat)
-    })
-  } else {
-    window.router.go(currentPath)
-}
 
-if(currentPath === ROUTES.chat) {
-  await getChats({
-    limit: Number(window.store.state.limitChat),
-    offset: Number(window.store.state.offsetChat)
-  })
-}
+const initApp = async (): Promise<void> => {
+  const check = await checkSingInUser();
+  const currentPath = window.location.pathname;
 
-window.router
+  window.router
   .use(ROUTES.login, Pages.LoginPage)
   .use(ROUTES.register, Pages.RegistrationPage)
   .use(ROUTES.chat, Pages.ChatPage)
@@ -77,3 +60,30 @@ window.router
   .use(ROUTES.servError, Pages.ErrorPage)
   .use("*", Pages.NotFoundPage)
   .start();
+
+  if (!check) {
+    window.router.go(ROUTES.login);
+    return;
+  }
+
+  if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
+    window.router.go(ROUTES.chat);
+    await getChats({
+      limit: Number(window.store.state.limitChat),
+      offset: Number(window.store.state.offsetChat)
+    })
+    return;
+  }
+
+  if (currentPath === ROUTES.chat) {
+    await getChats({
+      limit: Number(window.store.state.limitChat),
+      offset: Number(window.store.state.offsetChat)
+    })
+    return;
+  }
+  window.router.go(currentPath)
+}
+initApp().catch(error => {
+  console.error(error);
+});

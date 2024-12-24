@@ -23,7 +23,7 @@ export default class Message extends Block {
         {{#unless isSend}}
           <div class="message__user-info">
             {{#if user.avatar}}
-              <img class="message__avatar" src={{getImage user.avatar}} alt="Аватар" >
+              <img class="message__avatar" src="{{getImage user.avatar}}" alt="Аватар" >
               {{else}}
               <div class="message__mock-avatar"></div>
             {{/if}}
@@ -41,7 +41,7 @@ export default class Message extends Block {
           </div>
           {{else}}
             <div class="image-message">
-              <img class="image-message__image" src={{getImage file.path}} alt={{file.filename}} />
+              <img class="image-message__image" src="{{getImage file.path}}" alt="{{file.filename}}" />
               <div class="image-message__time-wrap">
                 <p class="image-message__time">{{getDate time false true}}</p>
               </div>

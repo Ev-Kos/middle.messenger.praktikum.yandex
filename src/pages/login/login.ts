@@ -57,7 +57,7 @@ class LoginPage extends Block {
       ButtonSubmit: new Button({
         type: "submit",
         text: "Авторизоваться",
-        onClick: (e: Event) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorLogin = checkLogin(this.props.formState.login);
