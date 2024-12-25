@@ -7,7 +7,9 @@ type TInputSearchProps = {
   name: string;
   type: string;
   value?: string;
-  onChange?: (e: Event) => void;
+  onChange?: (e: InputEvent) => void;
+  onKeyDown?: (e: KeyboardEvent) => void;
+
 }
 
 export default class InputSearch extends Block {
@@ -16,7 +18,8 @@ export default class InputSearch extends Block {
       ...props,
       className: 'input-search__label',
       events: {
-        change: props.onChange
+        change: props.onChange,
+        keydown: props.onKeyDown
       },
       LoupIcon: new LoupIcon
     })
@@ -24,7 +27,12 @@ export default class InputSearch extends Block {
 
   public render(): string {
     return `
-      <input class="input-search {{modifier}}" placeholder={{placeholderText}} name={{ name }} type={{ type }} value={{ value }} >
+      <input class="input-search {{modifier}}"
+        placeholder="{{placeholderText}}"
+        name="{{ name }}"
+        type="{{ type }}"
+        value="{{ value }}"
+      >
       <div class="input-search__icon-wrap">
         {{{LoupIcon}}}
       </div>

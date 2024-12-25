@@ -38,7 +38,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 125,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -57,7 +57,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 126,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -76,7 +76,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 127,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -95,7 +95,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 128,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -114,7 +114,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 129,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -133,7 +133,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 130,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -152,7 +152,7 @@ export const contactList = [
     }
   },
   {
-    "id": 124,
+    "id": 131,
     "title": "Алексей",
     "avatar": "https://proxys.io/files/blog/useragent/user.png",
     "unread_count": 4,
@@ -170,158 +170,158 @@ export const contactList = [
       "content": "Друзья, у меня для вас особенный выпуск новостей!..."
     }
   },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  },
-  {
-    "id": 124,
-    "title": "Алексей",
-    "avatar": "https://proxys.io/files/blog/useragent/user.png",
-    "unread_count": 4,
-    "created_by": 12345,
-    "last_message": {
-      "user": {
-        "first_name": "Алексей",
-        "second_name": "Pupkin",
-        "avatar": "https://proxys.io/files/blog/useragent/user.png",
-        "email": "my@email.com",
-        "login": "userLogin",
-        "phone": "8(911)-222-33-22"
-      },
-      "time": "2024-11-06T14:22:22.000Z",
-      "content": "Друзья, у меня для вас особенный выпуск новостей!..."
-    }
-  }
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  // },
+  // {
+  //   "id": 124,
+  //   "title": "Алексей",
+  //   "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //   "unread_count": 4,
+  //   "created_by": 12345,
+  //   "last_message": {
+  //     "user": {
+  //       "first_name": "Алексей",
+  //       "second_name": "Pupkin",
+  //       "avatar": "https://proxys.io/files/blog/useragent/user.png",
+  //       "email": "my@email.com",
+  //       "login": "userLogin",
+  //       "phone": "8(911)-222-33-22"
+  //     },
+  //     "time": "2024-11-06T14:22:22.000Z",
+  //     "content": "Друзья, у меня для вас особенный выпуск новостей!..."
+  //   }
+  //}
 ]
 
 export const message = `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА

@@ -2,7 +2,7 @@ import {v4 as makeUUID} from 'uuid';
 import EventBus from './event-bus';
 import Handlebars from 'handlebars';
 
-type TBlockProps = {
+export type TBlockProps = {
   [key: string]: any;
 }
 
@@ -11,20 +11,21 @@ type IMeta = {
 	props: TBlockProps
 }
 
-export default class Block {
+export default class Block<T extends TBlockProps = TBlockProps> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
+    FLOW_CDUN: "flow:component-did-unmount",
     FLOW_RENDER: "flow:render"
   };
 
   protected  _element: HTMLElement | null = null;
   protected  _meta: IMeta;
   protected  _id: string = makeUUID();
-  protected  props: TBlockProps;
+  public  props: T;
   protected eventBus: () => EventBus<string>;
-  protected children: Record<string, Block> | Record<string, Block[]>;
+  public children: Record<string, Block> | Record<string, Block[]>;
 
   constructor(tagName = "div", propsWithChildren = {}) {
     const eventBus = new EventBus();
@@ -38,7 +39,7 @@ export default class Block {
       props
     };
 
-    this.props = this._makePropsProxy({ ...props, __id: this._id });
+    this.props = this._makePropsProxy({ ...props, __id: this._id }) as T;
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -48,6 +49,7 @@ export default class Block {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDUN, this._componentDidUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -102,9 +104,7 @@ export default class Block {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
-    });
+
   }
 
   componentDidMount() {}
@@ -123,7 +123,15 @@ export default class Block {
 
   componentDidUpdate(oldProps?: TBlockProps, newProps?: TBlockProps): boolean {
     return oldProps !== newProps;
-}
+  }
+
+  _componentDidUnmount() {
+		this._removeEvents();
+	}
+
+  public dispatchComponentDidUnmount() {
+		this.eventBus().emit(Block.EVENTS.FLOW_CDUN);
+	}
 
   setProps = (nextProps: TBlockProps) => {
     if (!nextProps) {
@@ -132,7 +140,7 @@ export default class Block {
     Object.assign(this.props, nextProps);
   };
 
-  setPropsForChildren(children: Block | Block[], newProps: any) {
+  setPropsForChildren(children: Block | Block[], newProps: TBlockProps) {
     if (Array.isArray(children)) {
         children.forEach(child => {
             if (child instanceof Block) {
@@ -168,12 +176,12 @@ export default class Block {
   }
 
   _compile() {
-    const propsAndStubs = { ...this.props };
+    const propsAndStubs: { [key: string]: any } = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
         propsAndStubs[key] = child.map(
-          (component) => `<div data-id="${component._id}"></div>`,
+            (component) => `<div data-id="${component._id}"></div>`
         );
       } else {
         propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
@@ -195,7 +203,6 @@ export default class Block {
         });
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-
         stub?.replaceWith(child.getContent());
       }
     });
@@ -206,7 +213,6 @@ export default class Block {
   _render() {
     this._removeEvents();
     const block = this._compile();
-
     if(this._element) {
       if (this._element.children.length === 0) {
         this._element.appendChild(block);
@@ -214,7 +220,6 @@ export default class Block {
         this._element.replaceChildren(block);
       }
     }
-
     this._addEvents();
   }
 

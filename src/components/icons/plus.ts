@@ -1,8 +1,15 @@
 import Block from "../../core/block"
 
+type TProps = {
+  color: string,
+  width: string;
+  height: string;
+}
+
 export default class PlusIcon extends Block {
-  constructor() {
+  constructor(props: TProps) {
     super("div", {
+      ...props,
       className: "plus-icon"
     });
   }
@@ -10,8 +17,8 @@ export default class PlusIcon extends Block {
   public render(): string {
     return `
       <svg
-        width="12"
-        height="12"
+        width={{width}}
+        height={{height}}
         viewBox="0 0 12 12"
         fill="none"
       >
@@ -20,7 +27,7 @@ export default class PlusIcon extends Block {
           y1="0.5"
           x2="5.99988"
           y2="11.5"
-          stroke="#3369F3"
+          stroke={{color}}
           stroke-width="1.5"
         />
         <line
@@ -28,7 +35,7 @@ export default class PlusIcon extends Block {
           y1="6"
           x2="11.4999"
           y2="6"
-          stroke="#3369F3"
+          stroke={{color}}
           stroke-width="1.5"
         />
       </svg>

@@ -1,3 +1,5 @@
+import { baseApi } from "../utils/constants";
+
 const METHODS = {
   GET: 'GET',
   POST: 'POST',
@@ -13,8 +15,8 @@ type TOptions = {
   data?: any;
   headers?: any;
 }
-
-type TRequest = (url: string,  options: TOptions) => Promise<unknown>
+//any?
+type TRequest = (url: string,  options?: TOptions) => Promise<void | any>
 
 function queryStringify(data: Record<string, any>) {
   if (typeof data !== 'object') {
@@ -28,24 +30,29 @@ function queryStringify(data: Record<string, any>) {
 }
 
 export default class HTTPTransport {
+  private apiUrl: string;
+
+  constructor(apiPath: string) {
+    this.apiUrl = `${baseApi}${apiPath}`;
+  }
   get:TRequest = (url, options = {}) => {
-    return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+    return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.GET}, options.timeout);
   };
 
   post:TRequest = (url, options = {}) => {
-    return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+    return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.POST}, options.timeout);
   };
 
   put:TRequest = (url, options = {}) => {
-    return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+    return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.PUT}, options.timeout);
   };
 
   patch:TRequest = (url, options = {}) => {
-    return this.request(url, {...options, method: METHODS.PATCH}, options.timeout);
+    return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.PATCH}, options.timeout);
   };
 
   delete:TRequest = (url, options = {}) => {
-    return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+    return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.DELETE}, options.timeout);
   };
 
   private fetchWithRetry: TRequest = (url, options = {}) => {
@@ -61,7 +68,7 @@ export default class HTTPTransport {
     return fetch(url, options).catch(onError);
   };
 
-  request = (url: string, options: TOptions = {}, timeout = 5000) => {
+  request = async (url: string, options: TOptions = {}, timeout = 5000) => {
     const {headers = {}, method, data} = options;
 
     return new Promise(function(resolve, reject) {
@@ -72,6 +79,7 @@ export default class HTTPTransport {
 
       const xhr = new XMLHttpRequest();
       const isGet = method === METHODS.GET;
+      xhr.withCredentials = true;
 
       xhr.open(
         method,
@@ -80,16 +88,45 @@ export default class HTTPTransport {
         : url,
       );
 
+      if (!(data instanceof FormData)) {
+          xhr.setRequestHeader('Content-type', 'application/json');
+      }
+
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
-      xhr.onload = function() {
-        resolve(xhr);
+      const jsonIsString = (str: string) => {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
       };
 
+      xhr.onload = function () {
+				if (xhr.status >= 200 && xhr.status < 300) {
+					const response = jsonIsString(xhr.response)
+						? JSON.parse(xhr.response)
+						: xhr.response;
+					resolve(response);
+				} else {
+					const { error, reason } = JSON.parse(xhr.response);
+					reject({
+						error,
+						reason,
+					});
+				}
+			};
+
       xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.onerror = function () {
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText,
+        });
+      };
 
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
@@ -97,9 +134,8 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(data instanceof FormData ? data : JSON.stringify(data));
       }
     })
-    .catch(() => this.fetchWithRetry(url, options));
   }
 }

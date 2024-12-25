@@ -1,8 +1,11 @@
-import { Button, InputForm, Link } from "../../components";
+import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
+import { ROUTES } from "../../utils/constants";
 import { checkLogin, checkPassword } from "../../utils/validate-inputs";
+import { singIn } from "../../services/auth";
+import { connect } from "../../utils/connect";
 
-export default class LoginPage extends Block {
+class LoginPage extends Block {
   constructor() {
     super("section", {
       formState: {
@@ -14,6 +17,7 @@ export default class LoginPage extends Block {
         name: "login",
         type: "text",
         text: "Логин",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -23,7 +27,7 @@ export default class LoginPage extends Block {
                 ...this.props.formState,
                 login: value,
               },
-            });
+            })
           }
         },
       }),
@@ -31,6 +35,7 @@ export default class LoginPage extends Block {
         name: "password",
         type: "password",
         text: "Пароль",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -40,14 +45,14 @@ export default class LoginPage extends Block {
                 ...this.props.formState,
                 password: value,
               },
-            });
+            })
           }
         }
       }),
-      Button: new Button({
+      ButtonSubmit: new Button({
         type: "submit",
         text: "Авторизоваться",
-        onClick: (e) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorLogin = checkLogin(this.props.formState.login);
@@ -58,17 +63,22 @@ export default class LoginPage extends Block {
             this.setPropsForChildren(this.children.InputPassword, errorPassword);
             return;
           }
-          console.log(this.props.formState)}
+          singIn(this.props.formState);
+        }
       }),
-      Link: new Link({
-        to: "#",
-        modifierLink: "link",
+      Link: new Button({
+        type: "button",
+        onClick: () => window.router.go(ROUTES.register),
+        modifierButton: "button_link",
+        modifierText: "button_link-text",
         text: "Нет аккаунта?"
       })
     });
   }
+
   public render(): string {
     return `
+      <p class="{{#if singInError}}login-page__error-visible {{else}}login-page__error{{/if}}">Не верный логин или пароль</p>
       <form class="form-login">
         <div class="form-login__info">
           <h1 class="form-login__title">Вход</h1>
@@ -78,10 +88,19 @@ export default class LoginPage extends Block {
           </div>
         </div>
         <div class="form-login__buttons">
-          {{{Button}}}
+          {{{ButtonSubmit}}}
           {{{Link}}}
         </div>
       </form
     `;
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    isLoading: state.isLoading,
+    singInError: state.singInError,
+  };
+};
+
+export default connect(mapStateToProps)(LoginPage);

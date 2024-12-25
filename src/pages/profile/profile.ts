@@ -1,28 +1,30 @@
-import { ButtonArrow, FileLoadModal, ModalWrapper, ProfileInfo } from "../../components";
+import { ButtonArrow, ProfileInfo } from "../../components";
 import Block from "../../core/block";
+import { getChats } from "../../services/chats";
+import { ROUTES } from "../../utils/constants";
 
 export default class ProfilePage extends Block {
   constructor() {
     super("section", {
       className: "profile-page",
-      isClickFileLoad: false,
+      isClickFileLoad: window.store.state.isClickFileLoad,
       ButtonArrow: new ButtonArrow({
         onClick: () => {
-          console.log("click")
+          window.router.go(ROUTES.chat)
+          getChats({
+            limit: Number(window.store.state.limitChat),
+            offset: Number(window.store.state.offsetChat)
+          })
+          window.store.set({
+            isNotChange: true,
+            isChangePassword: false,
+            changeProfileError: null,
+            changePasswordError: null
+          })
         },
         isRight: false
       }),
-      ProfileInfo: new ProfileInfo({
-        onClickButtonAvatar: () => {
-          this.setProps({isClickFileLoad: true})
-        }
-      }),
-      FileLoadModal: new FileLoadModal,
-      ModalWrapper: new ModalWrapper({
-        onClick: () => {
-          this.setProps({isClickFileLoad: false})
-        }
-      }),
+      ProfileInfo: new ProfileInfo({}),
     });
   }
 
@@ -31,15 +33,7 @@ export default class ProfilePage extends Block {
       <div class="profile-page__button-back">
         {{{ButtonArrow}}}
       </div>
-      {{!-- isChangeInfo="true" (Изменение основной информации)
-        isChangePassword="true" (Изменение пароля)
-        isNotChange="true" (Профиль)
-      --}}
       {{{ProfileInfo}}}
-      {{#if isClickFileLoad}}
-        {{{ModalWrapper}}}
-        {{{FileLoadModal}}}
-      {{/if}}
     `
   }
 }

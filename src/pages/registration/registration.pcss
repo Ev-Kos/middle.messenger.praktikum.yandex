@@ -1,18 +1,31 @@
 .registration-page {
   position: relative;
   display: flex;
+  flex-direction: column;
+  gap: 15px;
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  &__error, &__error-visible {
+    opacity: 0;
+    margin: 0;
+    color: var(--color-red);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  &__error-visible {
+    opacity: 1;
+  }
 }
 
 .registration-form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 30px;
   align-items: center;
   width: 340px;
-  height: 680px;
   padding: 50px 30px 30px;
   box-sizing: border-box;
   box-shadow: 0 0 6px 0 var(--color-form-shadow);
@@ -22,7 +35,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
     width: 100%;
   }
 
@@ -51,4 +64,15 @@
 
 .input_error {
   color: var(--color-red)
+}
+
+.button_link {
+  background-color: var(--color-white);
+}
+
+.button_link-text {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-blue);
 }

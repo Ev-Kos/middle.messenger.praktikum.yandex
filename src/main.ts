@@ -1,21 +1,29 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
-import { getDate } from './utils/functions';
-import renderDOM from './core/render-dom';
+import { getDate } from './utils/functions/getDate';
+import { ROUTES } from './utils/constants';
+import { Store } from './core/store';
+import Router from './core/router';
+import { checkSingInUser } from './services/auth';
+import { getChats } from './services/chats';
+import { getImage } from './utils/functions/getImage';
+import WebScoketClass from './services/ws';
 
-const pages = {
-  navigation: [ Pages.NavigationPage ],
-  login: [ Pages.LoginPage],
-  registration: [ Pages.RegistrationPage],
-  chat: [ Pages.ChatPage ],
-  profile: [ Pages.ProfilePage],
-  500: [ Pages.NotFoundPage ],
-  400: [ Pages.ErrorPage ],
-};
+declare global {
+	interface Window {
+		router: Router;
+		store: Store;
+    socket: WebScoketClass;
+	}
+}
 
-Handlebars.registerHelper('getDate', function (date, isGotMessage, isOnlyTime) {
-  return getDate(date, isGotMessage, isOnlyTime)
+Handlebars.registerHelper('getDate', function (date, isChatCard, isOnlyTime) {
+  return getDate(date, isChatCard, isOnlyTime)
+})
+
+Handlebars.registerHelper('getImage', function (path) {
+  return getImage(path)
 })
 
 Object.entries(Components).forEach(([ name, template ]) => {
@@ -25,35 +33,48 @@ Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });
 
-function navigate(page: string) {
-  //@ts-ignore
-  const [source, context] = pages[page];
-  if (typeof source === "function") {
-    renderDOM(new source({}));
+window.store = new Store({
+  limitChat: 15,
+  offsetChat: 0,
+  partisipants: [],
+  selectedUsers: [],
+  isNotChange: true,
+  messagesArr: [],
+  offsetMessages: "0",
+ });
+
+const initApp = async (): Promise<void> => {
+  const check = await checkSingInUser();
+  const currentPath = window.location.pathname;
+
+  const APP_ROOT_ELEMENT = "#app";
+  window.router = new Router(APP_ROOT_ELEMENT);
+
+  window.router
+  .use(ROUTES.login, Pages.LoginPage)
+  .use(ROUTES.register, Pages.RegistrationPage)
+  .use(ROUTES.chat, Pages.ChatPage)
+  .use(ROUTES.profile, Pages.ProfilePage)
+  .use(ROUTES.servError, Pages.ErrorPage)
+  .use("*", Pages.NotFoundPage)
+  .start();
+
+  if (!check) {
+    window.router.go(ROUTES.login);
     return;
   }
-  const container = document.getElementById('app')!;
-  const temlpatingFunction = Handlebars.compile(source);
-  container.innerHTML = temlpatingFunction(context);
-  history.pushState({ page }, "", `${page}`);
+
+  if (currentPath === ROUTES.login || currentPath === ROUTES.register) {
+    window.router.go(ROUTES.chat);
+    await getChats({
+      limit: Number(window.store.state.limitChat),
+      offset: Number(window.store.state.offsetChat)
+    })
+    return;
+  }
+
+  window.router.go(currentPath)
 }
-
-window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.page) {
-    navigate(event.state.page);
-  } else {
-    navigate('navigation');
-  }
-})
-
-document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
-
-document.addEventListener('click', e => {
-  //@ts-ignore
-  const page = e.target.getAttribute('page');
-  if (page) {
-    navigate(page);
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }
-})
+initApp().catch(error => {
+  console.error(error);
+});

@@ -1,0 +1,76 @@
+.user-search-card {
+  width: 100%;
+  list-style: none;
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-grey-border);
+    width: 100%;
+    cursor: pointer;
+    padding: 3px 7px;
+  }
+
+  &__wrap:hover {
+    background-color: var(--color-blue-light);
+    border-radius: 10px;
+  }
+
+  &__wrap-you {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-grey-border);
+    width: 100%;
+    pointer-events: none;
+    padding: 3px 7px;
+  }
+
+  &__container  {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+  }
+
+  &__name-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__avatar, &__mock-photo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__mock-photo {
+    background-color: var(--color-grey-light)
+  }
+
+  &__name, &__login, &__admin {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-black);
+    margin: 0;
+    width: 210px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__login {
+    color: var(--color-grey);
+  }
+
+  &__admin {
+    color: var(--color-blue);
+  }
+
+  &__icon {
+    rotate: 45deg;
+  }
+}

@@ -1,9 +1,11 @@
 .container {
+  position: relative;
   width: 34%;
   display: flex;
   flex-direction: column;
   gap: 14px;
   background-color: var(--color-grey-lighter);
+  align-items: center;
 
   &__search {
     width: 100%;
@@ -16,18 +18,56 @@
   }
 
   &__search-link {
+    background-color: inherit;
+    padding: 0;
+    width: 57px;
+  }
+
+  &__search-link-text {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
     color: var(--color-grey);
   }
 
-  &__list {
+  &__button-create {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    height: 20%;
+  }
+
+  &__list, &__list-whithout-scroll {
+    width: 100%;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    overflow: hidden;
     max-height: calc(100vh - 104px);
     box-sizing: border-box;
     overflow-y: scroll;
     scroll-behavior: smooth;
     scrollbar-width: thin;
+  }
+
+  &__list-whithout-scroll {
+    overflow: hidden;
+  }
+
+  &__empty-list {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-grey);
+    text-align: center;
+  }
+
+  &__list:last-child, &__list-whithout-scroll:last-child {
+    border-bottom: 1px solid var(--color-grey-border);
   }
 }
