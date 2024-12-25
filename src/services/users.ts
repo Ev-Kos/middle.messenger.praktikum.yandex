@@ -1,5 +1,5 @@
 import UsersApi from "../api/users";
-import { TChangePasswordRequest, TSingUpRequest, TUsersSearchRequest } from "../utils/types";
+import { TChangePasswordRequest, TErrorApi, TSingUpRequest, TUsersSearchRequest } from "../utils/types";
 
 const usersApi = new UsersApi();
 
@@ -17,8 +17,8 @@ export const usersSearch = async (model: TUsersSearchRequest) => {
     if (Array.isArray(users) && users.length > 5) {
       window.store.set({ isUserScroll: true });
     }
-  } catch (error: any) {
-    window.store.set({ usersSearchError: error.reason });
+  } catch (error) {
+    window.store.set({ usersSearchError: (error as TErrorApi).reason });
   } finally {
     window.store.set({ isLoadingUserSearch: false });
   }
@@ -29,8 +29,8 @@ export const changeUserAvatar = async (file: File) => {
   try {
     const user = await usersApi.changeUserAvatar(file);
     window.store.set({user: user, userAvatar: null, userAvatarFile: null, isClickFileLoad: false})
-  } catch (error: any) {
-    window.store.set({ uploadUserAvatarError: error.reason });
+  } catch (error) {
+    window.store.set({ uploadUserAvatarError: (error as TErrorApi).reason });
   } finally {
     window.store.set({ isLoadingUploadUserAvatar: false });
   }
@@ -41,8 +41,8 @@ export const changeProfile = async (data: TSingUpRequest) => {
   try {
     const user = await usersApi.changeProfile(data);
     window.store.set({user: user, isNotChange: true})
-  } catch (error: any) {
-    window.store.set({ changeProfileError: error.reason });
+  } catch (error) {
+    window.store.set({ changeProfileError: (error as TErrorApi).reason });
   } finally {
     window.store.set({ isLoadingChangeProfile: false });
   }
@@ -53,8 +53,8 @@ export const changePassword = async (data: TChangePasswordRequest) => {
   try {
     await usersApi.changePassword(data);
     window.store.set({isNotChange: true, isChangePassword: false})
-  } catch (error: any) {
-    window.store.set({ changePasswordError: error.reason });
+  } catch (error) {
+    window.store.set({ changePasswordError: (error as TErrorApi).reason });
   } finally {
     window.store.set({ isLoadingChangePassword: false });
   }

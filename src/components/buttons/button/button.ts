@@ -10,7 +10,6 @@ type TButtonProps = {
   modifierButton?: string;
   onClick: (e: MouseEvent) => void;
   isLoading?: boolean;
-  isDisabled?: boolean;
 };
 
 class Button extends Block {
@@ -34,13 +33,11 @@ class Button extends Block {
 
   public render(): string {
     return `
-      <div class="{{#if isDisabled}}button__mask-disabled{{else}}button__mask{{/if}}">
-        {{#if isLoading}}
-          {{{Loader}}}
-        {{else}}
-          <span class="button__text {{modifierText}}">{{text}}</span>
-        {{/if}}
-      </div>
+      {{#if isLoading}}
+        {{{Loader}}}
+      {{else}}
+        <span class="button__text {{modifierText}}">{{text}}</span>
+      {{/if}}
     `
   }
 }

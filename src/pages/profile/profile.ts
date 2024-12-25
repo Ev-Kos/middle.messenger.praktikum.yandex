@@ -15,7 +15,12 @@ export default class ProfilePage extends Block {
             limit: Number(window.store.state.limitChat),
             offset: Number(window.store.state.offsetChat)
           })
-          window.store.set({isNotChange: true, isChangePassword: false})
+          window.store.set({
+            isNotChange: true,
+            isChangePassword: false,
+            changeProfileError: null,
+            changePasswordError: null
+          })
         },
         isRight: false
       }),

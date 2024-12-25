@@ -18,16 +18,16 @@ type TProfileInfoProps = {
 class ProfileInfo extends Block {
   constructor(props: TProfileInfoProps) {
     super("div", {
+      ...props,
       className: "profile-info",
-      userName: props.user.first_name,
       isNotChange: window.store.state.isNotChange,
       mainFieldState: {
-        email: props.user.email,
-        login: props.user.login,
-        first_name: props.user.first_name,
-        second_name: props.user.second_name,
-        phone: props.user.phone,
-        display_name: props.user.display_name,
+        email: props.user? props.user.email: "",
+        login: props.user ? props.user.login : "",
+        first_name: props.user? props.user.first_name : "",
+        second_name: props.user? props.user.second_name : "",
+        phone: props.user ? props.user.phone : "",
+        display_name: props.user ? props.user.display_name : "",
       },
       passwordState: {
         oldPassword: "",
@@ -46,19 +46,19 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Почта",
         inputName: "email",
-        value: props.user.email,
+        value: props.user ? props.user.email : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
-            console.log(value)
+            window.store.set({changeProfileError: null})
             this.setPropsForChildren(this.children.EmailField, checkEmail(value));
             this.setProps({
               mainFieldState: {
                 ...this.props.mainFieldState,
                 email: value,
               },
-            });
+            })
           }
         },
         inputType: "text"
@@ -68,18 +68,19 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Логин",
         inputName: "login",
-        value: props.user.login,
+        value: props.user? props.user.login : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
+            window.store.set({changeProfileError: null})
             this.setPropsForChildren(this.children.LoginField, checkLogin(value));
-              this.setProps({
-                mainFieldState: {
-                  ...this.props.mainFieldState,
-                  login: value,
-                },
-              });
+            this.setProps({
+              mainFieldState: {
+                ...this.props.mainFieldState,
+                login: value,
+              },
+            })
           }
         },
         inputType: "text"
@@ -89,7 +90,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя",
         inputName: "first_name",
-        value: props.user.first_name,
+        value: props.user? props.user.first_name : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -100,7 +101,7 @@ class ProfileInfo extends Block {
                 ...this.props.mainFieldState,
                 first_name: value,
               },
-            });
+            })
           }
         },
         inputType: "text"
@@ -110,7 +111,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Фамилия",
         inputName: "second_name",
-        value: props.user.second_name,
+        value: props.user? props.user.second_name : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -121,7 +122,7 @@ class ProfileInfo extends Block {
                 ...this.props.mainFieldState,
                 second_name: value,
               },
-            });
+            })
           }
         },
         inputType: "text"
@@ -131,7 +132,7 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Имя в чате",
         inputName: "display_name",
-        value: props.user.display_name ? props.user.display_name : "",
+        value: props.user ? props.user.display_name : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
@@ -142,7 +143,7 @@ class ProfileInfo extends Block {
                 ...this.props.mainFieldState,
                 display_name: value === "" ? null : value,
               },
-            });
+            })
           }
         },
         inputType: "text"
@@ -152,18 +153,18 @@ class ProfileInfo extends Block {
         isWithInput: true,
         nameField: "Телефон",
         inputName: "phone",
-        value: props.user.phone,
+        value: props.user? props.user.phone : "",
         inputIsDisabled: true,
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
             this.setPropsForChildren(this.children.PhoneField, checkPhone(value));
-              this.setProps({
-                mainFieldState: {
-                  ...this.props.mainFieldState,
-                  phone: value,
-                },
-              });
+            this.setProps({
+              mainFieldState: {
+                ...this.props.mainFieldState,
+                phone: value,
+              },
+            })
           }
         },
         inputType: "text"
@@ -213,13 +214,14 @@ class ProfileInfo extends Block {
         onChangeInput: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
+            window.store.set({changePasswordError: null})
             this.setPropsForChildren(this.children.OldPasswordField, checkPassword(value));
             this.setProps({
               passwordState: {
                 ...this.props.passwordState,
                 oldPassword: value,
               },
-            });
+            })
           }
         },
         inputType: "password"
@@ -241,7 +243,7 @@ class ProfileInfo extends Block {
                 ...this.props.passwordState,
                 newPassword: value,
               },
-            });
+            })
           }
         },
         inputType: "password"
@@ -260,7 +262,7 @@ class ProfileInfo extends Block {
             this.setPropsForChildren(this.children.ReteatNewPasswordField, checkRepeatedPassword(this.props.passwordState.newPassword, value));
             this.setProps({
               repeatedPassword: value
-            });
+            })
           }
         },
         inputType: "password"
@@ -271,7 +273,6 @@ class ProfileInfo extends Block {
         modifierButton:"profile-info__save-button",
         onClick: (e: MouseEvent) => {
           e.preventDefault();
-
           const errorEmail = checkEmail(this.props.mainFieldState.email)
           const errorLogin = checkLogin(this.props.mainFieldState.login);
           const errorName = checkName(this.props.mainFieldState.first_name, "Имя должно")
@@ -284,8 +285,8 @@ class ProfileInfo extends Block {
           if(!error) {
             let obj:{[key: string]: any} = {}
             for(let key in this.props.mainFieldState) {
-              //@ts-ignore
-              if(this.props.mainFieldState[key] !== props.user[key])
+              // @ts-ignore
+              if(this.props.mainFieldState[key] !== window.store.state.user[key])
                obj[key] = this.props.mainFieldState[key]
             }
             if(Object.keys(obj).length !== 0) {
@@ -322,9 +323,7 @@ class ProfileInfo extends Block {
   }
 
   public render(): string {
-    console.log(this.props)
     const isNotChange = window.store.state.isNotChange
-
     if(isNotChange) {
       this.setPropsForChildren(this.children.EmailField, {inputIsDisabled: true, value: window.store.state.user?.email})
       this.setPropsForChildren(this.children.LoginField, {inputIsDisabled: true, value: window.store.state.user?.login})
@@ -342,11 +341,12 @@ class ProfileInfo extends Block {
         <div class="profile-info__avatar-wrap">
           {{{ButtonAvatar}}}
           {{#if isNotChange }}
-            <h1 class="profile-info__user-name">{{userName}}</h1>
+            <h1 class="profile-info__user-name">{{user.first_name}}</h1>
           {{/if}}
         </div>
         {{#unless isChangePassword }}
           <ul class="profile-info__fields">
+            <p class="profile-info__error">{{changeProfileError}}</p>
             {{{EmailField}}}
             {{{LoginField}}}
             {{{FirstNameField}}}
@@ -364,6 +364,7 @@ class ProfileInfo extends Block {
         {{/if}}
         {{#if isChangePassword}}
           <ul class="profile-info__fields">
+          <p class="profile-info__error">{{changePasswordError}}</p>
             {{{OldPasswordField}}}
             {{{NewPasswordField}}}
             {{{ReteatNewPasswordField}}}
@@ -393,7 +394,9 @@ const mapStateToProps = (state: {[key: string]: unknown}) => {
     user: state.user,
     isClickFileLoad: state.isClickFileLoad,
     isNotChange: state.isNotChange,
-    isChangePassword: state.isChangePassword
+    isChangePassword: state.isChangePassword,
+    changeProfileError: state.changeProfileError,
+    changePasswordError: state.changePasswordError
   };
 };
 
