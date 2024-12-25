@@ -1,7 +1,8 @@
 import Block from "../../../core/block";
 
 type TButtonDots = {
-  onClick: () => void;
+  onClick?: () => void;
+  onMouseEnter?: () => void;
 }
 
 export default class ButtonDots extends Block {
@@ -12,7 +13,8 @@ export default class ButtonDots extends Block {
         type: "button"
       },
       events: {
-        click: props.onClick
+        click: props.onClick,
+        mouseenter: props.onMouseEnter
       }
     });
   }

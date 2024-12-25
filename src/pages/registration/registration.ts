@@ -1,8 +1,11 @@
-import { Button, InputForm, Link } from "../../components";
+import { Button, InputForm } from "../../components";
 import Block from "../../core/block";
+import { singUp } from "../../services/auth";
+import { connect } from "../../utils/connect";
+import { ROUTES } from "../../utils/constants";
 import { checkEmail, checkLogin, checkName, checkPassword, checkPhone, checkRepeatedPassword } from "../../utils/validate-inputs";
 
-export default class RegistrationPage extends Block {
+class RegistrationPage extends Block {
   constructor() {
     super('section', {
       formState: {
@@ -19,6 +22,7 @@ export default class RegistrationPage extends Block {
         name: "email",
         type: "text",
         text: "Почта",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -36,6 +40,7 @@ export default class RegistrationPage extends Block {
         name: "login",
         type: "text",
         text: "Логин",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -53,6 +58,7 @@ export default class RegistrationPage extends Block {
         name: "first_name",
         type: "text",
         text: "Имя",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -70,6 +76,7 @@ export default class RegistrationPage extends Block {
         name: "second_name",
         type: "text",
         text: "Фамилия",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -87,6 +94,7 @@ export default class RegistrationPage extends Block {
         name: "phone",
         type: "text",
         text: "Телефон",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -104,6 +112,7 @@ export default class RegistrationPage extends Block {
         name: "password",
         type: "password",
         text: "Пароль",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -121,6 +130,7 @@ export default class RegistrationPage extends Block {
         name: "repeat-password",
         type: "password",
         text: "Пароль (еще раз)",
+        withError: true,
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
@@ -134,7 +144,7 @@ export default class RegistrationPage extends Block {
       Button: new Button({
         type: "submit",
         text: "Зарегистрироваться",
-        onClick: (e) => {
+        onClick: (e: MouseEvent) => {
           e.preventDefault();
 
           const errorEmail = checkEmail(this.props.formState.email)
@@ -158,18 +168,21 @@ export default class RegistrationPage extends Block {
             this.setPropsForChildren(this.children.InputRepeatedPassword, errorRepeatedPassword);
             return;
           }
-          console.log(this.props.formState)
+          singUp(this.props.formState);
         }
       }),
-      Link: new Link({
-        to: "#",
-        modifierLink: "link",
-        text: "Войти"
+      Link: new Button({
+        type: "button",
+        onClick: () => window.router.go(ROUTES.login),
+        modifierButton: "button_link",
+        modifierText: "button_link-text",
+        text: "Войти?"
       })
     });
   }
   public render(): string {
     return `
+      <p class="{{#if singUpError}}registration-page__error-visible {{else}}registration-page__error{{/if}}">Что-то пошло не так :(</p>
       <form class="registration-form">
         <div class="registration-form__info">
           <h1 class="registration-form__title">Регистрация</h1>
@@ -191,3 +204,12 @@ export default class RegistrationPage extends Block {
     `
   }
 }
+
+const mapStateToProps = (state: {[key: string]: unknown}) => {
+  return {
+    isLoading: state.isLoading,
+    singUpError: state.singUpError,
+  };
+};
+
+export default connect(mapStateToProps)(RegistrationPage);

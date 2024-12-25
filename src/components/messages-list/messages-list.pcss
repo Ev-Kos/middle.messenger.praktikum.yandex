@@ -19,8 +19,6 @@
 
 .messages-list {
   width: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 0 20px;
   box-sizing: border-box;
 
@@ -55,15 +53,22 @@
     color: var(--color-text);
   }
 
-  &__content {
+  &__messages-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     padding: 48px 0 30px;
     border-top: 1px solid var(--color-grey-border);
     border-bottom: 1px solid var(--color-grey-border);
-    height: calc(100vh - 190px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+    height: calc(100vh - 193px);
+    width: 100%;
+    margin: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  &__messages-groups :first-child {
+    margin-top: auto;
   }
 
   &__create-message-container {
@@ -72,26 +77,5 @@
     display: flex;
     gap: 10px;
     align-items: center;
-  }
-
-  &__date {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-grey);
-  }
-
-  &__messages {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  &__got-messages {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
   }
 }

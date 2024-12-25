@@ -5,28 +5,28 @@ export const checkLogin = (value: string):{isError: boolean, error: string, valu
     return {
       isError: true,
       error: 'Минимальная длина логина 3 символа',
-      value: value
+      value: value,
     }
   }
   if (value.length > 20) {
     return {
       isError: true,
       error: 'Максимальная длина логина 20 символов',
-      value: value
+      value: value,
     }
   }
   if (!validType.test(value)) {
     return {
       isError: true,
       error: 'Логин может содержать только латиницу, цифры, дефис и нижнее подчеркивание',
-      value: value
+      value: value,
     }
   }
   if (onlyNumbers.test(value)) {
     return {
       isError: true,
       error: 'Логин не может состоять только из цифр',
-      value: value
+      value: value,
     }
   }
   return {isError: false, error: '', value: value};
