@@ -148,7 +148,7 @@ class MessagesList extends Block {
       return false;
     }
 
-		if(newProps && newProps.activeChatId !== oldProps.activeChatId) {
+		if(newProps && newProps.activeChatId !== oldProps.activeChatId && newProps.activeChatId !== null) {
 			wsChat(newProps.activeChatId);
       getChatUsers(newProps.activeChatId)
 		}

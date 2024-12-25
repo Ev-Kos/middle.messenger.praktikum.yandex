@@ -95,7 +95,7 @@ class ContactList extends Block {
           })
         }
         window.store.set({isNewCount: false})
-      }, 9000)
+      }, 5000)
     }
     if (newProps && newProps.chats) {
       this.children.Chats = newProps.chats.map(

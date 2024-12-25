@@ -70,13 +70,13 @@ export default class WebScoketClass {
 		}
 
 		this.socket.onclose = (event: CloseEvent) => {
-			if (event.wasClean) {
-				console.log("Соединение закрыто чисто");
-			} else {
-				console.log("Проверьте соединение с интернетом");
-			}
-			console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-			this.socket.close()
+      if (event.wasClean) {
+        console.log("Соединение закрыто чисто");
+      } else {
+        console.log("Проверьте соединение с интернетом");
+      }
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+      this.socket.close()
 		}
 
     this.socket.onerror = (event: ErrorEvent) => {
@@ -84,6 +84,10 @@ export default class WebScoketClass {
       this._reconnect()
 		};
 	}
+
+  public close = () => {
+    this.socket.close();
+  }
 
   private _reconnect() {
       const interval = 5000;

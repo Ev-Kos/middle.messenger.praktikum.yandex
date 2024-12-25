@@ -15,7 +15,7 @@ export const getChats = async (model: TGetChatsRequest) => {
     if(Array.isArray(chats) && chats.length === 0) {
       window.store.set({ chatsLength: null });
     }
-    if(Array.isArray(chats) && chats.length > 11) {
+    if(Array.isArray(chats) && chats.length > 10) {
       window.store.set({ isScroll: true });
     }
   } catch (error: any) {
@@ -113,7 +113,7 @@ export const deleteChat = async (data: TDeleteChatRequest) => {
       window.store.set({
         isOpenActionsWithChatModal: !window.store.state.isOpenActionsWithChatModal,
         chats: newChats,
-        activeChatId: null
+        activeChatId: null,
       })
     }
     if(Array.isArray(chats) && chats.length < 15) {
@@ -188,6 +188,7 @@ export const wsChat = async (id: number) => {
   const socket = new WebScoketClass(data);
 	if (user && activeChatToken && offsetMessages) {
     if (socket && interval) {
+      socket.close();
 			clearInterval(interval);
 		}
 		socket.connect();
