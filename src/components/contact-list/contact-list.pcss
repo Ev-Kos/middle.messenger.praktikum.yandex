@@ -43,11 +43,11 @@
     height: 20%;
   }
 
-  &__list {
+  &__list, &__list-whithout-scroll {
+    width: 100%;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    overflow: hidden;
     max-height: calc(100vh - 104px);
     box-sizing: border-box;
     overflow-y: scroll;
@@ -56,12 +56,7 @@
   }
 
   &__list-whithout-scroll {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
     overflow: hidden;
-    max-height: calc(100vh - 104px);
-    box-sizing: border-box;
   }
 
   &__empty-list {

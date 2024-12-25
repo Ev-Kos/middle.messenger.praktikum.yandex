@@ -43,21 +43,21 @@ window.store = new Store({
   offsetMessages: "0",
  });
 
-const APP_ROOT_ELEMNT = "#app";
-window.router = new Router(APP_ROOT_ELEMNT);
-
-window.router
-.use(ROUTES.login, Pages.LoginPage)
-.use(ROUTES.register, Pages.RegistrationPage)
-.use(ROUTES.chat, Pages.ChatPage)
-.use(ROUTES.profile, Pages.ProfilePage)
-.use(ROUTES.servError, Pages.ErrorPage)
-.use("*", Pages.NotFoundPage)
-.start();
-
 const initApp = async (): Promise<void> => {
   const check = await checkSingInUser();
   const currentPath = window.location.pathname;
+
+  const APP_ROOT_ELEMNT = "#app";
+  window.router = new Router(APP_ROOT_ELEMNT);
+
+  window.router
+  .use(ROUTES.login, Pages.LoginPage)
+  .use(ROUTES.register, Pages.RegistrationPage)
+  .use(ROUTES.chat, Pages.ChatPage)
+  .use(ROUTES.profile, Pages.ProfilePage)
+  .use(ROUTES.servError, Pages.ErrorPage)
+  .use("*", Pages.NotFoundPage)
+  .start();
 
   if (!check) {
     window.router.go(ROUTES.login);
