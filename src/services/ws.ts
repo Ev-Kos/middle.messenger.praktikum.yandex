@@ -85,10 +85,6 @@ export default class WebScoketClass {
 		};
 	}
 
-  public close = () => {
-    this.socket.close();
-  }
-
   private _reconnect() {
       const interval = 5000;
       console.log("Попытка переподключения");

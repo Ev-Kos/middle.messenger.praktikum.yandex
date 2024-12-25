@@ -188,7 +188,6 @@ export const wsChat = async (id: number) => {
   const socket = new WebScoketClass(data);
 	if (user && activeChatToken && offsetMessages) {
     if (socket && interval) {
-      socket.close();
 			clearInterval(interval);
 		}
 		socket.connect();
