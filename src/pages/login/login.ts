@@ -21,7 +21,6 @@ class LoginPage extends Block {
         onChange: (e) => {
           if(e.target instanceof HTMLInputElement) {
             const value = e.target.value;
-            const error = checkLogin(value)
             this.setPropsForChildren(this.children.InputLogin, checkLogin(value));
             this.setProps({
               formState: {
@@ -29,10 +28,6 @@ class LoginPage extends Block {
                 login: value,
               },
             })
-            error.isError
-              ? this.setPropsForChildren(this.children.ButtonSubmit, {isDisabled: true})
-              : this.setPropsForChildren(this.children.ButtonSubmit, {isDisabled: false})
-
           }
         },
       }),
@@ -50,7 +45,7 @@ class LoginPage extends Block {
                 ...this.props.formState,
                 password: value,
               },
-            });
+            })
           }
         }
       }),

@@ -47,8 +47,8 @@ const initApp = async (): Promise<void> => {
   const check = await checkSingInUser();
   const currentPath = window.location.pathname;
 
-  const APP_ROOT_ELEMNT = "#app";
-  window.router = new Router(APP_ROOT_ELEMNT);
+  const APP_ROOT_ELEMENT = "#app";
+  window.router = new Router(APP_ROOT_ELEMENT);
 
   window.router
   .use(ROUTES.login, Pages.LoginPage)
@@ -73,13 +73,6 @@ const initApp = async (): Promise<void> => {
     return;
   }
 
-  if (currentPath === ROUTES.chat) {
-    await getChats({
-      limit: Number(window.store.state.limitChat),
-      offset: Number(window.store.state.offsetChat)
-    })
-    return;
-  }
   window.router.go(currentPath)
 }
 initApp().catch(error => {
