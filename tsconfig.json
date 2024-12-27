@@ -23,5 +23,9 @@
     "sourceMap": true,
     "strictNullChecks": true
   },
-  "include": ["src"]
+  "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
+  },
+  "include": ["src", "mochaSetup.js", "loader.js"]
 }
