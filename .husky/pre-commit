@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/husky.sh"
 
-npm run test
-npm run lint
+npm run pre-commit
