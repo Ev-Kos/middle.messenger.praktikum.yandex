@@ -48,10 +48,5 @@
     "postcss-nested": "^7.0.2",
     "postcss-preset-env": "^10.0.9",
     "uuid": "^11.0.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test && npm run lint"
-    }
   }
 }
