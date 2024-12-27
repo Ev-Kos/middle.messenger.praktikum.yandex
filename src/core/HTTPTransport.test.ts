@@ -13,8 +13,8 @@ describe('HTTPTransport', () => {
   })
 
   afterEach(() => {
-    sinon.restore();
-  });
+    sinon.restore()
+  })
 
   it('Если метод отсутствует выбрасывается ошибка', async () => {
     const requestStub = request.rejects(new Error('Нет такого метода'));
