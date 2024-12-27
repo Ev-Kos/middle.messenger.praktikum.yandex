@@ -18,7 +18,7 @@
     "check": "npm run eslint && npm run stylelint && npm run check-types",
     "test": "mocha ",
     "prepare": "husky install",
-    "pre-commit": "npm-run-all test check"
+    "pre-commit": "npm-run-all test lint"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
