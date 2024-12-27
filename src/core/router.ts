@@ -10,9 +10,9 @@ export type BlockRouter = new (...args: any[]) => Block;
 
 export default class Router {
   static __instance: Router | null;
-  private routes: RouteInterface[] = [];
+  public routes: RouteInterface[] = [];
   private history: History | null = null;
-  private _currentRoute: RouteInterface | null = null;
+  public currentRoute: RouteInterface | null = null;
   private _rootQuery: string = "";
 
   constructor(rootQuery: string) {
@@ -22,7 +22,7 @@ export default class Router {
 
     this.routes = [];
     this.history = window.history;
-    this._currentRoute = null;
+    this.currentRoute = null;
     this._rootQuery = rootQuery;
 
     Router.__instance = this;
@@ -50,11 +50,11 @@ export default class Router {
       return;
     }
 
-    if (this._currentRoute && this._currentRoute !== route) {
-      this._currentRoute.leave();
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave();
     }
 
-    this._currentRoute = route;
+    this.currentRoute = route;
     route.render();
   }
 
