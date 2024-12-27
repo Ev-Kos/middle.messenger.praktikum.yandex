@@ -15,7 +15,7 @@
     "eslint:fix": "eslint . --fix",
     "stylelint": "stylelint **/*.pcss",
     "check-types": "tsc --noEmit",
-    "check": "npm run eslint && npm run stylelint && npm run check-types",
+    "lint": "npm run eslint && npm run stylelint && npm run check-types",
     "test": "mocha ",
     "prepare": "husky install",
     "pre-commit": "npm-run-all test lint"
@@ -51,7 +51,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run check"
+      "pre-commit": "npm run test && npm run lint"
     }
   }
 }
